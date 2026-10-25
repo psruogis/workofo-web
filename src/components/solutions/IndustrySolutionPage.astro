@@ -1,6 +1,7 @@
 ---
 import type { ResolvedIndustrySolution } from '../../lib/solutions';
 import { ui, type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
 
 type Props = {
   solution: ResolvedIndustrySolution;
@@ -8,13 +9,18 @@ type Props = {
 };
 
 const { solution, locale } = Astro.props;
-const demoHref = `/${locale}/get-in-touch`;
+const demoHref = localePath(locale, '/get-in-touch');
 ---
 
 <article class="solution-page">
-  <header class="solution-hero shell__inner">
+  <header class="solution-hero shell__inner" data-reveal>
+    <nav aria-label="Breadcrumb" class="solution-breadcrumb">
+      <span>Industries</span>
+      <span aria-hidden="true">/</span>
+      <span class="solution-breadcrumb__current">{solution.navLabel}</span>
+    </nav>
+    <h1 data-split>{solution.headline}</h1>
     <p class="t-overline section__eyebrow">{solution.eyebrow}</p>
-    <h1>{solution.headline}</h1>
     <p class="lede">{solution.lede}</p>
     <div class="solution-hero__actions">
       <a class="btn btn--primary btn--cta" href={demoHref}>{ui('bookDemo', locale)}</a>
@@ -33,7 +39,7 @@ const demoHref = `/${locale}/get-in-touch`;
     }
   </header>
 
-  <section class="solution-challenges shell__inner" aria-labelledby="solution-challenges-title">
+  <section class="solution-challenges shell__inner" aria-labelledby="solution-challenges-title" data-reveal>
     <h2 id="solution-challenges-title" class="visually-hidden">Industry challenges</h2>
     <div class="solution-challenges__grid">
       {
@@ -51,7 +57,7 @@ const demoHref = `/${locale}/get-in-touch`;
     </div>
   </section>
 
-  <section class="solution-features shell__inner" aria-labelledby="solution-features-title">
+  <section class="solution-features shell__inner" aria-labelledby="solution-features-title" data-reveal>
     <h2 id="solution-features-title" class="visually-hidden">Key capabilities</h2>
     <div class="solution-features__grid">
       {
@@ -72,7 +78,7 @@ const demoHref = `/${locale}/get-in-touch`;
         data-reveal
       >
         <div class="solution-band__copy">
-          <h2>{section.title}</h2>
+          <h2 data-split>{section.title}</h2>
           <p class="lede">{section.intro}</p>
           <ul class="solution-band__list">
             {section.points.map((point) => (
@@ -85,7 +91,7 @@ const demoHref = `/${locale}/get-in-touch`;
   }
 
   <section class="solution-cta shell__inner" data-reveal>
-    <h2>{solution.ctaHeadline}</h2>
+    <h2 data-split>{solution.ctaHeadline}</h2>
     <p class="lede">{solution.ctaBody}</p>
     <a class="btn btn--primary btn--cta" href={demoHref}>{ui('bookDemo', locale)}</a>
   </section>

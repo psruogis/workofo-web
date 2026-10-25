@@ -1,0 +1,32 @@
+---
+/**
+ * Prefixed Jobs for SE/LT chrome. EN Jobs rows used as fallback.
+ * `/en/jobs` redirects to unprefixed `/jobs`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import JobsPage from '../../components/sections/JobsPage.astro';
+import { isLocale, type Locale } from '../../lib/locales';
+import { listNavPages } from '../../lib/cms';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang)) {
+  return Astro.redirect('/jobs', 302);
+}
+
+const locale = rawLang as Locale;
+if (locale === 'en') {
+  return Astro.redirect('/jobs', 301);
+}
+
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Jobs | Workofo"
+  description="Build AI for demand forecasting and schedule optimization. Explore engineering roles at Workofo and solve scheduling problems for teams across Europe."
+  pathWithoutLang="/jobs"
+  navPages={navPages}
+>
+  <JobsPage locale={locale} />
+</SiteLayout>

@@ -1,0 +1,65 @@
+---
+/**
+ * Prefixed Book a demo for SE/LT chrome.
+ * `/en/get-in-touch` redirects to unprefixed `/get-in-touch`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ContactBookDemo from '../../components/sections/ContactBookDemo';
+import { isLocale, type Locale } from '../../lib/locales';
+import { listNavPages } from '../../lib/cms';
+import { DEMO_FORM_ID } from '../../lib/config';
+import { forms } from '@wix/forms';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang)) {
+  return Astro.redirect('/get-in-touch', 302);
+}
+
+const locale = rawLang as Locale;
+if (locale === 'en') {
+  return Astro.redirect('/get-in-touch', 301);
+}
+
+const navPages = await listNavPages(locale);
+
+let formFields: any[] = [];
+let formLoadError = '';
+try {
+  const form = await forms.getForm(DEMO_FORM_ID);
+  formFields = ((form as any).fields ?? [])
+    .filter((f: any) => f.target && !f.hidden)
+    .map((f: any) => ({
+      target: f.target,
+      label: f.view?.label ?? f.target,
+      placeholder: f.view?.placeholder ?? '',
+      required: f.validation?.required ?? false,
+      format: f.validation?.string?.format,
+      minLength: f.validation?.string?.minLength,
+      maxLength: f.validation?.string?.maxLength,
+      pattern: f.validation?.string?.pattern,
+      viewFieldType: f.view?.fieldType,
+      options: f.view?.options?.map((o: any) => ({
+        value: o.value ?? o.label ?? '',
+        label: o.label ?? o.value ?? '',
+      })),
+    }));
+} catch (err) {
+  formLoadError = `Could not load form schema for PUBLIC_WIX_DEMO_FORM_ID=${DEMO_FORM_ID}. Detail: ${String((err as Error)?.message ?? err)}`;
+}
+---
+
+<SiteLayout
+  locale={locale}
+  title="Book a demo | Workofo"
+  description="See Workofo with your own demand data and scheduling rules. Book an employee scheduling software demo tailored to your teams and business needs."
+  pathWithoutLang="/get-in-touch"
+  navPages={navPages}
+>
+  <ContactBookDemo
+    client:load
+    fields={formFields}
+    formId={DEMO_FORM_ID}
+    loadError={formLoadError}
+    locale={locale}
+  />
+</SiteLayout>

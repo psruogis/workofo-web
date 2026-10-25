@@ -1,0 +1,94 @@
+---
+/**
+ * Bottom demo CTA band — layout/icons from workofo-retail-cta.html;
+ * homepage type, buttons, --max / --gutter / --section-y; dark #111 surface.
+ * Optional copy props for industry variants (queues vs stores).
+ */
+type Props = {
+  demoHref: string;
+  /** Optional second CTA (homepage only — e.g. See how it works). */
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  headingId?: string;
+  title?: string;
+  sub?: string;
+  note?: string;
+  tailoredSub?: string;
+  bookedSub?: string;
+  ariaLabel?: string;
+};
+
+const {
+  demoHref,
+  secondaryHref,
+  secondaryLabel = 'See how it works',
+  headingId = 'wf-cta-heading',
+  title = 'Book a demo built around your stores.',
+  sub = "Bring your stores, roles and labor rules. We'll show you what Workofo would do with them.",
+  note = 'We respond within 1 business day.',
+  tailoredSub = 'Your stores, roles and rules',
+  bookedSub = 'Walkthrough with your data',
+  ariaLabel = 'Notifications: request received, demo tailored to your stores, demo booked.',
+} = Astro.props as Props;
+---
+
+<section class="sec wf-cta-sec" style="background:#FFFFFF" aria-labelledby={headingId}>
+  <div class="in wf-cta-sec__in">
+    <div class="wf-cta" data-reveal data-wf-cta>
+      <div class="wf-cta__copy">
+        <h2 class="h2 wf-cta__title" id={headingId}>{title}</h2>
+        <p class="lead wf-cta__sub">{sub}</p>
+        <div class="wf-cta__row">
+          <a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+          {
+            secondaryHref && (
+              <a class="btn btn--ghost btn--cta" href={secondaryHref}>
+                {secondaryLabel}
+                <svg class="btn__icon btn__icon--trail btn__icon--down" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                  <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            )
+          }
+          {!secondaryHref && <span class="wf-cta__note">{note}</span>}
+        </div>
+        {secondaryHref && <p class="wf-cta__note">{note}</p>}
+      </div>
+
+      <div class="wf-cta__vis" role="img" aria-label={ariaLabel}>
+        <div class="wf-cta__stk">
+          <div class="wf-cta__nc wf-cta__n1">
+            <span class="wf-cta__ic" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2.5-7h11L20 13"></path><path d="M4 13v5a1 1 0 001 1h14a1 1 0 001-1v-5h-5a3 3 0 01-6 0H4z"></path></svg>
+            </span>
+            <span class="wf-cta__tx">
+              <span class="wf-cta__t">Request received</span>
+              <span class="wf-cta__s">We've got your details</span>
+            </span>
+            <span class="wf-cta__tm">09:12</span>
+          </div>
+          <div class="wf-cta__nc wf-cta__n2">
+            <span class="wf-cta__ic" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
+            </span>
+            <span class="wf-cta__tx">
+              <span class="wf-cta__t">Demo tailored</span>
+              <span class="wf-cta__s">{tailoredSub}</span>
+            </span>
+            <span class="wf-cta__tm">09:40</span>
+          </div>
+          <div class="wf-cta__nc wf-cta__n3">
+            <span class="wf-cta__ic" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path><path d="M9 15l2 2 4-4"></path></svg>
+            </span>
+            <span class="wf-cta__tx">
+              <span class="wf-cta__t">Demo booked</span>
+              <span class="wf-cta__s">{bookedSub}</span>
+            </span>
+            <span class="wf-cta__tm">Thu 10:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

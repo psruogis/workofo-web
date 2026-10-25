@@ -1,0 +1,22 @@
+---
+/**
+ * Contact — EN unprefixed (`/contact`).
+ * Layout from contact-page-mock; homepage type/buttons/gutters.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ContactPage from '../components/sections/ContactPage.astro';
+import { listNavPages } from '../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Contact | Workofo"
+  description="Talk to the people behind Workofo. Book a demo, log in, explore jobs, or send a message. Offices in Copenhagen, London and Vilnius."
+  pathWithoutLang="/contact"
+  navPages={navPages}
+>
+  <ContactPage locale={locale} />
+</SiteLayout>

@@ -1,0 +1,22 @@
+---
+/**
+ * About — EN unprefixed (`/about`).
+ * Layout/section order from about-us-sketch.html; homepage type/buttons/gutters.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import AboutPage from '../components/sections/AboutPage.astro';
+import { listNavPages } from '../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="About Workofo | Better staffing, stronger business"
+  description="Workofo uses AI and mathematical optimization for workforce scheduling software that follows demand. For stronger business results and a working day that fits together more easily."
+  pathWithoutLang="/about"
+  navPages={navPages}
+>
+  <AboutPage locale={locale} />
+</SiteLayout>

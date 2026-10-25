@@ -1,0 +1,74 @@
+---
+/**
+ * English industry pages (unprefixed): `/industries/{slug}`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import RetailPage from '../../components/solutions/RetailPage.astro';
+import ContactCentrePage from '../../components/solutions/ContactCentrePage.astro';
+import AviationPage from '../../components/solutions/AviationPage.astro';
+import LogisticsPage from '../../components/solutions/LogisticsPage.astro';
+import RestaurantsPage from '../../components/solutions/RestaurantsPage.astro';
+import { isIndustrySlug } from '../../lib/solutions';
+import { listNavPages } from '../../lib/cms';
+
+const industry = Astro.params.industry;
+if (!isIndustrySlug(industry)) {
+  return Astro.redirect('/industries/retail', 302);
+}
+
+const navPages = await listNavPages('en');
+
+const customPages: Record<string, { title: string; description: string }> = {
+  retail: {
+    title: 'Retail Scheduling Software for Store Teams | Workofo',
+    description:
+      "Retail scheduling software that matches staff to customer demand. Make more of your team's time across stores, departments and busy periods.",
+  },
+  'contact-centre': {
+    title: 'Contact Centre Scheduling Software for Call Centres | Workofo',
+    description:
+      'Contact centre scheduling software that matches agents to demand, skills and service targets. Plan calls, chats and emails with your people in mind.',
+  },
+  aviation: {
+    title: 'Aviation Scheduling Software for Airport Teams | Workofo',
+    description:
+      'Aviation scheduling software that plans ramp, check-in, security and baggage teams around the flight schedule.',
+  },
+  logistics: {
+    title: 'Logistics Scheduling Software for Warehouses | Workofo',
+    description:
+      'Logistics scheduling software that forecasts pallets, orders and shipments and plans every zone and shift.',
+  },
+  restaurants: {
+    title: 'Restaurant Scheduling Software for Venue Teams | Workofo',
+    description:
+      'Restaurant scheduling software that staffs kitchen, bar and floor teams around every rush.',
+  },
+};
+
+const meta = customPages[industry];
+---
+
+{
+  industry === 'retail' ? (
+    <SiteLayout locale="en" title={meta.title} description={meta.description} pathWithoutLang="/industries/retail" navPages={navPages}>
+      <RetailPage locale="en" />
+    </SiteLayout>
+  ) : industry === 'contact-centre' ? (
+    <SiteLayout locale="en" title={meta.title} description={meta.description} pathWithoutLang="/industries/contact-centre" navPages={navPages}>
+      <ContactCentrePage locale="en" />
+    </SiteLayout>
+  ) : industry === 'aviation' ? (
+    <SiteLayout locale="en" title={meta.title} description={meta.description} pathWithoutLang="/industries/aviation" navPages={navPages}>
+      <AviationPage locale="en" />
+    </SiteLayout>
+  ) : industry === 'logistics' ? (
+    <SiteLayout locale="en" title={meta.title} description={meta.description} pathWithoutLang="/industries/logistics" navPages={navPages}>
+      <LogisticsPage locale="en" />
+    </SiteLayout>
+  ) : (
+    <SiteLayout locale="en" title={meta.title} description={meta.description} pathWithoutLang="/industries/restaurants" navPages={navPages}>
+      <RestaurantsPage locale="en" />
+    </SiteLayout>
+  )
+}

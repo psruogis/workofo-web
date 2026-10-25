@@ -1,0 +1,32 @@
+---
+/**
+ * Prefixed About for SE/LT chrome. English content first.
+ * `/en/about` redirects to unprefixed `/about`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import AboutPage from '../../components/sections/AboutPage.astro';
+import { isLocale, type Locale } from '../../lib/locales';
+import { listNavPages } from '../../lib/cms';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang)) {
+  return Astro.redirect('/about', 302);
+}
+
+const locale = rawLang as Locale;
+if (locale === 'en') {
+  return Astro.redirect('/about', 301);
+}
+
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="About Workofo | Better staffing, stronger business"
+  description="Workofo uses AI and mathematical optimization for workforce scheduling software that follows demand. For stronger business results and a working day that fits together more easily."
+  pathWithoutLang="/about"
+  navPages={navPages}
+>
+  <AboutPage locale={locale} />
+</SiteLayout>

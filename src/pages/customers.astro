@@ -1,0 +1,22 @@
+---
+/**
+ * Customers — EN unprefixed (`/customers`).
+ * Layout from customers-page-sketch.html; homepage type/buttons/gutters.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import CustomersPage from '../components/sections/CustomersPage.astro';
+import { listNavPages } from '../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Customers | Workofo"
+  description="See how airports, retail chains and contact centres schedule around real demand with Workofo."
+  pathWithoutLang="/customers"
+  navPages={navPages}
+>
+  <CustomersPage locale={locale} />
+</SiteLayout>

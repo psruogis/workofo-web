@@ -1,0 +1,387 @@
+---
+/**
+ * Logistics industry subpage - duplicated from Aviation/Contact Centre, adapted from Logistics.dc.html.
+ * Same type, buttons, gutters, mobile pass, hero, breadcrumbs, FAQ, bottom CTA as retail/CC.
+ * US spelling labor; no Calculate; Workofo casing; no More industries / workforce-mgmt band.
+ */
+import { type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+import LogisticsPanel from './LogisticsPanel';
+import BottomDemoCta from '../sections/BottomDemoCta.astro';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const homeHref = localePath(locale, '/');
+---
+<article class="retail-page logistics-page">
+<!-- Industry split-hero (homepage vertical center; 55/45 copy | photo) -->
+<div id="overview" class="industry-hero retail-hero">
+<div class="industry-hero__in retail-hero__in">
+
+<div class="industry-hero__copy retail-hero__copy">
+<nav aria-label="Breadcrumb" class="retail-breadcrumb">
+<span>Industries</span>
+<span aria-hidden="true">/</span>
+<span class="retail-breadcrumb__current">Logistics</span>
+</nav>
+<div class="industry-hero__intro retail-hero__intro" data-reveal>
+<h1 class="industry-hero__title" data-split>Logistics scheduling software built around your volumes</h1>
+<p class="lede industry-hero__lede">Workofo forecasts pallets, orders and shipments, plans every zone and shift, and shares staff across your warehouses.</p>
+<div class="hero__actions industry-hero__actions">
+<a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+<a class="btn btn--ghost btn--cta" href="#how">
+  See how it works
+  <svg class="btn__icon btn__icon--trail btn__icon--down" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+    <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</a>
+</div>
+</div>
+</div>
+
+<div class="industry-hero__media retail-hero__media" data-reveal>
+  <div class="industry-hero__photo retail-hero__photo">
+    <div class="industry-hero__frame retail-hero__frame">
+      <img
+        class="industry-hero__img retail-hero__img"
+        src="/industries/logistics-hero.jpg"
+        alt="Warehouse team at work"
+        width="720"
+        height="780"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <span class="industry-hero__fade retail-hero__fade" aria-hidden="true"></span>
+    </div>
+    <div
+      class="wf-stk"
+      data-wf-stk
+      role="status"
+      aria-label="Extra shift offered to pickers, then accepted by Ahmed."
+    >
+      <div class="wf-card wf-a" aria-hidden="true">
+        <span class="wf-ic">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Shift offered to 5 pickers</span>
+          <span class="wf-s">Zone B · Fri 06:00-14:00</span>
+        </div>
+        <span class="wf-tm">04:51</span>
+      </div>
+      <div class="wf-card wf-b" aria-hidden="true">
+        <span class="wf-avw">
+          <span class="wf-av">AH</span>
+          <span class="wf-ck">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5 9-10"></path>
+            </svg>
+          </span>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Ahmed accepted the shift</span>
+          <span class="wf-s">Friday peak covered · Rules OK</span>
+        </div>
+        <span class="wf-tm">04:53</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+  (() => {
+    const el = document.querySelector('.logistics-page [data-wf-stk]');
+    if (!el) return;
+    const show = () => el.classList.add('is-in');
+    if (!('IntersectionObserver' in window)) {
+      show();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            show();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+  })();
+</script>
+
+<!-- Challenge / why schedules fail -->
+<section class="sec retail-s2" style="background:#FFFFFF" aria-labelledby="lg-s2-heading">
+  <div class="in retail-s2__in">
+    <div class="retail-s2__top" data-reveal>
+      <h2 class="h2" id="lg-s2-heading" data-split>Throughput changes every shift. Most plans stay the same.</h2>
+      <div class="retail-s2__intro">
+        <p class="lead">Fixed shift plans can't keep up with inbound trucks, order peaks and absences. Workofo can.</p>
+        <a class="textlink" href="#how">
+          See how it works
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="retail-s2__grid">
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-6 4 3 8-9"></path><path d="M15 5h5v5"></path></svg>
+        </span>
+        <h3 class="h3">Throughput you can't staff evenly</h3>
+        <p class="txt">Pallets, orders and shipments arrive in peaks, not averages.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Forecasts workload per location, zone and shift.</span>
+        </p>
+      </article>
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14c2.5 0 4.5 2 4.5 5"></path></svg>
+        </span>
+        <h3 class="h3">Skills and safety on every task</h3>
+        <p class="txt">Forklifts, cold zones and dangerous goods need trained, certified staff.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Assigns workers to activities by competence and safety rules.</span>
+        </p>
+      </article>
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 10-2.3 5.7"></path><path d="M20 5v5h-5"></path></svg>
+        </span>
+        <h3 class="h3">Absences hit the whole flow</h3>
+        <p class="txt">One missing team stalls receiving, picking and dispatch.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Suggests daily adjustments so supervisors can react fast.</span>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="sec" id="how" style="background:#111111">
+<div class="in" style="gap:64px">
+
+<div class="sh" data-reveal>
+<h2 class="h2" style="color:#FFFFFF" data-split>Pallets in, shifts out. Four steps.</h2>
+<p class="lead" style="color:#C9C9C3">Workofo is <a href={homeHref} style="color:#FFFFFF">employee scheduling software</a> that turns expected volumes into a shift plan for every zone, then helps supervisors adjust it day by day.</p>
+</div>
+
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:40px 32px" data-reveal>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #FFFFFF;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">01</span>
+<h3 class="h3" style="color:#FFFFFF">Forecast volumes</h3>
+<p class="txt" style="color:#C9C9C3">Incoming pallets, orders and shipments set the workload per location, zone and shift.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">02</span>
+<h3 class="h3" style="color:#FFFFFF">Staff by skill</h3>
+<p class="txt" style="color:#C9C9C3">Headcount is set to meet service targets, with speed and experience factored in.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">03</span>
+<h3 class="h3" style="color:#FFFFFF">Assign tasks</h3>
+<p class="txt" style="color:#C9C9C3">Workers are matched to activities by competence and safety rules.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">04</span>
+<h3 class="h3" style="color:#FFFFFF">Rebalance daily</h3>
+<p class="txt" style="color:#C9C9C3">Suggested changes help supervisors react to delays and absences.</p>
+</li>
+</ol>
+
+<div class="cc-how__stats" data-reveal>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">50–300</span>
+<span class="cc-how__stat-sub">employees in one shared pool</span>
+</div>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">15 min</span>
+<span class="cc-how__stat-sub">forecast intervals per zone</span>
+</div>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">200–20,000+</span>
+<span class="cc-how__stat-sub">employees, from one warehouse to a network</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Use cases / zones graphic -->
+<section class="sec retail-platform" id="platform" style="background:#FFFFFF">
+<div class="in">
+<div class="sh retail-platform__intro" data-reveal>
+<h2 class="h2" data-split>One plan for every zone, from inbound to outbound.</h2>
+<p class="lead">See where each zone is short or over in a typical week, and how Workofo shifts the hours.</p>
+</div>
+<figure class="retail-platform__mat" data-reveal>
+  <LogisticsPanel client:load />
+</figure>
+</div>
+</section>
+
+<!-- Shared pool band (reuse cc-intraday cream layout) -->
+<section class="sec cc-intraday" style="background:#ECECE8" aria-labelledby="lg-intraday-heading">
+<div class="in">
+<div class="cc-intraday__top" data-reveal>
+<h2 class="h2" id="lg-intraday-heading" data-split>One shared pool across every site</h2>
+<p class="lead">Lend and borrow hours between warehouses, and let teams pick up open shifts from other groups when a site runs short.</p>
+</div>
+<ul class="cc-intraday__pts" data-reveal>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"></path></svg></span>
+<div>
+<h3 class="h3">Lend and borrow hours</h3>
+<p class="txt">Move hours between warehouses to cover peaks and absences.</p>
+</div>
+</li>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>
+<div>
+<h3 class="h3">Shift offers across teams</h3>
+<p class="txt">Teams can receive open shifts from other groups, so gaps fill faster.</p>
+</div>
+</li>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h.01M12 12h.01M16 12h.01"></path></svg></span>
+<div>
+<h3 class="h3">Ask Nora</h3>
+<p class="txt">Workofo's assistant answers questions about rules and settings, right in the schedule.</p>
+</div>
+</li>
+</ul>
+<figure class="cc-intraday__shot" data-reveal>
+<img
+  src="/industries/logistics-product.png"
+  alt="Workofo monthly schedule with Nora, the built-in assistant, explaining how a team can receive open-shift offers from other groups."
+  loading="lazy"
+  width="2000"
+  height="1250"
+/>
+</figure>
+</div>
+</section>
+
+<!-- App -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:56px 72px;align-items:center">
+<div class="stack" style="flex:1 1 380px;min-width:0;gap:32px" data-reveal>
+<h2 class="h2" data-split>Logistics scheduling app for supervisors and warehouse staff</h2>
+<p class="lead">Warehouse staff see their shifts, share availability and swap with colleagues in the Workofo app for iOS and Android. Supervisors approve changes from the floor.</p>
+<div class="hero__actions">
+<a class="btn btn--ghost btn--cta" href="https://apps.apple.com/app/workofo-employee-schedules/id1567197620"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>App Store</a>
+<a class="btn btn--ghost btn--cta" href="https://play.google.com/store/apps/details?id=com.workofo.mobile"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>Google Play</a>
+</div>
+</div>
+<div style="flex:1.15 1 460px;min-width:0;display:flex;flex-wrap:wrap;gap:16px" data-reveal>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#F5F4F0;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="padding-bottom:16px">For warehouse staff</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>See this week's shifts</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg>Update availability</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg>Apply for leave</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"></path></svg>Swap a shift</div>
+</div>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#111111;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="color:#FFFFFF;padding-bottom:16px">For supervisors</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>Approve swaps and leave requests</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13 7l4 4"></path></svg>Move people between zones</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M5 20V11M12 20V4M19 20v-6"></path></svg>Follow hours per zone</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg>Access by role and site</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:48px 72px;align-items:flex-start">
+<div class="stack" style="flex:1 1 300px;min-width:0;gap:20px;max-width:380px" data-reveal>
+<h2 class="h2" data-split>Logistics scheduling, answered</h2>
+<p class="txt">Curious how it works for your sites? We'll show Workofo with your own volumes and rules.</p>
+</div>
+<div class="retail-faq" data-lg-faq style="flex:2 1 520px;min-width:0" data-reveal>
+<details><summary>What is logistics scheduling software?</summary><p>Logistics scheduling software builds shift plans around expected volumes instead of fixed patterns. Workofo forecasts pallets, orders and shipments, plans staff per location, zone and shift, and applies local labor rules.</p></details>
+<details><summary>How does Workofo forecast warehouse workload?</summary><p>It uses incoming pallets, orders and shipment volumes to anticipate peaks and quiet periods across the day.</p></details>
+<details><summary>Can Workofo assign people by skill and safety rules?</summary><p>Yes. Workers are assigned to activities based on competence and safety requirements, and differences in speed and experience are taken into account.</p></details>
+<details><summary>Can we share staff between warehouses?</summary><p>Yes. You can reallocate, borrow or lend employee hours between locations. It works especially well for shared pools of 50–300 employees.</p></details>
+<details><summary>How does Workofo handle absences and spikes?</summary><p>It suggests daily schedule adjustments so supervisors can cover unexpected absences and demand spikes quickly.</p></details>
+<div class="retail-faq__more" data-lg-faq-more hidden>
+<details><summary>Does Workofo support task-based staffing?</summary><p>Yes. Staffing can be planned per task and activity, not just per shift.</p></details>
+<details><summary>Does Workofo follow local labor rules?</summary><p>Yes. Contracts, rest rules and local agreements are applied to every shift plan.</p></details>
+<details><summary>Do supervisors keep control?</summary><p>Yes. Workofo suggests the plan; supervisors and operations managers review, adjust and publish it, and can test business rules over time.</p></details>
+<details><summary>Is there an app for warehouse staff?</summary><p>Yes. Staff see their shifts, update availability and swap shifts in the Workofo mobile app.</p></details>
+<details><summary>Is Workofo suitable for large logistics networks?</summary><p>Yes. Every site and zone is planned in one system, from a single warehouse to networks with thousands of employees.</p></details>
+</div>
+<button type="button" class="pill retail-faq-more__toggle" data-lg-faq-toggle aria-expanded="false">
+<span class="retail-faq-more__more">Load more questions</span>
+<span class="retail-faq-more__less">Show less</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+</div>
+</div>
+</section>
+
+<BottomDemoCta
+  demoHref={demoHref}
+  headingId="lg-cta-heading"
+  title="Book a demo built around your warehouse."
+  sub="Bring your volumes, zones and shift rules, and we'll show you the plan Workofo would build."
+  note="Most requests get a reply within one working day."
+  tailoredSub="Your volumes, zones and rules"
+  ariaLabel="Notifications: request received, demo tailored to your warehouse, demo booked."
+/>
+
+<script is:inline>
+(function () {
+  const faq = document.querySelector('[data-lg-faq]');
+  if (!faq) return;
+  const more = faq.querySelector('[data-lg-faq-more]');
+  const btn = faq.querySelector('[data-lg-faq-toggle]');
+  if (!more || !btn) return;
+  const items = Array.from(more.querySelectorAll('details'));
+  function setExpanded(on) {
+    faq.classList.toggle('is-expanded', on);
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if (on) {
+      more.hidden = false;
+      items.forEach(function (el, idx) {
+        el.setAttribute('data-reveal', '');
+        el.classList.remove('is-in');
+        window.setTimeout(function () {
+          el.classList.add('is-in');
+        }, 40 + idx * 70);
+      });
+    } else {
+      more.hidden = true;
+      items.forEach(function (el) {
+        el.classList.remove('is-in');
+        el.removeAttribute('data-reveal');
+      });
+    }
+  }
+  btn.addEventListener('click', function () {
+    setExpanded(!faq.classList.contains('is-expanded'));
+  });
+})();
+</script>
+</article>

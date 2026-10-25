@@ -1,0 +1,327 @@
+---
+/**
+ * About — layout/section order from about-us-sketch.html + Oct 16 work copy.
+ * Type, buttons, gutters, and palette follow the homepage / Workofo tokens.
+ */
+import { type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const jobsHref = localePath(locale, '/jobs');
+
+const principles = [
+  {
+    title: 'Demand drives the schedule',
+    body: "Last week's schedule does not say everything about next week's staffing need. First a forecast of the work ahead, then we build the schedule.",
+    icon: 'demand' as const,
+  },
+  {
+    title: 'Rules are there from the start',
+    body: 'Working-time rules, collective agreements, employment terms and skill requirements shape how the schedule is built. You should not have to check everything by hand.',
+    icon: 'rules' as const,
+  },
+  {
+    title: 'You have the final say',
+    body: 'Workofo does the calculations. You review, adjust and publish the schedule. Employees get a fair share of shifts and visibility into the plan.',
+    icon: 'people' as const,
+  },
+] as const;
+
+const offices = [
+  {
+    city: 'Copenhagen',
+    region: 'Denmark · Headquarters',
+    lines: ['Amager Strandvej 230', '2300 Copenhagen'],
+    tel: '+45 6053 8020',
+    telHref: 'tel:+4560538020',
+  },
+  {
+    city: 'London',
+    region: 'United Kingdom',
+    lines: ['52 Brook Street', 'London W1K 5DS'],
+    tel: '+44 203 764 7260',
+    telHref: 'tel:+442037647260',
+  },
+  {
+    city: 'Vilnius',
+    region: 'Lithuania',
+    lines: ['Polocko g. 17-66', '01205 Vilnius'],
+    tel: '+370 618 000 57',
+    telHref: 'tel:+37061800057',
+  },
+] as const;
+
+const facts = [
+  { dt: 'Headquarters', dd: 'Copenhagen, Denmark' },
+  { dt: 'Offices', dd: 'Copenhagen, London, Vilnius' },
+  { dt: 'Built for', dd: '200 to 20,000+ employees' },
+  { dt: 'Founded', dd: '2021' },
+  { dt: 'Company', dd: 'Workofo Europe ApS' },
+] as const;
+
+const stats = [
+  { value: '5–15%', label: 'more capacity with the same staffing' },
+  { value: '15 minutes', label: 'how finely staffing need is calculated' },
+  { value: '200 to 20,000+', label: 'employees per customer' },
+  { value: '3', label: 'offices in Europe' },
+] as const;
+
+const storyPath = [
+  { title: 'Mathematics and computer science olympiads', detail: 'Representing Lithuania' },
+  { title: 'Data consultancy for banks', detail: 'Analysis and modeling' },
+  { title: 'Restaurants', detail: 'Shifts that follow the lunch rush' },
+  { title: 'Workofo', detail: 'Contact centres, airports and more' },
+] as const;
+
+const storyLead =
+  'He had represented Lithuania in international olympiads in mathematics and computer science, and run a consultancy that analyzed data for banks. Using that knowledge closer to people\'s everyday lives appealed more. Contacts in the restaurant industry gave him that chance. There were problems to solve.';
+
+const storyBody = [
+  'So Remigijus Staniulis built a team. They began testing different ideas.',
+  'A restaurant has its own rhythm. The smell of morning coffee, the murmur of the lunch rush, the clatter from the dish pit when the room empties. A gastronomic cycle. But when the team compared schedules with real demand, they saw the same working hours returning week after week. Many started and finished at the same time, even though staffing need rose and fell through the day.',
+] as const;
+
+const storyAfterPull = [
+  'They began by letting morning shifts start and evening shifts end at different times. Then the fixed handover in the middle of the day could be reconsidered too. Hours that used to land in quiet periods could instead meet the lunch rush or reduce the need for overtime.',
+  'But moving start and end times was not enough. The kitchen still needed prep when the dining room was empty. The right skills were needed for each task. One employee wanted to study on Tuesdays; another preferred fixed hours. Working-time rules and rest also had to fit.',
+  'A manager can know the operation inside out and still struggle to see every combination. A schedule request that first looks impossible can work if another shift moves. Static templates kept the job manageable, but they also left opportunities undiscovered.',
+  'The team used mathematics to find better ways to allocate shifts. The calculation weighed the restaurant\'s needs together with employees\' preferences.',
+  'This is where Workofo took shape. The same principle then helped in more operations, including contact centres and airports. Different shifts, different skills. But the same need for staffing that follows demand more closely.',
+  'What should the new room be used for? Hours freed in one place can do more good in another. Maybe there is a new assignment to take on, or an overtime cost to cut.',
+  'For employees, a better schedule can make it easier to fit work and life outside work together.',
+] as const;
+---
+
+<article class="about-page">
+  <!-- HERO -->
+  <div class="about-hero">
+    <div class="about-hero__in">
+      <div class="about-hero__row">
+        <div class="about-hero__copy" data-reveal>
+          <h1 class="about-hero__title" data-split>Scheduling that follows the rhythm of your business.</h1>
+          <p class="about-hero__lede">
+            Workofo uses AI and mathematical optimization to match staffing with demand. That can mean more
+            customers helped when they need it, less overtime, and room for new work, while making better use of
+            people's skills and weighing their schedule preferences.
+          </p>
+        </div>
+        <aside class="about-glance" aria-label="Workofo at a glance" data-reveal>
+          <div class="about-glance__title">Workofo at a glance</div>
+          <dl class="about-glance__list">
+            {
+              facts.map((fact, i) => (
+                <div class:list={['about-fact', { 'about-fact--last': i === facts.length - 1 }]}>
+                  <dt>{fact.dt}</dt>
+                  <dd>{fact.dd}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUSINESS VALUE -->
+  <section class="about-sec about-sec--ink" aria-labelledby="about-mission-heading">
+    <div class="about-in" data-reveal>
+      <div class="about-mission">
+        <h2 id="about-mission-heading" class="about-h2 about-h2--light" data-split>
+          Every shift should meet a real need.
+        </h2>
+        <div class="about-mission__copy">
+          <p class="about-lead about-lead--muted">
+            Many schedules are already old when they are published. Last week's template, or worse, last month's.
+            We start from another place: sales, volumes, tasks and service targets. From those, Workofo calculates
+            staffing need per location, down to 15-minute intervals.
+          </p>
+          <p class="about-lead about-lead--muted">
+            The price of freeing capacity in your own operation is deciding what to use it for. Less overtime,
+            better service, or capacity for new business. Maybe a mix of all three. We help you see the options and
+            what they mean for your business.
+          </p>
+        </div>
+      </div>
+      <div class="about-stats">
+        {
+          stats.map((stat) => (
+            <div class="about-stat">
+              <span class="about-stat__value">{stat.value}</span>
+              <span class="about-stat__label">{stat.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- REMI'S STORY -->
+  <section class="about-sec about-sec--cream" aria-labelledby="about-story-heading">
+    <div class="about-in about-in--story" data-reveal>
+      <div class="about-story__top">
+        <h2 id="about-story-heading" class="about-h2 h2" data-split>
+          The lunch rush became a question for mathematics.
+        </h2>
+      </div>
+      <div class="about-story__grid">
+        <aside class="about-story__side">
+          <figure class="about-story__photo">
+            <span class="about-story__ph">Photo: Remigijus Staniulis</span>
+          </figure>
+          <ol class="about-story__path" aria-label="From mathematics to Workofo">
+            {
+              storyPath.map((step) => (
+                <li>
+                  <i aria-hidden="true" />
+                  <div>
+                    {step.title}
+                    <small>{step.detail}</small>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </aside>
+        <div class="about-story">
+          <p class="about-lead about-story__lead">{storyLead}</p>
+          {storyBody.map((p) => <p class="about-lead">{p}</p>)}
+          <p class="about-story__pull">There was something to calculate.</p>
+          {storyAfterPull.map((p) => <p class="about-lead">{p}</p>)}
+          <p class="about-story__close">Advanced technology that makes everyday life work with more ease.</p>
+          <div class="about-signoff">
+            <div class="about-signoff__sender">
+              <span class="about-signoff__script" aria-hidden="true">Remigijus Staniulis</span>
+              <span class="about-signoff__name">Remigijus Staniulis</span>
+              <span class="about-signoff__title">Founder</span>
+            </div>
+            <div class="about-signoff__cta">
+              <p class="h2 about-signoff__invite">
+                Tell us what you want to work better.<br />
+                We would like to know more.
+              </p>
+              <div>
+                <a class="btn btn--primary btn--cta" href={demoHref}>Get in touch</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="about-sec about-sec--white" aria-labelledby="about-principles-heading">
+    <div class="about-in">
+      <div class="about-sh" data-reveal>
+        <h2 id="about-principles-heading" class="about-h2" data-split>What we believe</h2>
+        <p class="about-lead">
+          Three principles guide how we develop Workofo and help customers get more from their staffing.
+        </p>
+      </div>
+      <div class="about-principles" data-reveal>
+        {
+          principles.map((item) => (
+            <div class="about-principle">
+              <div class="about-uic" aria-hidden="true">
+                {item.icon === 'demand' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 17l5-6 4 3 8-9"></path>
+                    <path d="M15 5h5v5"></path>
+                  </svg>
+                )}
+                {item.icon === 'rules' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path>
+                    <path d="M9 12l2 2 4-4"></path>
+                  </svg>
+                )}
+                {item.icon === 'people' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="3.5"></circle>
+                    <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"></path>
+                  </svg>
+                )}
+              </div>
+              <div class="about-principle__copy">
+                <h3 class="about-h3">{item.title}</h3>
+                <p class="about-txt">{item.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICES -->
+  <section class="about-sec about-sec--cream" aria-labelledby="about-offices-heading">
+    <div class="about-in">
+      <div class="about-sh" data-reveal>
+        <h2 id="about-offices-heading" class="about-h2" data-split>Three offices. One Workofo.</h2>
+        <p class="about-lead">
+          From Copenhagen, London and Vilnius we work closely with customers across Europe. Solving staffing
+          problems and freeing capacity for bigger ambitions. One schedule at a time.
+        </p>
+      </div>
+      <div class="about-offices" data-reveal>
+        {
+          offices.map((office) => (
+            <div class="about-office">
+              <div class="about-office__head">
+                <h3 class="about-h3">{office.city}</h3>
+                <span class="about-office__region">{office.region}</span>
+              </div>
+              <p class="about-txt about-office__addr">
+                {office.lines[0]}
+                <br />
+                {office.lines[1]}
+              </p>
+              <div class="about-office__contact">
+                <a href={office.telHref}>{office.tel}</a>
+                <a href="mailto:contact@workofo.com">contact@workofo.com</a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREERS + CTA -->
+  <section class="about-sec about-sec--white" aria-labelledby="about-careers-heading">
+    <div class="about-in about-in--tight">
+      <div class="about-split" data-reveal>
+        <div class="about-card about-card--cream">
+          <div class="about-card__copy">
+            <h2 id="about-careers-heading" class="about-h2 h2" data-split>
+              Big challenges looking for sharp minds.
+            </h2>
+            <p class="about-lead">
+              We are looking for engineers and developers who thrive on complex numbers and needs, and who want to
+              solve scheduling's hardest problems. Come build with us.
+            </p>
+          </div>
+          <div>
+            <a class="btn btn--ghost btn--cta" href={jobsHref}>See open roles</a>
+          </div>
+        </div>
+        <div class="about-card about-card--ink">
+          <div class="about-card__copy">
+            <h2 class="about-h2 h2 about-h2--light">
+              Your staffing needs. Your rules. See what Workofo can do.
+            </h2>
+            <p class="about-card__note">We usually respond within one working day.</p>
+          </div>
+          <div class="about-card__actions">
+            <a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>

@@ -1,26 +1,28 @@
 ---
-/**
- * Blog list — live from Wix Blog API.
- */
 import SiteLayout from '../../../layouts/SiteLayout.astro';
-import { isLocale, DEFAULT_LOCALE, ui, type Locale } from '../../../lib/locales';
+import { isLocale, ui, type Locale } from '../../../lib/locales';
 import { listBlogPosts, formatPostDate } from '../../../lib/blog';
 import { listNavPages } from '../../../lib/cms';
+import { localePath } from '../../../lib/paths';
 
 const rawLang = Astro.params.lang;
 if (!isLocale(rawLang)) {
-  return Astro.redirect(`/${DEFAULT_LOCALE}/blog`, 302);
+  return Astro.redirect('/blog', 302);
 }
 const locale = rawLang as Locale;
+
+if (locale === 'en') {
+  return Astro.redirect('/blog', 301);
+}
 
 const { posts: blogPosts, error } = await listBlogPosts();
 const navPages = await listNavPages(locale);
 ---
 
 <SiteLayout locale={locale} title={ui('blog', locale)} pathWithoutLang="/blog" navPages={navPages}>
-  <section class="blog-list">
+  <section class="blog-list" data-reveal>
     <p class="t-overline section__eyebrow">{ui('blog', locale)}</p>
-    <h1>{ui('blog', locale)}</h1>
+    <h1 data-split>{ui('blog', locale)}</h1>
     <p class="lede">{ui('blogIntro', locale)}</p>
 
     {error && <p class="dev-msg">{error}</p>}
@@ -31,11 +33,11 @@ const navPages = await listNavPages(locale);
       )
     }
 
-    <div class="blog-list__grid">
+    <div class="blog-list__grid" data-reveal>
       {
         blogPosts.map((post) => (
           <article class="blog-card">
-            <a href={`/${locale}/blog/${post.slug}`}>
+            <a href={localePath(locale, `/blog/${post.slug}`)}>
               <div class="blog-card__cover">
                 {post.coverImageUrl ? <img src={post.coverImageUrl} alt="" /> : null}
               </div>

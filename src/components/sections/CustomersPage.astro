@@ -1,0 +1,201 @@
+---
+/**
+ * Customers — layout from customers-page-sketch-v5.html board.
+ * Homepage type/buttons/gutters; retail/about hero top. Logos from homepage CLIENT set.
+ */
+import type { Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const arlandaHref = `${localePath(locale, '/')}#arlanda-case`.replace('/#', '#');
+
+/** Same assets and greyscale sizing as homepage LogoStrip. */
+const CLIENT_LOGOS = [
+  { name: 'Telenordi', image: '/clients/telenordi.png?v=2' },
+  { name: 'Senukai', image: '/clients/senukai.png?v=2' },
+  { name: 'Barbora', image: '/clients/barbora.png?v=2' },
+  { name: 'Tele2', image: '/clients/tele2.png?v=2' },
+  { name: 'Planas Chuliganas', image: '/clients/planas-chuliganas.png?v=2' },
+] as const;
+
+const LOGO_RATIOS: Record<string, number> = {
+  telenordi: 8.07,
+  senukai: 2.98,
+  barbora: 4.77,
+  tele2: 2.65,
+  'planas chuliganas': 2.57,
+};
+
+function logoWidth(name: string): number | undefined {
+  const ratio = LOGO_RATIOS[name.trim().toLowerCase()];
+  if (!ratio) return undefined;
+  return Math.round(Math.sqrt(2500 * ratio));
+}
+
+const logos = CLIENT_LOGOS.map((item) => ({
+  ...item,
+  width: logoWidth(item.name),
+}));
+
+const stories = [
+  {
+    tag: 'Retail',
+    quote:
+      'With Workofo no more Excel is needed, everything is in one place. I also like the employee self-service function where they submit wishes, swap shifts and request shift changes directly in Workofo.',
+    name: 'Large DIY retailer',
+    role: 'Retail',
+  },
+  {
+    tag: 'Telecommunications',
+    quote:
+      'With Workofo we had an easy system implementation. It was very well managed by the support team, and we feel that we get a quick response to any question we have.',
+    name: 'Mindaugas Ilgevičius',
+    role: 'Sales Channels Operations Manager, Tele2',
+  },
+  {
+    tag: 'Contact centres',
+    quote:
+      'Our experience is top-notch. The provider is flexible, the product is reliable, easy to use, and is being regularly updated.',
+    name: 'Dovydas Braukyla',
+    role: 'CEO, Planas Chuliganas',
+  },
+] as const;
+
+/** Featured-case stats card — customers-page-sketch-v5.html + customers-stats-card.png */
+const featuredStats = [
+  { value: '~12%', label: 'effective capacity' },
+  { value: '15 min', label: 'demand intervals' },
+  { value: 'Fewer', label: 'last-minute changes' },
+] as const;
+---
+
+<article class="customers-page">
+  <!-- HERO -->
+  <div class="customers-hero">
+    <div class="customers-hero__in">
+      <div class="customers-hero__copy" data-reveal>
+        <h1 class="customers-hero__title" data-split>Teams across Europe schedule around real demand.</h1>
+        <p class="customers-hero__lede">
+          From airports to retail chains and contact centres, see how operations plan the right people at the
+          right time with Workofo.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED CASE -->
+  <section class="customers-sec customers-sec--white customers-sec--tight-bottom" aria-labelledby="customers-featured-heading">
+    <div class="customers-in">
+      <article class="customers-featured" data-reveal>
+        <div class="customers-featured__main">
+          <div class="customers-featured__intro">
+            <div class="customers-featured__tags">
+              <span class="customers-tag customers-tag--ink">Featured case</span>
+              <span class="customers-tag customers-tag--ink">Aviation</span>
+            </div>
+            <h2 data-split id="customers-featured-heading" class="customers-h2 customers-h2--light customers-h2--featured">
+              Arlanda Airport
+            </h2>
+            <p class="customers-lead customers-lead--muted">
+              Sweden's biggest airport. Staffing matched to passenger demand across terminals.
+            </p>
+          </div>
+          <blockquote class="customers-featured__quote">
+            “We plan shifts to the terminal's actual traffic, not last week's template.”
+          </blockquote>
+          <div>
+            <a class="btn btn--primary btn--cta" href={arlandaHref}>Read the case</a>
+          </div>
+        </div>
+        <div class="customers-featured__stats" aria-label="Featured case results">
+          <div class="customers-statp">
+            {
+              featuredStats.map((stat) => (
+                <div class="customers-stat">
+                  <span class="customers-stat__n">{stat.value}</span>
+                  <span class="customers-stat__l">{stat.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section class="customers-sec customers-sec--white customers-sec--tight-top" aria-labelledby="customers-stories-heading">
+    <div class="customers-in">
+      <div class="customers-sh" data-reveal>
+        <h2 data-split id="customers-stories-heading" class="customers-h2">In their own words</h2>
+        <p class="customers-lead">
+          What scheduling managers and operations leaders say about working with Workofo.
+        </p>
+      </div>
+      <div class="customers-stories">
+        {
+          stories.map((story) => (
+            <figure class="customers-qcard" data-reveal>
+              <div class="customers-qcard__body">
+                <span class="customers-tag">{story.tag}</span>
+                <blockquote>“{story.quote}”</blockquote>
+              </div>
+              <figcaption class="customers-qcard__cap">
+                <span class="customers-qcard__name">{story.name}</span>
+                <span class="customers-qcard__role">{story.role}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUSTED BY -->
+  <section class="customers-sec customers-sec--cream" aria-labelledby="customers-logos-heading">
+    <div class="customers-in">
+      <div class="customers-sh" data-reveal>
+        <h2 data-split id="customers-logos-heading" class="customers-h2 customers-h2--sm">
+          Trusted by operations across Europe
+        </h2>
+        <p class="customers-lead customers-lead--sm">
+          Retail, aviation, telecom and customer service teams plan their shifts with Workofo.
+        </p>
+      </div>
+      <ul class="customers-marks" data-reveal aria-label="Customer logos">
+        {
+          logos.map((item) => (
+            <li
+              class="customers-marks__cell"
+              style={item.width ? `--logo-w: ${item.width}px` : undefined}
+            >
+              <img src={item.image} alt={item.name} loading="lazy" decoding="async" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="customers-sec customers-sec--white" aria-labelledby="customers-cta-heading">
+    <div class="customers-in customers-in--tight">
+      <div class="customers-cta" data-reveal>
+        <div class="customers-cta__copy">
+          <h2 data-split id="customers-cta-heading" class="customers-h2 customers-h2--light customers-h2--cta">
+            See what Workofo could do for your operation.
+          </h2>
+          <p class="customers-cta__note">We usually respond within 1 business day.</p>
+        </div>
+        <div class="customers-cta__actions">
+          <a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>

@@ -1,0 +1,41 @@
+---
+/**
+ * Calculator — top-level page (no breadcrumbs).
+ * Hero offset matches About / Jobs / Customers; calculator reused as-is.
+ */
+import CapacityCalculator from './CapacityCalculator';
+import { type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+---
+
+<article class="calculator-page">
+  <header class="calculator-hero">
+    <div class="calculator-hero__in">
+      <div class="calculator-hero__copy" data-reveal>
+        <h1 id="calculator-page-heading" class="calculator-hero__title" data-split>
+          Estimate the capacity locked in your schedules.
+        </h1>
+        <p class="calculator-hero__lede">
+          Adjust a few workforce inputs to see the hours and annual capacity value demand-driven scheduling could
+          unlock for your operation.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div data-reveal>
+  <CapacityCalculator
+    client:load
+    demoHref={demoHref}
+    hideIntro
+    labelledBy="calculator-page-heading"
+  />
+  </div>
+</article>

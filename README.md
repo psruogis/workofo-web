@@ -43,10 +43,33 @@ All pages live under `/[lang]/…`. Localization is **CMS `language` fields**, n
 
 Permissions: **read = Anyone**.
 
+### `Jobs` (open roles)
+
+Managed in **Wix dashboard → CMS → Jobs**. Listing: `/jobs`. Detail: `/jobs/{slug}`.
+
+| Field | Type | Notes |
+|-------|------|--------|
+| `title` | Text | Role title |
+| `slug` | Text | URL segment under `/jobs/` |
+| `location` | Text | Tag, e.g. Vilnius, Lithuania |
+| `department` | Text | Team tag, e.g. Engineering |
+| `employmentType` | Text | Type tag, e.g. Hybrid / Remote / On-site |
+| `summary` | Text | Short blurb on the Open roles board |
+| `description` | Rich text | Full role body on `/jobs/{slug}` |
+| `applyUrl` | Text | Absolute or site path (`/get-in-touch`) |
+| `applyEmail` | Text | Optional; used as `mailto:` if `applyUrl` empty |
+| `sortOrder` | Number | Ascending on `/jobs` |
+| `published` | Boolean | Only `true` rows appear |
+| `language` | Text | `en` \| `se` \| `lt` (EN used as fallback) |
+
+Create / update collection: `node scripts/ensure-jobs-collection.mjs`
+
+Permissions: **read = Anyone**.
+
 ### Seeded content (from workofo.com)
 
-- **en + lt:** `home` (full marketing stack), `get-in-touch` (hero + demo form), `jobs` (hero + job list)
-- **se:** not seeded yet → “Not translated yet” for missing slugs
+- **en + lt:** `home` (full marketing stack), `get-in-touch` (hero + demo form)
+- **Jobs:** open roles live in the `Jobs` collection (not SiteSections JSON)
 - Blog posts remain in **Wix Blog** (previously migrated)
 
 Legacy `Pages` / `Sections` are abandoned — do not edit them for the live site.

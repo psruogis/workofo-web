@@ -1,0 +1,94 @@
+---
+/**
+ * Job detail — EN unprefixed (`/jobs/{slug}`).
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { listNavPages } from '../../lib/cms';
+import { localePath } from '../../lib/paths';
+import {
+  getPublishedJobBySlug,
+  jobApplyHref,
+  jobDescriptionHtml,
+  jobTags,
+} from '../../lib/jobs';
+
+const locale = 'en' as const;
+const slug = Astro.params.slug;
+if (!slug) {
+  return Astro.redirect('/jobs', 302);
+}
+
+const [{ job, error }, navPages] = await Promise.all([
+  getPublishedJobBySlug(slug, locale),
+  listNavPages(locale),
+]);
+
+if (!job) {
+  return Astro.redirect('/jobs', 302);
+}
+
+const apply = jobApplyHref(job);
+const html = jobDescriptionHtml(job);
+const tags = jobTags(job);
+const title = `${job.title || 'Open role'} | Jobs | Workofo`;
+---
+
+<SiteLayout
+  locale={locale}
+  title={title}
+  description={job.summary || tags.join(' · ') || 'Open role at Workofo.'}
+  pathWithoutLang={`/jobs/${slug}`}
+  navPages={navPages}
+>
+  <article class="jobs-page jobs-page--detail">
+    <div class="jobs-hero jobs-hero--detail">
+      <div class="jobs-hero__in">
+        <nav aria-label="Breadcrumb" class="jobs-breadcrumb">
+          <a href={localePath(locale, '/jobs')}>Jobs</a>
+          <span aria-hidden="true">/</span>
+          <span class="jobs-breadcrumb__current">{job.title || 'Role'}</span>
+        </nav>
+        {error && <p class="dev-msg">{error}</p>}
+        <h1 class="jobs-hero__title" data-split data-reveal>{job.title || 'Open role'}</h1>
+        {
+          tags.length > 0 && (
+            <div class="jobs-card__tags">
+              {tags.map((tag) => (
+                <span class="jobs-tag">{tag}</span>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <section class="jobs-sec jobs-sec--white">
+      <div class="jobs-in jobs-in--narrow">
+        {
+          html ? (
+            <div class="jobs-detail__body prose" data-reveal set:html={html} />
+          ) : (
+            <p class="jobs-txt" data-reveal>Details coming soon.</p>
+          )
+        }
+        <div class="jobs-detail__actions" data-reveal>
+          {
+            apply && (
+              <a
+                class="btn btn--primary btn--cta"
+                href={apply}
+                target={apply.startsWith('http') ? '_blank' : undefined}
+                rel={apply.startsWith('http') ? 'noreferrer noopener' : undefined}
+              >
+                Apply
+              </a>
+            )
+          }
+          <a class="btn btn--ghost btn--cta" href={localePath(locale, '/jobs')}>
+            All roles
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</SiteLayout>

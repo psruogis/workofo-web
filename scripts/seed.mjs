@@ -136,6 +136,39 @@ try {
   console.log(`${SITE_SECTIONS} already exists — continuing`);
 }
 
+const JOBS = 'Jobs';
+console.log(`Ensuring ${JOBS} collection…`);
+try {
+  await withRetry(
+    () =>
+      wix('POST', '/wix-data/v2/collections', {
+        collection: {
+          id: JOBS,
+          displayName: 'Jobs',
+          fields: [
+            { key: 'title', displayName: 'Title', type: 'TEXT' },
+            { key: 'slug', displayName: 'Slug', type: 'TEXT' },
+            { key: 'location', displayName: 'Location', type: 'TEXT' },
+            { key: 'department', displayName: 'Department / Team', type: 'TEXT' },
+            { key: 'employmentType', displayName: 'Type', type: 'TEXT' },
+            { key: 'summary', displayName: 'Summary', type: 'TEXT' },
+            { key: 'description', displayName: 'Description', type: 'RICH_TEXT' },
+            { key: 'applyUrl', displayName: 'Apply URL', type: 'TEXT' },
+            { key: 'applyEmail', displayName: 'Apply email', type: 'TEXT' },
+            { key: 'sortOrder', displayName: 'Sort order', type: 'NUMBER' },
+            { key: 'published', displayName: 'Published', type: 'BOOLEAN' },
+            { key: 'language', displayName: 'Language', type: 'TEXT' },
+          ],
+          permissions: PERMS,
+        },
+      }),
+    JOBS,
+  );
+} catch (e) {
+  if (!/already exists|WDE0117|409/i.test(e.message)) throw e;
+  console.log(`${JOBS} already exists — continuing`);
+}
+
 // Clear existing redesign content (idempotent re-seed)
 console.log('Clearing previous SitePages / SiteSections items…');
 for (const col of [SITE_SECTIONS, SITE_PAGES]) {
@@ -155,13 +188,23 @@ for (const col of [SITE_SECTIONS, SITE_PAGES]) {
 
 const pageDefs = [
   // EN
-  { title: 'Workofo — AI workforce scheduling', slug: 'home', language: 'en', navLabel: 'Home', navOrder: 0 },
+  {
+    title: 'Employee Scheduling Software | AI Workforce Optimization | Workofo',
+    slug: 'home',
+    language: 'en',
+    navLabel: 'Home',
+    navOrder: 0,
+  },
   { title: 'Book a Demo', slug: 'get-in-touch', language: 'en', navLabel: 'Contact', navOrder: 2 },
   { title: 'Jobs', slug: 'jobs', language: 'en', navLabel: 'Jobs', navOrder: 1 },
   // LT
   { title: 'Workofo — AI darbo jėgos planavimas', slug: 'home', language: 'lt', navLabel: 'Pradžia', navOrder: 0 },
   { title: 'Užsisakyti demo', slug: 'get-in-touch', language: 'lt', navLabel: 'Kontaktai', navOrder: 2 },
   { title: 'Karjera', slug: 'jobs', language: 'lt', navLabel: 'Karjera', navOrder: 1 },
+  // SE (URL segment; html lang is sv). Modern home stack mirrors EN in code.
+  { title: 'Workofo | AI workforce scheduling', slug: 'home', language: 'se', navLabel: 'Hem', navOrder: 0 },
+  { title: 'Boka en demo', slug: 'get-in-touch', language: 'se', navLabel: 'Kontakt', navOrder: 2 },
+  { title: 'Jobb', slug: 'jobs', language: 'se', navLabel: 'Jobb', navOrder: 1 },
 ];
 
 console.log('Inserting SitePages…');
@@ -254,7 +297,7 @@ const problemLt = JSON.stringify([
 const stepsEn = JSON.stringify([
   {
     title: 'Forecast demand or workload with AI',
-    body: 'Sales, volume, tasks, or service targets — whatever defines work in your business.',
+    body: 'Sales, volume, tasks, or service targets: whatever defines work in your business.',
   },
   {
     title: 'Include real-world constraints',
@@ -262,11 +305,11 @@ const stepsEn = JSON.stringify([
   },
   {
     title: 'Optimize schedules automatically',
-    body: 'The system creates flexible, demand-driven shifts — not fixed templates.',
+    body: 'The system creates flexible, demand-driven shifts, not fixed templates.',
   },
   {
     title: 'Adjust fast when things change',
-    body: 'Replan quickly without rebuilding schedules from scratch — always staying in control.',
+    body: 'Replan quickly without rebuilding schedules from scratch, always staying in control.',
   },
 ]);
 const stepsLt = JSON.stringify([
@@ -291,7 +334,7 @@ const stepsLt = JSON.stringify([
 const benefitsEn = JSON.stringify([
   {
     title: 'Unlock 5–15% more effective capacity',
-    body: 'By optimizing shift lengths, start/end times, skill mixes, and allocation — Workofo finds opportunities manual planning misses.',
+    body: 'By optimizing shift lengths, start/end times, skill mixes, and allocation, Workofo finds opportunities manual planning misses.',
   },
   {
     title: 'Better coverage during peak workload',
@@ -394,12 +437,12 @@ const jobsLt = JSON.stringify([
 const sections = [
   // EN home
   section('en', 'home', 1, 'hero', {
-    heading: 'Unlock 15% more workforce capacity with AI scheduling.',
+    heading: 'AI-powered employee scheduling software built around real demand',
     subheading:
-      'Forecast demand and workload and optimize schedules automatically, so teams are staffed when and where work actually happens.',
-    ctaLabel: 'See how it works',
+      'Forecast demand, apply real-world labor rules and automatically create optimized schedules around when and where work actually happens.',
+    ctaLabel: 'Book a demo',
     ctaUrl: '/en/get-in-touch',
-    body: 'Used by retail, hospitality, and service businesses across Europe.',
+    body: 'Unlock 5–15% more effective capacity',
   }),
   section('en', 'home', 2, 'logoStrip', {
     heading: 'Some of our clients',
@@ -409,13 +452,13 @@ const sections = [
   section('en', 'home', 3, 'problem', {
     heading: 'Work and schedules rarely match',
     subheading: 'When demand fluctuates and rules are complex, manual planning becomes costly and unreliable.',
-    body: '<p>The result: higher labor costs, inconsistent coverage, and constant rework for managers. Workofo AI matches staffing to demand automatically — while enforcing every rule.</p>',
+    body: '<p>The result: higher labor costs, inconsistent coverage, and constant rework for managers. Workofo AI matches staffing to demand automatically, while enforcing every rule.</p>',
     items: problemEn,
   }),
   section('en', 'home', 4, 'steps', {
     heading: 'How Workofo works',
-    subheading: 'From demand forecasting to compliant schedules — in four simple steps.',
-    ctaLabel: 'You stay in control — Workofo automates the heavy lifting, not decision-making.',
+    subheading: 'From demand forecasting to compliant schedules in four simple steps.',
+    ctaLabel: 'You stay in control: Workofo automates the heavy lifting, not decision-making.',
     items: stepsEn,
   }),
   section('en', 'home', 5, 'benefits', {
@@ -427,8 +470,8 @@ const sections = [
   section('en', 'home', 6, 'testimonial', {
     ctaLabel: 'What our customers say',
     heading:
-      'We have been using Workofo for more than two years for teams serving large customers, and for planning and managing blended traffic. Our experience is top notch — the provider is flexible, the product is reliable, easy to use, and is being regularly updated.',
-    subheading: 'Dovydas Braukyla, CEO — Planas Chuliganas, telemarketing / call center provider',
+      'We have been using Workofo for more than two years for teams serving large customers, and for planning and managing blended traffic. Our experience is top notch. The provider is flexible, the product is reliable, easy to use, and is being regularly updated.',
+    subheading: 'Dovydas Braukyla, CEO, Planas Chuliganas, telemarketing / call center provider',
   }),
   section('en', 'home', 7, 'demoForm', {
     heading: 'See how much workforce capacity you can unlock',
@@ -518,6 +561,66 @@ const sections = [
   section('lt', 'jobs', 2, 'jobList', {
     heading: 'Atviros pozicijos',
     items: jobsLt,
+  }),
+
+  // SE home — structural mirror of EN (EN placeholder copy; rewrite in CMS / code later)
+  section('se', 'home', 1, 'hero', {
+    heading: 'AI-powered employee scheduling software built around real demand',
+    subheading:
+      'Forecast demand, apply real-world labor rules and automatically create optimized schedules around when and where work actually happens.',
+    ctaLabel: 'Boka en demo',
+    ctaUrl: '/se/get-in-touch',
+  }),
+  section('se', 'home', 2, 'logoStrip', {
+    heading: 'Some of our clients',
+    subheading: 'Trusted by teams across Europe to improve coverage, productivity, and schedule quality with AI.',
+    items: logosEn,
+  }),
+  section('se', 'home', 3, 'problem', {
+    heading: 'Work and schedules rarely match',
+    subheading: 'When demand fluctuates and rules are complex, manual planning becomes costly and unreliable.',
+    body: '<p>The result: higher labor costs, inconsistent coverage, and constant rework for managers. Workofo AI matches staffing to demand automatically, while enforcing every rule.</p>',
+    items: problemEn,
+  }),
+  section('se', 'home', 4, 'steps', {
+    heading: 'How Workofo works',
+    subheading: 'From demand forecasting to compliant schedules in four simple steps.',
+    ctaLabel: 'You stay in control: Workofo automates the heavy lifting, not decision-making.',
+    items: stepsEn,
+  }),
+  section('se', 'home', 5, 'benefits', {
+    heading: 'Why teams choose Workofo',
+    subheading:
+      'Experience fairness in scheduling, increased employee satisfaction, exceptional service for your customers, and operational excellence unlike any other.',
+    items: benefitsEn,
+  }),
+  section('se', 'home', 6, 'testimonial', {
+    ctaLabel: 'What our customers say',
+    heading:
+      'We have been using Workofo for more than two years for teams serving large customers, and for planning and managing blended traffic. Our experience is top notch. The provider is flexible, the product is reliable, easy to use, and is being regularly updated.',
+    subheading: 'Dovydas Braukyla, CEO, Planas Chuliganas, telemarketing / call center provider',
+  }),
+  section('se', 'home', 7, 'demoForm', {
+    heading: 'See how much workforce capacity you can unlock',
+    subheading: 'See how AI-driven scheduling improves coverage and productivity in your operations.',
+  }),
+  section('se', 'get-in-touch', 1, 'hero', {
+    heading: 'See how much you can save with Workofo',
+    subheading:
+      'AI-powered workforce planning with 15-minute accuracy and built-in compliance. Typical savings: 5–15% of scheduled hours.',
+  }),
+  section('se', 'get-in-touch', 2, 'demoForm', {
+    heading: 'Boka en demo',
+    subheading: 'Tell us a bit about your operation and we’ll tailor the demo for you.',
+  }),
+  section('se', 'jobs', 1, 'hero', {
+    heading: 'Join our team',
+    subheading:
+      'Explore opportunities to join an innovative team passionate about revolutionizing how businesses manage their workforce.',
+  }),
+  section('se', 'jobs', 2, 'jobList', {
+    heading: 'Open roles',
+    items: jobsEn,
   }),
 ];
 

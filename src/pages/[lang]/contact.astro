@@ -1,0 +1,32 @@
+---
+/**
+ * Prefixed Contact for SE/LT chrome. English content first.
+ * `/en/contact` redirects to unprefixed `/contact`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ContactPage from '../../components/sections/ContactPage.astro';
+import { isLocale, type Locale } from '../../lib/locales';
+import { listNavPages } from '../../lib/cms';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang)) {
+  return Astro.redirect('/contact', 302);
+}
+
+const locale = rawLang as Locale;
+if (locale === 'en') {
+  return Astro.redirect('/contact', 301);
+}
+
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Contact | Workofo"
+  description="Talk to the people behind Workofo. Book a demo, log in, explore jobs, or send a message. Offices in Copenhagen, London and Vilnius."
+  pathWithoutLang="/contact"
+  navPages={navPages}
+>
+  <ContactPage locale={locale} />
+</SiteLayout>

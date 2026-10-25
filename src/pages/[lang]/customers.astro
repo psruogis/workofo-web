@@ -1,0 +1,32 @@
+---
+/**
+ * Prefixed Customers for SE/LT chrome. English content first.
+ * `/en/customers` redirects to unprefixed `/customers`.
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import CustomersPage from '../../components/sections/CustomersPage.astro';
+import { isLocale, type Locale } from '../../lib/locales';
+import { listNavPages } from '../../lib/cms';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang)) {
+  return Astro.redirect('/customers', 302);
+}
+
+const locale = rawLang as Locale;
+if (locale === 'en') {
+  return Astro.redirect('/customers', 301);
+}
+
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Customers | Workofo"
+  description="See how airports, retail chains and contact centres schedule around real demand with Workofo."
+  pathWithoutLang="/customers"
+  navPages={navPages}
+>
+  <CustomersPage locale={locale} />
+</SiteLayout>

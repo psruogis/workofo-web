@@ -1,6 +1,8 @@
+import type { CSSProperties } from 'react';
 import type { CmsSection } from '../../lib/cms';
 import { WATCH_VIDEO_URL } from '../../lib/config';
-import { ui, type Locale } from '../../lib/locales';
+import { isModernHomeLocale, ui, type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
 import { imgSrc, parseItemsJson, richToHtml } from '../../lib/rich';
 
 type Props = { section: CmsSection; locale?: Locale };
@@ -21,30 +23,65 @@ const CLIENT_LOGOS = [
   { name: 'Planas Chuliganas', image: '/clients/planas-chuliganas.png?v=2' },
 ];
 
+/** Modern homepage hero — EN SEO copy used as placeholder for SE until rewritten. */
+const MODERN_HOME_HERO = {
+  heading: 'AI-powered employee scheduling software built around real demand',
+  body: "Workofo forecasts demand, applies your labor rules and builds schedules automatically. Help more customers at busy times, reduce overtime and make better use of your team's skills.",
+  primaryCta: 'Book a demo',
+  secondaryCta: 'See how it works',
+} as const;
+
 export function Hero({ section, locale = 'en' }: Props) {
-  const demoHref = section.ctaUrl || `/${locale}/get-in-touch`;
+  const modern = isModernHomeLocale(locale);
+  // Modern home always uses the locale demo path; CMS may still hold an older /en/... CTA.
+  const demoHref = modern
+    ? localePath(locale, '/get-in-touch')
+    : section.ctaUrl && !section.ctaUrl.startsWith('/en/')
+      ? section.ctaUrl
+      : localePath(locale, '/get-in-touch');
+  const heading = modern ? MODERN_HOME_HERO.heading : section.heading;
+  const body = modern ? MODERN_HOME_HERO.body : section.subheading;
+  const primaryCta = modern
+    ? locale === 'se'
+      ? ui('bookDemo', locale)
+      : MODERN_HOME_HERO.primaryCta
+    : ui('bookDemo', locale);
+  /** Product overview on the homepage (`HomeFeatures`); not a new page. */
+  const secondaryHref = modern ? `${localePath(locale, '/')}#home-features` : WATCH_VIDEO_URL;
+  const secondaryCta = modern ? MODERN_HOME_HERO.secondaryCta : ui('watchVideo', locale);
+
   return (
-    <section className="hero">
+    <section className={`hero${modern ? ' hero--en' : ''}`}>
       <div className="hero__inner">
         <div className="hero__stack">
           <div className="hero__copy">
-            <p className="t-overline hero__eyebrow">{ui('heroEyebrow', locale)}</p>
-            {section.heading && <h1 data-split>{section.heading}</h1>}
-            {section.subheading && <p className="lede">{section.subheading}</p>}
+            {!modern && (
+              <p className="t-overline hero__eyebrow">{ui('heroEyebrow', locale)}</p>
+            )}
+            {heading && <h1 data-split>{heading}</h1>}
+            {body && <p className="lede">{body}</p>}
             <div className="hero__actions">
               <a className="btn btn--primary btn--cta" href={demoHref}>
-                {ui('bookDemo', locale)}
+                {primaryCta}
               </a>
               <a
                 className="btn btn--ghost btn--cta"
-                href={WATCH_VIDEO_URL}
-                target="_blank"
-                rel="noreferrer noopener"
+                href={secondaryHref}
+                {...(modern
+                  ? {}
+                  : { target: '_blank', rel: 'noreferrer noopener' })}
               >
-                <svg className="btn__icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
-                  <path d="M3.2 1.6v10.8L12.2 7 3.2 1.6z" fill="currentColor" />
-                </svg>
-                {ui('watchVideo', locale)}
+                {!modern && (
+                  <svg className="btn__icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                    <path d="M3.2 1.6v10.8L12.2 7 3.2 1.6z" fill="currentColor" />
+                  </svg>
+                )}
+                {secondaryCta}
+                {modern && (
+                  <svg className="btn__icon btn__icon--trail btn__icon--down" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                    <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
               </a>
             </div>
           </div>
@@ -67,11 +104,26 @@ export function Hero({ section, locale = 'en' }: Props) {
 
 export function PageHero({ label }: { label: string }) {
   return (
-    <section className="page-hero">
+    <section className="page-hero" data-reveal>
       <p className="t-overline section__eyebrow">{label}</p>
-      <h1>{label}</h1>
+      <h1 data-split>{label}</h1>
     </section>
   );
+}
+
+/** Intrinsic aspect ratios so logos can be sized to equal visual area, not equal height. */
+const LOGO_RATIOS: Record<string, number> = {
+  telenordi: 8.07,
+  senukai: 2.98,
+  barbora: 4.77,
+  tele2: 2.65,
+  'planas chuliganas': 2.57,
+};
+
+function logoWidth(name?: string): number | undefined {
+  const ratio = name ? LOGO_RATIOS[name.trim().toLowerCase()] : undefined;
+  if (!ratio) return undefined;
+  return Math.round(Math.sqrt(2500 * ratio));
 }
 
 function resolveLogoSrc(image?: string): string {
@@ -80,28 +132,7 @@ function resolveLogoSrc(image?: string): string {
   return imgSrc(image, 360, 120);
 }
 
-function LogoMarqueeRow({
-  items,
-  duration,
-}: {
-  items: Array<{ name?: string; src: string }>;
-  duration: number;
-}) {
-  const loop = items.length ? [...items, ...items, ...items] : [];
-  return (
-    <div className="marquee-row marquee-row--transparent">
-      <div className="marquee-track marquee-track--logos" data-marquee data-duration={duration}>
-        {loop.map((item, i) => (
-          <span className="marquee-logo" key={`${item.name || 'logo'}-${i}`}>
-            <img src={item.src} alt={item.name || ''} loading="lazy" decoding="async" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function LogoStrip({ section }: Props) {
+export function LogoStrip({ section, locale = 'en' }: Props) {
   const items = parseItemsJson<{ name?: string; image?: string }>(section.items);
   const source = items.some((item) => item.image) ? items : CLIENT_LOGOS;
   const logos = source
@@ -111,18 +142,34 @@ export function LogoStrip({ section }: Props) {
     }))
     .filter((item) => item.src);
 
+  const label = isModernHomeLocale(locale)
+    ? 'Trusted by teams across Europe'
+    : section.heading || section.subheading || '';
+
+  if (!logos.length && !label) return null;
+
   return (
-    <>
-      <section className="section logo-strip shell__inner" data-reveal>
-        {section.heading && <p className="t-overline section__eyebrow">{section.heading}</p>}
-        {section.subheading && <p className="muted">{section.subheading}</p>}
-      </section>
-      {logos.length > 0 && (
-        <div className="marquee-band marquee-band--logos">
-          <LogoMarqueeRow items={logos} duration={60} />
-        </div>
-      )}
-    </>
+    <section className="logo-proof" aria-label={label || 'Clients'} data-reveal>
+      <div className="logo-proof__inner">
+        {label && <p className="logo-proof__label">{label}</p>}
+        {logos.length > 0 && (
+          <ul className="logo-proof__row">
+            {logos.map((item, i) => {
+              const w = logoWidth(item.name);
+              return (
+                <li
+                  className="logo-proof__item"
+                  key={`${item.name || 'logo'}-${i}`}
+                  style={w ? ({ '--logo-w': `${w}px` } as CSSProperties) : undefined}
+                >
+                  <img src={item.src} alt={item.name || ''} loading="lazy" decoding="async" />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -206,7 +253,10 @@ export function Steps({ section }: Props) {
 
 export function Benefits({ section, locale = 'en' }: Props) {
   const items = parseItemsJson<{ title?: string; body?: string }>(section.items).slice(0, 4);
-  const demoHref = section.ctaUrl || `/${locale}/get-in-touch`;
+  const demoHref =
+    section.ctaUrl && !section.ctaUrl.startsWith('/en/')
+      ? section.ctaUrl
+      : localePath(locale, '/get-in-touch');
   const ctaLabel = section.ctaLabel || ui('bookDemo', locale);
   const count = Math.max(items.length, 1);
 

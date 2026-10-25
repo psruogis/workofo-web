@@ -1,0 +1,411 @@
+---
+/**
+ * Retail industry subpage — rebuilt from Max retail-page-updated.html mock.
+ * Icons and visual treatments from the HTML bundle. Workofo gutters/tokens/buttons.
+ * Labor spelling; no Calculate CTA; Overview not sticky; Workofo casing.
+ */
+import { type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+import RetailPanel from './RetailPanel';
+import BottomDemoCta from '../sections/BottomDemoCta.astro';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const homeHref = localePath(locale, '/');
+---
+<article class="retail-page">
+<!-- Industry split-hero (homepage vertical center; 55/45 copy | photo) -->
+<div id="overview" class="industry-hero retail-hero">
+<div class="industry-hero__in retail-hero__in">
+
+<div class="industry-hero__copy retail-hero__copy">
+<nav aria-label="Breadcrumb" class="retail-breadcrumb">
+<span>Industries</span>
+<span aria-hidden="true">/</span>
+<span class="retail-breadcrumb__current">Retail</span>
+</nav>
+<div class="industry-hero__intro retail-hero__intro" data-reveal>
+<h1 class="industry-hero__title" data-split>Retail scheduling software that staffs your stores around customer traffic</h1>
+<p class="lede industry-hero__lede">Workofo forecasts footfall and workload, applies your labor rules and builds retail staff schedules automatically. Put the right skills on the shop floor when customers need help.</p>
+<div class="hero__actions industry-hero__actions">
+<a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+<a class="btn btn--ghost btn--cta" href="#how">
+  See how it works
+  <svg class="btn__icon btn__icon--trail btn__icon--down" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+    <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</a>
+</div>
+</div>
+</div>
+
+<div class="industry-hero__media retail-hero__media" data-reveal>
+  <div class="industry-hero__photo retail-hero__photo">
+    <div class="industry-hero__frame retail-hero__frame">
+      <img
+        class="industry-hero__img retail-hero__img"
+        src="/industries/shift-notification-barista.webp"
+        alt="Barista pouring steamed milk into a coffee"
+        width="720"
+        height="780"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <span class="industry-hero__fade retail-hero__fade" aria-hidden="true"></span>
+    </div>
+    <div
+      class="wf-stk"
+      data-wf-stk
+      role="status"
+      aria-label="Open shift Saturday 07:00 to 13:00 at store 14 sent to 12 colleagues. Sara accepted the shift, schedule updated."
+    >
+      <div class="wf-card wf-a" aria-hidden="true">
+        <span class="wf-ic">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Shift sent to 12 colleagues</span>
+          <span class="wf-s">Sat 07:00-13:00 · Store 14</span>
+        </div>
+        <span class="wf-tm">09:12</span>
+      </div>
+      <div class="wf-card wf-b" aria-hidden="true">
+        <span class="wf-avw">
+          <span class="wf-av">SM</span>
+          <span class="wf-ck">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5 9-10"></path>
+            </svg>
+          </span>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Sara accepted the shift</span>
+          <span class="wf-s">Schedule updated · Rules OK</span>
+        </div>
+        <span class="wf-tm">09:14</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+  (() => {
+    const el = document.querySelector('[data-wf-stk]');
+    if (!el) return;
+    const show = () => el.classList.add('is-in');
+    if (!('IntersectionObserver' in window)) {
+      show();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            show();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+  })();
+</script>
+
+<!-- 2. Why schedules fail (workofo-retail-section2.html layout/icons; site type/spacing) -->
+<section class="sec retail-s2" style="background:#FFFFFF" aria-labelledby="retail-s2-heading">
+  <div class="in retail-s2__in">
+    <div class="retail-s2__top" data-reveal>
+      <h2 class="h2" id="retail-s2-heading" data-split>Retail demand moves by the hour. Most schedules don't.</h2>
+      <div class="retail-s2__intro">
+        <p class="lead">Customer traffic changes. Workofo matches staffing to demand so your team can help more shoppers during busy periods.</p>
+        <a class="textlink" href="#how">
+          See how it works
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="retail-s2__grid">
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-6 4 3 8-9"></path><path d="M15 5h5v5"></path></svg>
+        </span>
+        <h3 class="h3">Be ready for the next rush</h3>
+        <p class="txt">Weekends, promotions and weather change when customers arrive and need help.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Retail labor forecasting predicts staffing needs per store in 15-minute intervals.</span>
+        </p>
+      </article>
+
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14c2.5 0 4.5 2 4.5 5"></path></svg>
+        </span>
+        <h3 class="h3">Many roles, many rules</h3>
+        <p class="txt">Skills, contracts and availability all matter when you plan a working day.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Builds your configured rules into every proposed schedule.</span>
+        </p>
+      </article>
+
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 10-2.3 5.7"></path><path d="M20 5v5h-5"></path></svg>
+        </span>
+        <h3 class="h3">Find a way when plans change</h3>
+        <p class="txt">A sick call can take a manager away from the shop floor.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Nora helps find available cover within your scheduling rules.</span>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec retail-platform" id="platform" style="background:#FFFFFF">
+<div class="in">
+<div class="sh retail-platform__intro" data-reveal>
+<h2 class="h2" data-split>More time for your stores. Less time rebuilding schedules.</h2>
+<p class="lead">Forecast, schedule and adjust in one place. Nora and smart recommendations help managers respond to change and focus on their teams.</p>
+</div>
+<figure class="retail-platform__mat" data-reveal>
+  <RetailPanel client:load />
+</figure>
+</div>
+</section>
+
+<!-- 2. HOW IT WORKS -->
+<section class="sec" id="how" style="background:#111111">
+<div class="in" style="gap:64px">
+
+<div class="sh" data-reveal>
+<h2 class="h2" style="color:#FFFFFF" data-split>From footfall to finished schedule in four steps.</h2>
+<p class="lead" style="color:#C9C9C3">Workofo is <a href={homeHref} style="color:#FFFFFF">employee scheduling software</a> that turns changing store demand into workable schedules, with your people and rules built in.</p>
+</div>
+
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:40px 32px" data-reveal>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #FFFFFF;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">01</span>
+<h3 class="h3" style="color:#FFFFFF">Forecast demand</h3>
+<p class="txt" style="color:#C9C9C3">Use sales, footfall, deliveries and tasks to forecast staffing needs per store and department.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">02</span>
+<h3 class="h3" style="color:#FFFFFF">Apply labor rules</h3>
+<p class="txt" style="color:#C9C9C3">Contracts, skills, availability and agreements shape the options Workofo proposes.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">03</span>
+<h3 class="h3" style="color:#FFFFFF">Optimize schedules</h3>
+<p class="txt" style="color:#C9C9C3">Shift lengths, start times and skills follow demand, so hours go where they matter.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">04</span>
+<h3 class="h3" style="color:#FFFFFF">Adapt to change</h3>
+<p class="txt" style="color:#C9C9C3">Re-optimize when demand or availability shifts, without starting over.</p>
+</li>
+</ol>
+
+</div>
+</section>
+
+<!-- 5. APP -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:56px 72px;align-items:center">
+<div class="stack" style="flex:1 1 380px;min-width:0;gap:32px" data-reveal>
+<h2 class="h2" data-split>Retail scheduling app for managers and employees</h2>
+<p class="lead">Employees view schedules, submit preferences, request days off and swap shifts in the Workofo app for iOS and Android. Managers approve requests and adjust schedules on the go.</p>
+<div class="hero__actions">
+<a class="btn btn--ghost btn--cta" href="https://apps.apple.com/app/workofo-employee-schedules/id1567197620"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>App Store</a>
+<a class="btn btn--ghost btn--cta" href="https://play.google.com/store/apps/details?id=com.workofo.mobile"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>Google Play</a>
+</div>
+</div>
+<div style="flex:1.15 1 460px;min-width:0;display:flex;flex-wrap:wrap;gap:16px" data-reveal>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#F5F4F0;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="padding-bottom:16px">For employees</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>View schedules</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg>Submit preferences</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg>Request days off</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"></path></svg>Swap shifts</div>
+</div>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#111111;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="color:#FFFFFF;padding-bottom:16px">For managers</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>Approve requests</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13 7l4 4"></path></svg>Adjust schedules on the go</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M5 20V11M12 20V4M19 20v-6"></path></svg>Track efficiency and service levels</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg>Role-based access for security</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 7. CUSTOMER STORIES -->
+<section class="sec" style="background:#ECECE8">
+<div class="in" style="gap:48px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
+<h2 class="h2" data-reveal data-split>What our customers say</h2>
+<div style="display:flex;align-items:center;gap:12px">
+<span class="retail-stories-label" aria-live="polite" style="font-size:0.9375rem;font-weight:600;color:#4A4F57;min-width:48px;text-align:right">1 / 2</span>
+<button type="button" class="navbtn" data-story-prev aria-label="Previous customer story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="navbtn" data-story-next aria-label="Next customer story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+<div class="retail-stories" data-retail-stories data-reveal>
+<article class="retail-stories__card rowin" data-story="0">
+<div class="retail-stories__aside">
+<span aria-hidden="true" class="retail-stories__quote-mark">“</span>
+<div class="stack" style="gap:6px"><span class="retail-stories__org">Planas Chuliganas</span><span class="retail-stories__sector">Telemarketing / call center</span></div>
+</div>
+<div class="retail-stories__body">
+<blockquote class="retail-stories__quote">We have been using Workofo for more than two years for teams serving large customers, and for planning and managing blended traffic.</blockquote>
+<p class="txt">Our experience is top notch. The provider is flexible, the product is reliable, easy to use, and is being regularly updated. We are very happy, and I think there is nothing better in our market in the area of workforce management.</p>
+<div class="retail-stories__attribution">
+<span class="retail-stories__name">Dovydas Braukyla, CEO</span>
+<span class="retail-stories__role">Planas Chuliganas, telemarketing/ call center provider</span>
+</div>
+</div>
+</article>
+<article class="retail-stories__card rowin" data-story="1" hidden>
+<div class="retail-stories__aside">
+<span aria-hidden="true" class="retail-stories__quote-mark">“</span>
+<div class="stack" style="gap:6px"><span class="retail-stories__org">Tele2</span><span class="retail-stories__sector">Telecommunications</span></div>
+</div>
+<div class="retail-stories__body">
+<blockquote class="retail-stories__quote">With Workofo we had an easy system implementation.</blockquote>
+<p class="txt">It was very well managed by the support team – and we feel that we get a quick response to any question we have. Excellent support, flexible functionalities implementation, good system support as well.</p>
+<div class="retail-stories__attribution">
+<span class="retail-stories__name">Mindaugas Ilgevičius</span>
+<span class="retail-stories__role">Sales Channels Operations Manager, Tele2</span>
+</div>
+</div>
+</article>
+<div class="retail-stories__dots" role="tablist" aria-label="Customer stories">
+<button type="button" class="retail-stories__dot is-active" data-story-dot="0" role="tab" aria-selected="true" aria-label="Story 1"></button>
+<button type="button" class="retail-stories__dot" data-story-dot="1" role="tab" aria-selected="false" aria-label="Story 2"></button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 8. FAQ -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:48px 72px;align-items:flex-start">
+<div class="stack" style="flex:1 1 300px;min-width:0;gap:20px;max-width:380px" data-reveal>
+<h2 class="h2" data-split>Your retail scheduling questions, answered</h2>
+<p class="txt">Still have questions? We'll walk you through it with your own scheduling rules.</p>
+</div>
+<div class="retail-faq" data-retail-faq style="flex:2 1 520px;min-width:0" data-reveal>
+<details><summary>What is retail scheduling software?</summary><p>Retail scheduling software builds employee schedules around expected customer demand instead of fixed shift templates. Workofo forecasts workload per store in 15-minute intervals, applies labor rules and skills, and creates optimized schedules automatically.</p></details>
+<details><summary>How does Workofo handle scheduling across multiple stores?</summary><p>Workofo plans staffing per location and lets you lend or borrow employees between stores to cover absences and demand spikes. Long-term cross-location staffing can be automated.</p></details>
+<details><summary>Is Workofo suitable for large retail chains?</summary><p>Yes. Workofo is built to scale, from specialty retailers to chains with 20,000 or more employees, with demand forecasting, automated scheduling and integration with HR and payroll systems.</p></details>
+<details><summary>Does Workofo integrate with POS, HR and payroll systems?</summary><p>Yes. Workofo connects to your existing HR, payroll and POS systems, so sales and volume data feed the forecast and approved schedules flow back to payroll.</p></details>
+<details><summary>Is there an app for retail employee scheduling?</summary><p>Yes. The Workofo app for iOS and Android lets employees view schedules, submit preferences and swap shifts, and lets managers approve requests on the go.</p></details>
+<div class="retail-faq__more" data-retail-faq-more hidden>
+<details><summary>How is Workofo different from a basic retail scheduling app?</summary><p>Workofo starts with demand forecasting and builds shifts around it. Its retail workforce management approach brings contracts, skills and availability into the same calculation, helping you find options that fixed patterns can miss.</p></details>
+<details><summary>How does Workofo forecast retail demand?</summary><p>It uses the drivers that define work in your stores, such as sales, volumes, tasks or service targets, and forecasts staffing needs down to 15-minute intervals per location.</p></details>
+<details><summary>Can Workofo handle labor law and union agreements?</summary><p>Yes. Contracts, rest rules, skills and local agreements are encoded into every schedule so managers are not left checking compliance by hand.</p></details>
+<details><summary>How much capacity can we unlock?</summary><p>That depends on your stores. Better allocation can put more hours into busy periods, reduce overtime or help another location. We assess the opportunity against your demand and scheduling rules.</p></details>
+<details><summary>Do managers stay in control of the schedule?</summary><p>Yes. Workofo builds the plan; managers review, adjust and publish. Automation handles the heavy lifting, not the final call.</p></details>
+</div>
+<button type="button" class="pill retail-faq-more__toggle" data-retail-faq-toggle aria-expanded="false">
+<span class="retail-faq-more__more">Load more questions</span>
+<span class="retail-faq-more__less">Show less</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+</div>
+</div>
+</section>
+
+<!-- BOTTOM DEMO CTA -->
+<BottomDemoCta
+  demoHref={demoHref}
+  title="What could better staffing mean for your stores?"
+  sub="Bring your stores, roles and labor rules. Let's find the opportunities hidden in your schedules."
+  note="Expect a reply within one working day."
+/>
+
+<script is:inline>
+(function () {
+  const root = document.querySelector('[data-retail-stories]');
+  const page = document.querySelector('.retail-page');
+  if (!root || !page) return;
+  const stories = Array.from(root.querySelectorAll('[data-story]'));
+  if (!stories.length) return;
+  const label = page.querySelector('.retail-stories-label');
+  const dots = Array.from(root.querySelectorAll('[data-story-dot]'));
+  const prev = page.querySelector('[data-story-prev]');
+  const next = page.querySelector('[data-story-next]');
+  let i = 0;
+  function show(n) {
+    i = (n + stories.length) % stories.length;
+    stories.forEach(function (el, idx) {
+      if (idx === i) el.removeAttribute('hidden');
+      else el.setAttribute('hidden', '');
+    });
+    if (label) label.textContent = i + 1 + ' / ' + stories.length;
+    dots.forEach(function (d, idx) {
+      var on = idx === i;
+      d.classList.toggle('is-active', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+  if (prev) prev.addEventListener('click', function () { show(i - 1); });
+  if (next) next.addEventListener('click', function () { show(i + 1); });
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () {
+      var n = Number(d.getAttribute('data-story-dot'));
+      if (!Number.isNaN(n)) show(n);
+    });
+  });
+  show(0);
+})();
+(function () {
+  const faq = document.querySelector('[data-retail-faq]');
+  if (!faq) return;
+  const more = faq.querySelector('[data-retail-faq-more]');
+  const btn = faq.querySelector('[data-retail-faq-toggle]');
+  if (!more || !btn) return;
+  const items = Array.from(more.querySelectorAll('details'));
+  function setExpanded(on) {
+    faq.classList.toggle('is-expanded', on);
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if (on) {
+      more.hidden = false;
+      items.forEach(function (el, idx) {
+        el.setAttribute('data-reveal', '');
+        el.classList.remove('is-in');
+        window.setTimeout(function () {
+          el.classList.add('is-in');
+        }, 40 + idx * 70);
+      });
+    } else {
+      more.hidden = true;
+      items.forEach(function (el) {
+        el.classList.remove('is-in');
+        el.removeAttribute('data-reveal');
+      });
+    }
+  }
+  btn.addEventListener('click', function () {
+    setExpanded(!faq.classList.contains('is-expanded'));
+  });
+})();
+</script>
+</article>

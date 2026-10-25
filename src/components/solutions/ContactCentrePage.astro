@@ -1,0 +1,410 @@
+---
+/**
+ * Contact Centre industry subpage — duplicated from Retail, adapted from ContactCentre.dc.html.
+ * Same type, buttons, gutters, mobile pass, hero, breadcrumbs, FAQ, bottom CTA as retail.
+ * US spelling labor; no Calculate; Workofo casing; no More industries / workforce-mgmt band.
+ */
+import { type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+import ContactCentrePanel from './ContactCentrePanel';
+import BottomDemoCta from '../sections/BottomDemoCta.astro';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const homeHref = localePath(locale, '/');
+---
+<article class="retail-page contact-centre-page">
+<!-- Industry split-hero (homepage vertical center; 55/45 copy | photo) -->
+<div id="overview" class="industry-hero retail-hero">
+<div class="industry-hero__in retail-hero__in">
+
+<div class="industry-hero__copy retail-hero__copy">
+<nav aria-label="Breadcrumb" class="retail-breadcrumb">
+<span>Industries</span>
+<span aria-hidden="true">/</span>
+<span class="retail-breadcrumb__current">Contact Centre</span>
+</nav>
+<div class="industry-hero__intro retail-hero__intro" data-reveal>
+<h1 class="industry-hero__title" data-split>Contact centre scheduling software built around demand and service levels</h1>
+<p class="lede industry-hero__lede">Forecast calls, chats and emails, then match agent schedules to demand, skills and service targets. Give your team better conditions to help each customer.</p>
+<div class="hero__actions industry-hero__actions">
+<a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>
+<a class="btn btn--ghost btn--cta" href="#how">
+  See how it works
+  <svg class="btn__icon btn__icon--trail btn__icon--down" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+    <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</a>
+</div>
+</div>
+</div>
+
+<div class="industry-hero__media retail-hero__media" data-reveal>
+  <div class="industry-hero__photo retail-hero__photo">
+    <div class="industry-hero__frame retail-hero__frame">
+      <img
+        class="industry-hero__img retail-hero__img"
+        src="/industries/contact-centre-hero.jpg"
+        alt="Contact centre agent with a headset at her desk"
+        width="720"
+        height="780"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <span class="industry-hero__fade retail-hero__fade" aria-hidden="true"></span>
+    </div>
+    <div
+      class="wf-stk"
+      data-wf-stk
+      role="status"
+      aria-label="Extra shift offered to agents with the right skills, then accepted by Jonas."
+    >
+      <div class="wf-card wf-a" aria-hidden="true">
+        <span class="wf-ic">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Shift offered to 8 agents</span>
+          <span class="wf-s">Billing queue · Mon 14:00-16:00</span>
+        </div>
+        <span class="wf-tm">13:42</span>
+      </div>
+      <div class="wf-card wf-b" aria-hidden="true">
+        <span class="wf-avw">
+          <span class="wf-av">JK</span>
+          <span class="wf-ck">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5 9-10"></path>
+            </svg>
+          </span>
+        </span>
+        <div class="wf-txt">
+          <span class="wf-t">Jonas accepted the shift</span>
+          <span class="wf-s">Billing queue covered · SLA on track</span>
+        </div>
+        <span class="wf-tm">13:44</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+  (() => {
+    const el = document.querySelector('.contact-centre-page [data-wf-stk]');
+    if (!el) return;
+    const show = () => el.classList.add('is-in');
+    if (!('IntersectionObserver' in window)) {
+      show();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            show();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+  })();
+</script>
+
+<!-- Challenge / why schedules fail -->
+<section class="sec retail-s2" style="background:#FFFFFF" aria-labelledby="cc-s2-heading">
+  <div class="in retail-s2__in">
+    <div class="retail-s2__top" data-reveal>
+      <h2 class="h2" id="cc-s2-heading" data-split>Behind every queue, someone is waiting for help.</h2>
+      <div class="retail-s2__intro">
+        <p class="lead">Workofo brings demand, skills and schedules together so your team can respond as contact volumes change.</p>
+        <a class="textlink" href="#how">
+          See how it works
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="retail-s2__grid">
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-6 4 3 8-9"></path><path d="M15 5h5v5"></path></svg>
+        </span>
+        <h3 class="h3">Understand the next peak</h3>
+        <p class="txt">Campaigns, outages and Monday mornings change the volume of calls, chats and emails your team must handle.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Call volume forecasting by queue, channel and 15-minute interval.</span>
+        </p>
+      </article>
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14c2.5 0 4.5 2 4.5 5"></path></svg>
+        </span>
+        <h3 class="h3">Put the right skills to work</h3>
+        <p class="txt">Languages, skills and handling times affect the support each queue needs.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Service level planning turns demand into staffing needs by skill.</span>
+        </p>
+      </article>
+      <article class="retail-s2__card" data-reveal>
+        <span class="retail-s2__ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 10-2.3 5.7"></path><path d="M20 5v5h-5"></path></svg>
+        </span>
+        <h3 class="h3">Help the day stay on track</h3>
+        <p class="txt">Absences and longer conversations can change the balance across your queues.</p>
+        <p class="retail-s2__answer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EE8068" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          <span>Suggests intraday adjustments so planners can respond to change.</span>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="sec" id="how" style="background:#111111">
+<div class="in" style="gap:64px">
+
+<div class="sh" data-reveal>
+<h2 class="h2" style="color:#FFFFFF" data-split>From contact history to a day your team can plan for.</h2>
+<p class="lead" style="color:#C9C9C3">Workofo is <a href={homeHref} style="color:#FFFFFF">employee scheduling software</a> that connects demand forecasts with agent scheduling. Workofo calculates staffing needs for each queue and builds a plan around skills, rules and service targets.</p>
+</div>
+
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:40px 32px" data-reveal>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #FFFFFF;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">01</span>
+<h3 class="h3" style="color:#FFFFFF">Forecast contacts</h3>
+<p class="txt" style="color:#C9C9C3">Use call, chat and email history, campaigns and seasonality to forecast volume per queue and interval.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">02</span>
+<h3 class="h3" style="color:#FFFFFF">Set service levels</h3>
+<p class="txt" style="color:#C9C9C3">Handling times and service-level targets turn volume into the headcount each interval needs.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">03</span>
+<h3 class="h3" style="color:#FFFFFF">Build schedules</h3>
+<p class="txt" style="color:#C9C9C3">Shifts, breaks and skills are planned around demand, within contracts and labor rules.</p>
+</li>
+<li class="stack" style="flex:1 1 230px;min-width:0;gap:14px;border-top:2px solid #3A3A3A;padding-top:24px">
+<span style="font-size:0.9375rem;font-weight:600;color:#EE8068">04</span>
+<h3 class="h3" style="color:#FFFFFF">Adapt intraday</h3>
+<p class="txt" style="color:#C9C9C3">Rebalance queues and offer extra shifts when volume or attendance shifts during the day.</p>
+</li>
+</ol>
+
+<div class="cc-how__stats" data-reveal>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">Voice, chat &amp; email</span>
+<span class="cc-how__stat-sub">planned together in one schedule</span>
+</div>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">15 min</span>
+<span class="cc-how__stat-sub">forecast intervals per queue</span>
+</div>
+<div class="stack" style="gap:6px">
+<span class="cc-how__stat">200-20,000+</span>
+<span class="cc-how__stat-sub">employees, from one site to many</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Use cases / queues graphic -->
+<section class="sec retail-platform" id="platform" style="background:#FFFFFF">
+<div class="in">
+<div class="sh retail-platform__intro" data-reveal>
+<h2 class="h2" data-split>Bring every queue and channel into one plan.</h2>
+<p class="lead">See which queues are over- or understaffed, and how Workofo can rebalance the plan.</p>
+</div>
+<figure class="retail-platform__mat" data-reveal>
+  <ContactCentrePanel client:load />
+</figure>
+</div>
+</section>
+
+<!-- Intraday control + product screenshot -->
+<section class="sec cc-intraday" style="background:#ECECE8" aria-labelledby="cc-intraday-heading">
+<div class="in">
+<div class="cc-intraday__top" data-reveal>
+<h2 class="h2" id="cc-intraday-heading" data-split>Intraday management, with planners in control</h2>
+<p class="lead">See every agent's day on one timeline, identify over- and understaffing and review Workofo's suggested changes. Apply the optimized plan when you are ready.</p>
+</div>
+<ul class="cc-intraday__pts" data-reveal>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>
+<div>
+<h3 class="h3">See the whole day at a glance</h3>
+<p class="txt">Every shift on one timeline, from first login to last call, team by team.</p>
+</div>
+</li>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 8-9"></path><path d="M15 5h5v5"></path></svg></span>
+<div>
+<h3 class="h3">See how staffing compares with demand</h3>
+<p class="txt">Compare planned hours with demand and get clear suggestions for where to adjust.</p>
+</div>
+</li>
+<li class="cc-intraday__li">
+<span class="cc-intraday__ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>
+<div>
+<h3 class="h3">Apply the optimized plan</h3>
+<p class="txt">Review the optimized schedule and copy it to the live one when you are ready.</p>
+</div>
+</li>
+</ul>
+<figure class="cc-intraday__shot" data-reveal>
+<img
+  src="/industries/contact-centre-product.png"
+  alt="Workofo day view: labor hours compared with target and every employee's shift on a timeline for one day."
+  loading="lazy"
+  width="2000"
+  height="1250"
+/>
+</figure>
+</div>
+</section>
+
+<!-- App -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:56px 72px;align-items:center">
+<div class="stack" style="flex:1 1 380px;min-width:0;gap:32px" data-reveal>
+<h2 class="h2" data-split>Contact centre scheduling app for team leads and agents</h2>
+<p class="lead">The Workofo app for iOS and Android helps agents fit work into everyday life. They see schedules, share availability and request swaps. Team leads review requests and make changes from their phone.</p>
+<div class="hero__actions">
+<a class="btn btn--ghost btn--cta" href="https://apps.apple.com/app/workofo-employee-schedules/id1567197620"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>App Store</a>
+<a class="btn btn--ghost btn--cta" href="https://play.google.com/store/apps/details?id=com.workofo.mobile"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>Google Play</a>
+</div>
+</div>
+<div style="flex:1.15 1 460px;min-width:0;display:flex;flex-wrap:wrap;gap:16px" data-reveal>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#F5F4F0;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="padding-bottom:16px">For agents</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>See upcoming shifts</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg>Set availability and preferences</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg>Request time off</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #E1E1DB;font-size:0.9375rem;font-weight:500"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex:0 0 20px"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"></path></svg>Swap shifts with colleagues</div>
+</div>
+<div style="flex:1 1 220px;min-width:0;box-sizing:border-box;background:#111111;border-radius:28px;padding:32px;display:flex;flex-direction:column">
+<h3 class="h3" style="color:#FFFFFF;padding-bottom:16px">For team leads</h3>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>Approve swaps and leave</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13 7l4 4"></path></svg>Edit the plan from anywhere</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><path d="M5 20V11M12 20V4M19 20v-6"></path></svg>Follow service levels per queue</div>
+<div style="display:flex;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2E2E2E;font-size:0.9375rem;font-weight:500;color:#FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#EE8068;flex:0 0 20px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg>Access by role and team</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Customer story -->
+<section class="sec" style="background:#ECECE8">
+<div class="in" style="gap:48px">
+<h2 class="h2" data-reveal data-split>What Tele2 says about Workofo</h2>
+<div class="retail-stories" data-reveal>
+<article class="retail-stories__card rowin">
+<div class="retail-stories__aside">
+<span aria-hidden="true" class="retail-stories__quote-mark">“</span>
+<div class="stack" style="gap:6px"><span class="retail-stories__org">Tele2</span><span class="retail-stories__sector">Telecommunications</span></div>
+</div>
+<div class="retail-stories__body">
+<blockquote class="retail-stories__quote">With Workofo we had an easy system implementation.</blockquote>
+<p class="txt">It was very well managed by the support team, and we feel that we get a quick response to any question we have. Excellent support, flexible functionalities implementation, good system support as well.</p>
+<div class="retail-stories__attribution">
+<span class="retail-stories__name">Mindaugas Ilgevičius</span>
+<span class="retail-stories__role">Sales Channels Operations Manager, Tele2</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" style="background:#FFFFFF">
+<div class="in">
+<div style="display:flex;flex-wrap:wrap;gap:48px 72px;align-items:flex-start">
+<div class="stack" style="flex:1 1 300px;min-width:0;gap:20px;max-width:380px" data-reveal>
+<h2 class="h2" data-split>Your contact centre scheduling questions, answered</h2>
+<p class="txt">Can't find your answer? We'll show you Workofo with your own queues and service levels.</p>
+</div>
+<div class="retail-faq" data-cc-faq style="flex:2 1 520px;min-width:0" data-reveal>
+<details><summary>What is contact centre scheduling software?</summary><p>Contact centre scheduling software builds agent schedules around forecast contact volume instead of fixed rosters. It predicts calls, chats and emails for every queue and interval, then builds agent schedules that respect skills and labor rules.</p></details>
+<details><summary>How does Workofo forecast call, chat and email volume?</summary><p>Workofo uses historical and real-time data, campaigns and seasonality to forecast volume per queue, channel and 15-minute interval, so peaks are planned for before they happen.</p></details>
+<details><summary>Can Workofo plan for service-level targets?</summary><p>Yes. Workofo estimates the headcount each interval needs to reach your service-level targets, taking handling times, skills and proficiency into account.</p></details>
+<details><summary>Does Workofo support skill-based and multi-channel planning?</summary><p>Yes. Skill-based scheduling and multi-channel contact centre planning bring voice, chat and email into one plan. Workofo allocates agents according to their skills and the staffing requirements of each queue.</p></details>
+<details><summary>How does Workofo handle intraday changes?</summary><p>When volume or attendance shifts during the day, Workofo suggests changes, rebalances over- and understaffed queues and supports shift swaps and short-term adjustments.</p></details>
+<div class="retail-faq__more" data-cc-faq-more hidden>
+<details><summary>Will our planners keep the final say?</summary><p>Yes. Planners review the options, test business rules and make the final call. Workofo helps them see how staffing choices affect service coverage and agent preferences, including where priorities need to be weighed.</p></details>
+<details><summary>Does Workofo respect working-time rules and agreements?</summary><p>Yes. Working-time limits, breaks, rest periods and contract terms are checked in every plan, so team leads don't have to review compliance shift by shift.</p></details>
+<details><summary>Does Workofo integrate with our contact centre platform, HR and payroll?</summary><p>Workofo connects to your HR and payroll systems and uses contact volume data from your contact centre platform, so the forecast stays current and approved schedules flow to payroll.</p></details>
+<details><summary>Is there an app for agents?</summary><p>Yes. Agents see their shifts, set availability and trade shifts in the Workofo mobile app, while team leads approve changes wherever they are.</p></details>
+<details><summary>Can Workofo run multi-site contact centres?</summary><p>Yes. Workofo scales from a single site to multi-site operations with thousands of agents, with forecasting, automated scheduling and HR and payroll integrations.</p></details>
+</div>
+<button type="button" class="pill retail-faq-more__toggle" data-cc-faq-toggle aria-expanded="false">
+<span class="retail-faq-more__more">Load more questions</span>
+<span class="retail-faq-more__less">Show less</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+</div>
+</div>
+</section>
+
+<BottomDemoCta
+  demoHref={demoHref}
+  headingId="cc-cta-heading"
+  title="Book a demo built around your queues."
+  sub="Bring your queues, skills and service targets. See how Workofo plans staffing around them."
+  note="Expect a reply within one working day."
+  tailoredSub="Your queues, skills and rules"
+  ariaLabel="Notifications: request received, demo tailored to your queues, demo booked."
+/>
+
+<script is:inline>
+(function () {
+  const faq = document.querySelector('[data-cc-faq]');
+  if (!faq) return;
+  const more = faq.querySelector('[data-cc-faq-more]');
+  const btn = faq.querySelector('[data-cc-faq-toggle]');
+  if (!more || !btn) return;
+  const items = Array.from(more.querySelectorAll('details'));
+  function setExpanded(on) {
+    faq.classList.toggle('is-expanded', on);
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if (on) {
+      more.hidden = false;
+      items.forEach(function (el, idx) {
+        el.setAttribute('data-reveal', '');
+        el.classList.remove('is-in');
+        window.setTimeout(function () {
+          el.classList.add('is-in');
+        }, 40 + idx * 70);
+      });
+    } else {
+      more.hidden = true;
+      items.forEach(function (el) {
+        el.classList.remove('is-in');
+        el.removeAttribute('data-reveal');
+      });
+    }
+  }
+  btn.addEventListener('click', function () {
+    setExpanded(!faq.classList.contains('is-expanded'));
+  });
+})();
+</script>
+</article>

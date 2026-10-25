@@ -1,6 +1,7 @@
 ---
 import type { CmsSection } from '../../lib/cms';
-import type { Locale } from '../../lib/locales';
+import { isModernHomeLocale, type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
 import {
   Benefits,
   CaseStudies,
@@ -13,7 +14,13 @@ import {
   Steps,
   Testimonial,
 } from './Blocks';
+import ArlandaCase from './ArlandaCase';
+import HomeFeatures from './HomeFeatures';
+import HomeFeatureAnnounce from './HomeFeatureAnnounce';
+import { HomeFaq, HomeIndustries } from './HomeJourney';
+import IntegrationsHub from './IntegrationsHub.astro';
 import DemoForm from './DemoForm';
+import BottomDemoCta from './BottomDemoCta.astro';
 
 type FormField = {
   target: string;
@@ -49,14 +56,59 @@ const {
 } = Astro.props as Props;
 
 const SIMPLE_HERO_SLUGS = new Set(['jobs', 'get-in-touch']);
+const useModernHome = isModernHomeLocale(locale) && pageSlug === 'home';
+const heroSection = sections.find((s) => (s.type || '').trim() === 'hero');
+const logoSection = sections.find((s) => (s.type || '').trim() === 'logoStrip');
 
 const SUPPORTED =
   'hero, logoStrip, problem, steps, benefits, testimonial, caseStudies, demoForm, richText, jobList';
 ---
 
 {
+  useModernHome && heroSection && (
+    <div class="home-top-band">
+      <Hero section={heroSection} locale={locale} />
+      {logoSection && <LogoStrip section={logoSection} locale={locale} />}
+    </div>
+  )
+}
+{
+  useModernHome && logoSection && (
+    <>
+      <HomeFeatures client:load />
+      <ArlandaCase client:load />
+      <HomeFeatureAnnounce client:load demoHref={localePath(locale, '/get-in-touch')} />
+      <HomeIndustries client:load locale={locale} />
+      <IntegrationsHub demoHref={localePath(locale, '/get-in-touch')} />
+      <HomeFaq locale={locale} />
+      <BottomDemoCta
+        demoHref={localePath(locale, '/get-in-touch')}
+        secondaryHref={`${localePath(locale, '/')}#home-features`}
+        secondaryLabel="See how it works"
+        title="See Workofo with your own demand data and scheduling rules."
+        sub="Bring your demand patterns, roles and labor rules. Let's explore where better scheduling could make a difference."
+        note="We respond within one working day."
+        tailoredSub="Your teams, roles and rules"
+        bookedSub="Explore your scheduling needs"
+        ariaLabel="Notifications: request received, demo tailored to your teams, demo booked."
+      />
+    </>
+  )
+}
+{
   sections.map((section) => {
     const type = (section.type || '').trim();
+    // Modern home (EN/SE): custom stack above; skip CMS problem / benefits / testimonial too.
+    if (
+      useModernHome &&
+      (type === 'hero' ||
+        type === 'logoStrip' ||
+        type === 'problem' ||
+        type === 'benefits' ||
+        type === 'testimonial')
+    ) {
+      return null;
+    }
     switch (type) {
       case 'hero':
         if (SIMPLE_HERO_SLUGS.has(pageSlug) && pageLabel) {
@@ -64,10 +116,12 @@ const SUPPORTED =
         }
         return <Hero section={section} locale={locale} />;
       case 'logoStrip':
-        return <LogoStrip section={section} />;
+        return <LogoStrip section={section} locale={locale} />;
       case 'problem':
         return <Problem section={section} />;
       case 'steps':
+        // Modern home already surfaces these four steps in section 2 — skip the duplicate block.
+        if (useModernHome) return null;
         return <Steps section={section} />;
       case 'benefits':
         return <Benefits section={section} locale={locale} />;
@@ -80,6 +134,8 @@ const SUPPORTED =
       case 'jobList':
         return <JobList section={section} />;
       case 'demoForm':
+        // Modern home ends with BottomDemoCta; skip the CMS demo form duplicate.
+        if (useModernHome) return null;
         return (
           <DemoForm
             client:load

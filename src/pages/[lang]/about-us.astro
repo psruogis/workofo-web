@@ -1,0 +1,15 @@
+---
+/**
+ * Alias: `/{se|lt}/about-us` → `/{se|lt}/about`.
+ */
+import { isLocale, type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+
+const rawLang = Astro.params.lang;
+if (!isLocale(rawLang) || rawLang === 'en') {
+  return Astro.redirect('/about', 301);
+}
+
+const locale = rawLang as Locale;
+return Astro.redirect(localePath(locale, '/about'), 301);
+---

@@ -1,0 +1,75 @@
+---
+/**
+ * Integrations hub (Flows in/out copy). Homepage only.
+ * Orbit diagram removed; keep heading, lead, flow list, and CTA.
+ */
+type Props = {
+  demoHref: string;
+};
+
+const { demoHref } = Astro.props as Props;
+---
+
+<section id="integrations" class="integrations-hub" aria-labelledby="integrations-hub-heading">
+  <div class="integrations-hub__in">
+    <div class="integrations-hub__copy" data-reveal>
+      <h2 id="integrations-hub-heading" class="integrations-hub__h2" data-split>
+        Connects to your HR, payroll and POS systems
+      </h2>
+      <p class="integrations-hub__lead">
+        Workofo connects with your HR, payroll and point-of-sale systems. Sales, workload and
+        employee data feed the forecast. Approved schedules and hours go to payroll and the
+        employee app.
+      </p>
+      <div class="integrations-hub__flows">
+        <div class="integrations-hub__flow">
+          <div class="integrations-hub__ico integrations-hub__ico--in" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 4v12M7 11l5 5 5-5M5 20h14"></path>
+            </svg>
+          </div>
+          <div class="integrations-hub__flow-text">
+            <h3 class="integrations-hub__h3">Flows in</h3>
+            <p class="integrations-hub__txt">
+              Sales, footfall data and employee records feed the forecast.
+            </p>
+          </div>
+        </div>
+        <div class="integrations-hub__flow integrations-hub__flow--last">
+          <div class="integrations-hub__ico integrations-hub__ico--out" aria-hidden="true">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 16V4M7 9l5-5 5 5M5 20h14"></path>
+            </svg>
+          </div>
+          <div class="integrations-hub__flow-text">
+            <h3 class="integrations-hub__h3">Flows out</h3>
+            <p class="integrations-hub__txt">
+              Approved schedules and hours go to payroll and the employee app.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a class="btn btn--primary" href={demoHref}>Talk to us about your systems</a>
+      </div>
+    </div>
+  </div>
+</section>

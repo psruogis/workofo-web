@@ -1,8 +1,10 @@
 ---
 import { LOCALES, LOCALE_LABELS, LOCALE_NAMES, htmlLang, ui, type Locale } from '../lib/locales';
 import { LOGIN_URL, SITE_NAME } from '../lib/config';
-import { listIndustrySolutions } from '../lib/solutions';
+import { isIndustrySlug, listIndustrySolutions, type IndustrySlug } from '../lib/solutions';
+import { localePath, industryPath, normalizePath } from '../lib/paths';
 import FlagIcon from '../components/FlagIcon.astro';
+import NavMenuIcon from '../components/NavMenuIcon.astro';
 import '../styles/global.css';
 
 type NavPage = { slug?: string; title?: string; navLabel?: string; navOrder?: number };
@@ -18,17 +20,203 @@ type Props = {
 const { locale, title, description, pathWithoutLang = '', navPages = [] } = Astro.props;
 const lang = htmlLang(locale);
 const origin = Astro.url.origin;
-const currentPath = pathWithoutLang.startsWith('/') ? pathWithoutLang : `/${pathWithoutLang}`;
+const currentPath = normalizePath(pathWithoutLang);
+
+/** CMS pages that live under the Company dropdown — keep out of the flat nav. */
+const COMPANY_NAV_SLUGS = new Set(['jobs', 'get-in-touch', 'about', 'about-us', 'contact']);
 
 const nav = [...navPages]
-  .filter((p) => p.slug && p.slug !== 'home')
+  .filter((p) => p.slug && p.slug !== 'home' && !COMPANY_NAV_SLUGS.has(p.slug))
   .sort((a, b) => (a.navOrder ?? 99) - (b.navOrder ?? 99));
 
 const solutions = listIndustrySolutions().map((item) => ({
-  slug: item.slug,
+  slug: item.slug as IndustrySlug,
   label: item.navLabel[locale] ?? item.navLabel.en,
+  href: industryPath(locale, item.slug),
 }));
-const isSolutionsActive = currentPath.startsWith('/solutions/');
+
+/** Header Industries dropdown — order/copy from industries-dropdown.png */
+const industryNav = [
+  {
+    slug: 'retail' as const,
+    title: 'Retail',
+    description: 'Staff every store around footfall',
+  },
+  {
+    slug: 'contact-centre' as const,
+    title: 'Contact centres',
+    description: 'Meet service levels on every channel',
+  },
+  {
+    slug: 'aviation' as const,
+    title: 'Aviation',
+    description: 'Ground handling around every flight',
+  },
+  {
+    slug: 'restaurants' as const,
+    title: 'Restaurants',
+    description: 'Staff every rush, kitchen to floor',
+  },
+  {
+    slug: 'logistics' as const,
+    title: 'Logistics',
+    description: 'Plan zones around your volumes',
+  },
+].map((item) => ({
+  ...item,
+  href: industryPath(locale, item.slug),
+}));
+
+const demoHref = localePath(locale, '/get-in-touch');
+const homeHref = localePath(locale, '/');
+const aboutHref = localePath(locale, '/about');
+const jobsHref = localePath(locale, '/jobs');
+const contactHref = localePath(locale, '/contact');
+const blogHref = localePath(locale, '/blog');
+const calculatorHref = localePath(locale, '/calculator');
+const privacyHref = localePath(locale, '/privacy');
+const cookieHref = localePath(locale, '/cookie-policy');
+const linkedInHref = 'https://www.linkedin.com/company/workofo';
+/** No /industries index — jump to homepage industries band */
+const allIndustriesHref = `${localePath(locale, '/')}#industries`;
+
+type ProductMenuIcon =
+  | 'forecast'
+  | 'calendar'
+  | 'shield'
+  | 'spark'
+  | 'chart'
+  | 'transfer'
+  | 'chat'
+  | 'phone'
+  | 'swap'
+  | 'arrow';
+
+type ProductMenuItem = {
+  title: string;
+  description: string;
+  icon: ProductMenuIcon;
+};
+
+/** Product mega — visual only for now (no hrefs / click-through). */
+const productMenuGroups: Array<{ label: string; items: ProductMenuItem[] }> = [
+  {
+    label: 'Plan',
+    items: [
+      {
+        title: 'Demand forecasting',
+        description: 'Workload per location in 15-minute intervals',
+        icon: 'forecast',
+      },
+      {
+        title: 'Automatic scheduling',
+        description: 'Optimized shifts built from demand',
+        icon: 'calendar',
+      },
+      {
+        title: 'Rules & compliance',
+        description: 'Labor law, agreements and contracts built in',
+        icon: 'shield',
+      },
+    ],
+  },
+  {
+    label: 'Optimize',
+    items: [
+      {
+        title: 'Recommendations',
+        description: 'Savings and fixes ranked by impact',
+        icon: 'spark',
+      },
+      {
+        title: 'Workload coverage',
+        description: 'Optimized vs actual, need vs staffed',
+        icon: 'chart',
+      },
+      {
+        title: 'Multi-site staffing',
+        description: 'Lend and borrow hours between sites',
+        icon: 'transfer',
+      },
+    ],
+  },
+  {
+    label: 'Engage',
+    items: [
+      {
+        title: 'Nora AI assistant',
+        description: 'Answers about rules and settings, in the schedule',
+        icon: 'chat',
+      },
+      {
+        title: 'Employee app',
+        description: 'Shifts, availability and leave on iOS and Android',
+        icon: 'phone',
+      },
+      {
+        title: 'Open shifts & swaps',
+        description: 'Offer, accept and swap shifts in minutes',
+        icon: 'swap',
+      },
+    ],
+  },
+];
+
+/** Company — name-only (no descriptions). Contact is /contact, not get-in-touch. */
+const companyLinks = [
+  { label: 'About', href: aboutHref, path: '/about', badge: null as string | null },
+  { label: 'Jobs', href: jobsHref, path: '/jobs', badge: 'Hiring' },
+  { label: 'Contact', href: contactHref, path: '/contact', badge: null as string | null },
+] as const;
+
+/** Resources — Blog name row + calculator promo (black fill on hover only). */
+const resourceLinks = [{ label: ui('blog', locale), href: blogHref, path: '/blog' }] as const;
+
+const footerOffices = [
+  {
+    title: 'Copenhagen office',
+    address: 'Amager Strandvej 230, 2300 Copenhagen, Denmark.',
+    tel: '+45 6053 8020',
+    telHref: 'tel:+4560538020',
+  },
+  {
+    title: 'London office',
+    address: '52 Brook Street, London W1K 5DS, United Kingdom.',
+    tel: '+44 203 764 7260',
+    telHref: 'tel:+442037647260',
+  },
+  {
+    title: 'Vilnius office',
+    address: 'Polocko g. 17-66, 01205 Vilnius, Lithuania.',
+    tel: '+370 618 000 57',
+    telHref: 'tel:+37061800057',
+  },
+] as const;
+
+const isIndustryPage = currentPath.startsWith('/industries/');
+const isSolutionsActive = isIndustryPage;
+const isCompanyActive =
+  currentPath === '/about' ||
+  currentPath === '/contact' ||
+  currentPath === '/jobs' ||
+  currentPath.startsWith('/jobs/');
+const isResourcesActive =
+  currentPath === '/blog' ||
+  currentPath.startsWith('/blog/') ||
+  currentPath === '/calculator';
+
+function alternateHref(targetLocale: Locale): string {
+  if (isIndustryPage) {
+    const slug = currentPath.slice('/industries/'.length);
+    if (isIndustrySlug(slug)) {
+      return `${origin}${industryPath(targetLocale, slug)}`;
+    }
+  }
+  if (currentPath === '/' || currentPath === '/home') {
+    return `${origin}${localePath(targetLocale, '/')}`;
+  }
+  return `${origin}${localePath(targetLocale, currentPath)}`;
+}
 ---
 
 <!doctype html>
@@ -42,59 +230,204 @@ const isSolutionsActive = currentPath.startsWith('/solutions/');
     <slot name="seo-tags" />
     {
       LOCALES.map((l) => (
-        <link
-          rel="alternate"
-          hreflang={htmlLang(l)}
-          href={`${origin}/${l}${currentPath === '/' ? '' : currentPath}`}
-        />
+        <link rel="alternate" hreflang={htmlLang(l)} href={alternateHref(l)} />
       ))
     }
-    <link rel="alternate" hreflang="x-default" href={`${origin}/en${currentPath === '/' ? '/home' : currentPath}`} />
+    <link rel="alternate" hreflang="x-default" href={alternateHref('en')} />
     <slot name="head" />
   </head>
   <body>
+    {/* Strip Wix Headless BODY_START badge (see global.css #wixheadless-banner-container). */}
+    <script is:inline>
+      (() => {
+        const el = document.getElementById('wixheadless-banner-container');
+        if (!el) return;
+        const wrap = el.parentElement;
+        if (wrap && wrap !== document.body && wrap.childElementCount <= 3) wrap.remove();
+        else el.remove();
+      })();
+    </script>
     <a class="skip" href="#main">{ui('skip', locale)}</a>
     <header class="site-header" data-site-header>
       <div class="site-header__inner">
-        <a class="brand" href={`/${locale}/home`}>
+        <a class="brand" href={localePath(locale, '/')}>
           <img
-            src="/workofo-logo.png?v=4"
+            src="/workofo-logo.png?v=5"
             alt={SITE_NAME}
-            width="150"
+            width="168"
             height="25"
             decoding="async"
           />
         </a>
         <nav class="site-nav" aria-label="Primary">
-          <details class:list={['nav-dropdown', { 'is-active': isSolutionsActive }]}>
+          <details class="nav-dropdown nav-dropdown--product">
+            <summary class="nav-dropdown__trigger">
+              Product
+              <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="nav-mega" role="region" aria-label="Product menu">
+              <div class="nav-mega__main">
+                <div class="nav-mega__cols">
+                  {
+                    productMenuGroups.map((group) => (
+                      <div class="nav-mega__col">
+                        <p class="nav-mega__k">{group.label}</p>
+                        <ul class="nav-mega__list">
+                          {group.items.map((item) => (
+                            <li>
+                              <div class="nav-mega__item">
+                                <span class="nav-mega__ic">
+                                  <NavMenuIcon name={item.icon} />
+                                </span>
+                                <span>
+                                  <span class="nav-mega__t">{item.title}</span>
+                                  <span class="nav-mega__d">{item.description}</span>
+                                </span>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+              <aside class="nav-mega__feat">
+                <div class="nav-mega__shot">
+                  <img
+                    src="/nav/product-nora.png"
+                    alt="Workofo monthly schedule with Nora, the AI assistant"
+                    width="640"
+                    height="400"
+                    decoding="async"
+                  />
+                </div>
+                <p class="nav-mega__ft">Meet Nora</p>
+                <p class="nav-mega__fd">
+                  Workofo's AI assistant answers questions about rules, settings and schedules, right where you
+                  plan.
+                </p>
+                <div class="nav-mega__fb">
+                  See how Nora works
+                  <NavMenuIcon name="arrow" size={14} />
+                </div>
+              </aside>
+            </div>
+          </details>
+          <details class:list={['nav-dropdown', 'nav-dropdown--industries', { 'is-active': isSolutionsActive }]}>
             <summary class="nav-dropdown__trigger">
               {ui('solutions', locale)}
               <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </summary>
-            <div class="nav-dropdown__menu">
+            <div class="nav-dropdown__menu nav-dropdown__menu--rich" role="list">
               {
-                solutions.map((item) => (
+                industryNav.map((item) => (
                   <a
-                    href={`/${locale}/solutions/${item.slug}`}
+                    href={item.href}
+                    role="listitem"
                     class:list={[
                       'nav-dropdown__option',
-                      { 'is-active': currentPath === `/solutions/${item.slug}` },
+                      'nav-dropdown__option--rich',
+                      {
+                        'is-active': currentPath === `/industries/${item.slug}`,
+                      },
+                    ]}
+                  >
+                    <span class="nav-dropdown__option-title">{item.title}</span>
+                    <span class="nav-dropdown__option-desc">{item.description}</span>
+                  </a>
+                ))
+              }
+              <div class="nav-dropdown__divider" aria-hidden="true"></div>
+              <a class="nav-dropdown__all" href={allIndustriesHref}>
+                All industries
+                <NavMenuIcon name="arrow" size={14} />
+              </a>
+            </div>
+          </details>
+          {
+            nav
+              .filter((p) => p.slug !== 'blog' && p.slug !== 'calculator')
+              .map((p) => (
+                <a href={localePath(locale, `/${p.slug}`)}>{p.navLabel || p.title || p.slug}</a>
+              ))
+          }
+          <details class:list={['nav-dropdown', 'nav-dropdown--resources', { 'is-active': isResourcesActive }]}>
+            <summary class="nav-dropdown__trigger">
+              Resources
+              <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="nav-dropdown__menu nav-dropdown__menu--plain nav-dropdown__menu--resources" role="list">
+              {
+                resourceLinks.map((item) => (
+                  <a
+                    href={item.href}
+                    role="listitem"
+                    class:list={[
+                      'nav-dropdown__option',
+                      'nav-dropdown__option--plain',
+                      {
+                        'is-active':
+                          item.path === '/blog'
+                            ? currentPath === '/blog' || currentPath.startsWith('/blog/')
+                            : currentPath === item.path,
+                      },
                     ]}
                   >
                     {item.label}
                   </a>
                 ))
               }
+              <a class="nav-dropdown__promo" href={calculatorHref} role="listitem">
+                <span class="nav-dropdown__promo-title">{ui('calculatePotential', locale)}</span>
+                <span class="nav-dropdown__promo-desc">
+                  See what better scheduling could free up in your operation.
+                </span>
+                <span class="nav-dropdown__promo-cta">
+                  Open calculator
+                  <span aria-hidden="true">→</span>
+                </span>
+              </a>
             </div>
           </details>
-          {
-            nav.map((p) => (
-              <a href={`/${locale}/${p.slug}`}>{p.navLabel || p.title || p.slug}</a>
-            ))
-          }
-          <a href={`/${locale}/blog`}>{ui('blog', locale)}</a>
+          <details class:list={['nav-dropdown', 'nav-dropdown--company', { 'is-active': isCompanyActive }]}>
+            <summary class="nav-dropdown__trigger">
+              Company
+              <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="nav-dropdown__menu nav-dropdown__menu--plain nav-dropdown__menu--company" role="list">
+              {
+                companyLinks.map((item) => (
+                  <a
+                    href={item.href}
+                    role="listitem"
+                    class:list={[
+                      'nav-dropdown__option',
+                      'nav-dropdown__option--plain',
+                      item.badge && 'nav-dropdown__option--with-badge',
+                      {
+                        'is-active':
+                          item.path === '/jobs'
+                            ? currentPath === '/jobs' || currentPath.startsWith('/jobs/')
+                            : currentPath === item.path,
+                      },
+                    ]}
+                  >
+                    <span class="nav-dropdown__option-label">{item.label}</span>
+                    {item.badge && <span class="nav-dropdown__badge">{item.badge}</span>}
+                  </a>
+                ))
+              }
+            </div>
+          </details>
         </nav>
         <div class="header-actions">
           <details class="lang-dropdown">
@@ -109,7 +442,7 @@ const isSolutionsActive = currentPath.startsWith('/solutions/');
               {
                 LOCALES.map((l) => (
                   <a
-                    href={`/${l}${currentPath === '/' ? '/home' : currentPath}`}
+                    href={alternateHref(l).replace(origin, '') || '/'}
                     class:list={['lang-dropdown__option', { 'is-active': l === locale }]}
                     hreflang={htmlLang(l)}
                     role="option"
@@ -125,19 +458,249 @@ const isSolutionsActive = currentPath.startsWith('/solutions/');
           <a class="btn btn--ghost btn--header" href={LOGIN_URL} target="_blank" rel="noreferrer noopener">
             {ui('login', locale)}
           </a>
-          <a class="btn btn--primary btn--header" href={`/${locale}/get-in-touch`}>{ui('bookDemo', locale)}</a>
+          <a class="btn btn--primary btn--header" href={localePath(locale, '/get-in-touch')}>
+            {ui('bookDemo', locale)}
+          </a>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-nav-toggle
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="Open menu"
+          >
+            <span class="nav-toggle__bars" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </header>
+
+    <div
+      id="mobile-nav"
+      class="mobile-nav"
+      data-mobile-nav
+      hidden
+      aria-hidden="true"
+    >
+      <div class="mobile-nav__sheet">
+        <div class="mobile-nav__top">
+          <a class="mobile-nav__brand" href={localePath(locale, '/')} aria-label={SITE_NAME}>
+            <img src="/workofo-logo.png?v=5" alt="" width="168" height="25" decoding="async" />
+          </a>
+          <button type="button" class="mobile-nav__close" data-nav-close aria-label="Close menu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mobile-nav__body">
+          <details class="mobile-acc">
+            <summary class="mobile-acc__h">
+              Product
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="mobile-acc__b">
+              {
+                productMenuGroups.map((group) => (
+                  <div class="mobile-acc__group">
+                    <p class="nav-mega__k">{group.label}</p>
+                    {group.items.map((item) => (
+                      <div class="nav-mega__item">
+                        <span class="nav-mega__ic">
+                          <NavMenuIcon name={item.icon} />
+                        </span>
+                        <span>
+                          <span class="nav-mega__t">{item.title}</span>
+                          <span class="nav-mega__d">{item.description}</span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))
+              }
+              <div class="mobile-acc__nora">
+                <p class="nav-mega__ft">Meet Nora</p>
+                <p class="nav-mega__fd">
+                  Workofo's AI assistant answers questions about rules, settings and schedules, right where you
+                  plan.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <details class="mobile-acc">
+            <summary class="mobile-acc__h">
+              {ui('solutions', locale)}
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="mobile-acc__b">
+              {
+                industryNav.map((item) => (
+                  <a class="mobile-acc__link mobile-acc__link--rich" href={item.href}>
+                    <span class="nav-dropdown__option-title">{item.title}</span>
+                    <span class="nav-dropdown__option-desc">{item.description}</span>
+                  </a>
+                ))
+              }
+              <a class="nav-dropdown__all" href={allIndustriesHref}>
+                All industries
+                <NavMenuIcon name="arrow" size={14} />
+              </a>
+            </div>
+          </details>
+
+          {
+            nav
+              .filter((p) => p.slug !== 'blog' && p.slug !== 'calculator')
+              .map((p) => (
+                <a class="mobile-acc__flat" href={localePath(locale, `/${p.slug}`)}>
+                  {p.navLabel || p.title || p.slug}
+                </a>
+              ))
+          }
+
+          <details class="mobile-acc">
+            <summary class="mobile-acc__h">
+              Resources
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="mobile-acc__b">
+              {
+                resourceLinks.map((item) => (
+                  <a class="mobile-acc__link" href={item.href}>
+                    {item.label}
+                  </a>
+                ))
+              }
+              <a class="nav-dropdown__promo" href={calculatorHref}>
+                <span class="nav-dropdown__promo-title">{ui('calculatePotential', locale)}</span>
+                <span class="nav-dropdown__promo-desc">
+                  See what better scheduling could free up in your operation.
+                </span>
+                <span class="nav-dropdown__promo-cta">
+                  Open calculator
+                  <span aria-hidden="true">→</span>
+                </span>
+              </a>
+            </div>
+          </details>
+
+          <details class="mobile-acc">
+            <summary class="mobile-acc__h">
+              Company
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+            <div class="mobile-acc__b">
+              {
+                companyLinks.map((item) => (
+                  <a class="mobile-acc__link mobile-acc__link--row" href={item.href}>
+                    <span>{item.label}</span>
+                    {item.badge && <span class="nav-dropdown__badge">{item.badge}</span>}
+                  </a>
+                ))
+              }
+            </div>
+          </details>
+        </div>
+
+        <div class="mobile-nav__cta">
+          <a class="btn btn--primary" href={localePath(locale, '/get-in-touch')}>{ui('bookDemo', locale)}</a>
+          <a class="btn btn--ghost" href={LOGIN_URL} target="_blank" rel="noreferrer noopener">{ui('login', locale)}</a>
+        </div>
+      </div>
+    </div>
     <main id="main" class="shell">
       <slot />
     </main>
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <p>© {new Date().getFullYear()} {SITE_NAME}. {ui('footerCopy', locale)}</p>
-        <p class="t-caption">{ui('footerLegal', locale)}</p>
+        <div class="site-footer__top">
+          <div class="site-footer__brand">
+            <a class="site-footer__logo" href={homeHref} aria-label={SITE_NAME}>
+              <img
+                src="/workofo-logo.png?v=5"
+                alt={SITE_NAME}
+                width="168"
+                height="25"
+                decoding="async"
+              />
+            </a>
+            <p class="site-footer__tagline">
+              AI-powered employee scheduling software built around real demand.
+            </p>
+          </div>
+
+          <nav class="site-footer__col" aria-label="Industries">
+            <h2 class="site-footer__heading">Industries</h2>
+            <ul class="site-footer__list">
+              {
+                solutions.map((item) => (
+                  <li>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+
+          <nav class="site-footer__col" aria-label="Company">
+            <h2 class="site-footer__heading">Company</h2>
+            <ul class="site-footer__list">
+              <li><a href={homeHref}>Home</a></li>
+              <li><a href={aboutHref}>About</a></li>
+              <li><a href={jobsHref}>Jobs</a></li>
+              <li><a href={blogHref}>Blog</a></li>
+              <li><a href={contactHref}>Contact</a></li>
+            </ul>
+          </nav>
+
+          <nav class="site-footer__col" aria-label="Get started">
+            <h2 class="site-footer__heading">Get started</h2>
+            <ul class="site-footer__list">
+              <li><a href={demoHref}>Book a demo</a></li>
+              <li>
+                <a href={LOGIN_URL} target="_blank" rel="noreferrer noopener">Log in</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="site-footer__offices">
+          {
+            footerOffices.map((office) => (
+              <div class="site-footer__office">
+                <h2 class="site-footer__office-title">{office.title}</h2>
+                <p class="site-footer__office-line">{office.address}</p>
+                <p class="site-footer__office-line">
+                  t: <a href={office.telHref}>{office.tel}</a>
+                </p>
+                <p class="site-footer__office-line">
+                  e: <a href="mailto:contact@workofo.com">contact@workofo.com</a>
+                </p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="site-footer__legal">
+          <p class="site-footer__copy">© 2026 Workofo Europe ApS, 42015784</p>
+          <nav class="site-footer__legal-nav" aria-label="Legal">
+            <a href={privacyHref}>Privacy policy</a>
+            <a href={cookieHref}>Cookie policy</a>
+            <a href={linkedInHref} target="_blank" rel="noreferrer noopener">LinkedIn</a>
+          </nav>
+        </div>
       </div>
     </footer>
-    <script is:inline src="/aura.js"></script>
+    <script is:inline src="/aura.js?v=mobile1"></script>
   </body>
 </html>

@@ -1,0 +1,190 @@
+---
+/**
+ * Jobs page — layout from jobs-page-sketch.html Open roles board + Why Workofo.
+ * Roles from Wix CMS `Jobs`. Homepage type/buttons/gutters; retail/about hero top.
+ */
+import type { Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+import {
+  listPublishedJobs,
+  jobCardSummary,
+  jobTags,
+} from '../../lib/jobs';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const result = await listPublishedJobs(locale);
+const jobs = result.status === 'ok' ? result.jobs : [];
+const countLabel =
+  jobs.length === 1 ? '1 open position' : `${jobs.length} open positions`;
+
+const why = [
+  {
+    title: 'Work on AI and ML',
+    body: 'Build demand forecasting and schedule optimization for teams running stores, contact centres and other shift-based operations.',
+    icon: 'ai' as const,
+  },
+  {
+    title: 'Hybrid work',
+    body: 'Meet the team in the office a couple of days a week, work remotely the rest.',
+    icon: 'hybrid' as const,
+  },
+  {
+    title: 'Potential share options',
+    body: 'Hourly pay with the possibility of sharing in what we build together.',
+    icon: 'growth' as const,
+  },
+  {
+    title: 'Grow with us',
+    body: 'Develop your skills with colleagues who share ideas and give clear, honest feedback.',
+    icon: 'learn' as const,
+  },
+] as const;
+---
+
+<article class="jobs-page">
+  <!-- HERO -->
+  <div class="jobs-hero">
+    <div class="jobs-hero__in">
+      <div class="jobs-hero__copy" data-reveal>
+        <h1 class="jobs-hero__title" data-split>Solve hard scheduling problems. Build technology people rely on.</h1>
+        <p class="jobs-hero__lede">
+          Workofo uses AI to build schedules for teams at companies like Decathlon, Jysk and Tele2. Help us solve complex forecasting and optimization problems in a small, friendly team that values humor, transparency and direct communication.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEN ROLES -->
+  <section class="jobs-sec jobs-sec--white" id="open-roles" aria-labelledby="jobs-open-heading">
+    <div class="jobs-in">
+      <div class="jobs-board__head" data-reveal>
+        <h2 id="jobs-open-heading" class="jobs-h2" data-split>Open roles</h2>
+        {
+          result.status === 'ok' && (
+            <span class="jobs-board__count">{countLabel}</span>
+          )
+        }
+      </div>
+
+      {
+        result.status === 'missing_collection' && (
+          <p class="dev-msg">
+            {result.message}
+            {result.detail ? ` Detail: ${result.detail}` : ''}
+          </p>
+        )
+      }
+      {
+        result.status === 'query_failed' && (
+          <p class="dev-msg">
+            {result.message}
+            {result.detail ? ` Detail: ${result.detail}` : ''}
+          </p>
+        )
+      }
+
+      {
+        result.status === 'ok' && jobs.length === 0 && (
+          <div class="jobs-board__empty" data-reveal>
+            <p class="jobs-txt">No open roles right now. Check back soon, or tell us what you'd like to build.</p>
+            <a class="btn btn--ghost btn--cta" href="mailto:contact@workofo.com">Get in touch</a>
+          </div>
+        )
+      }
+
+      {
+        result.status === 'ok' && jobs.length > 0 && (
+          <div class="jobs-board__list" data-reveal>
+            {jobs.map((job) => {
+              const href = job.slug ? localePath(locale, `/jobs/${job.slug}`) : '#open-roles';
+              const tags = jobTags(job);
+              const summary = jobCardSummary(job);
+              return (
+                <a class="jobs-card" href={href}>
+                  <div class="jobs-card__copy">
+                    {tags.length > 0 && (
+                      <div class="jobs-card__tags">
+                        {tags.map((tag) => (
+                          <span class="jobs-tag">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                    <h3 class="jobs-card__title">{job.title || 'Open role'}</h3>
+                    {summary && <p class="jobs-txt">{summary}</p>}
+                  </div>
+                  <span class="jobs-card__go">
+                    View role
+                    <span class="jobs-card__arrow" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M13 6l6 6-6 6"></path>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+
+      <div class="jobs-board__cta" data-reveal>
+        <div class="jobs-board__cta-copy">
+          <span class="jobs-board__cta-title">Don't see the right role?</span>
+          <span class="jobs-txt">Tell us what you'd like to build. We read every message.</span>
+        </div>
+        <a class="btn btn--ghost btn--cta" href="mailto:contact@workofo.com">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Workofo -->
+  <section class="jobs-sec jobs-sec--cream" aria-labelledby="jobs-why-heading">
+    <div class="jobs-in">
+      <div class="jobs-sh" data-reveal>
+        <h2 id="jobs-why-heading" class="jobs-h2" data-split>Why Workofo</h2>
+        <p class="jobs-lead">Bring your curiosity to problems that matter in people's working lives.</p>
+      </div>
+      <div class="jobs-why" data-reveal>
+        {
+          why.map((item) => (
+            <div class="jobs-why__card">
+              <div class="jobs-uic" aria-hidden="true">
+                {item.icon === 'ai' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path>
+                    <circle cx="12" cy="12" r="5"></circle>
+                  </svg>
+                )}
+                {item.icon === 'hybrid' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 11l9-7 9 7"></path>
+                    <path d="M5 10v10h14V10"></path>
+                  </svg>
+                )}
+                {item.icon === 'growth' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 17l5-6 4 3 8-9"></path>
+                    <path d="M15 5h5v5"></path>
+                  </svg>
+                )}
+                {item.icon === 'learn' && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19V5l8 4 8-4v14l-8-4z"></path>
+                  </svg>
+                )}
+              </div>
+              <div class="jobs-why__copy">
+                <h3 class="jobs-why__title">{item.title}</h3>
+                <p class="jobs-txt">{item.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</article>

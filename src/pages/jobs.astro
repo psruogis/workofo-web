@@ -1,0 +1,22 @@
+---
+/**
+ * Jobs — EN unprefixed (`/jobs`).
+ * Layout from jobs-page-sketch.html; roles from Wix CMS `Jobs`.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import JobsPage from '../components/sections/JobsPage.astro';
+import { listNavPages } from '../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Jobs | Workofo"
+  description="Build AI for demand forecasting and schedule optimization. Explore engineering roles at Workofo and solve scheduling problems for teams across Europe."
+  pathWithoutLang="/jobs"
+  navPages={navPages}
+>
+  <JobsPage locale={locale} />
+</SiteLayout>

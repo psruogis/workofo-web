@@ -4,10 +4,11 @@
  */
 import SiteLayout from '../../../layouts/SiteLayout.astro';
 import RicosContentViewer from '../../../components/RicosContentViewer';
-import { isLocale, DEFAULT_LOCALE, type Locale } from '../../../lib/locales';
+import { isLocale, type Locale } from '../../../lib/locales';
 import { getBlogPostBySlug, formatPostDate } from '../../../lib/blog';
 import { listNavPages } from '../../../lib/cms';
 import { imgSrc } from '../../../lib/rich';
+import { localePath } from '../../../lib/paths';
 import { WIX_APPS } from '@wix/essentials';
 import { seoTags } from '@wix/seo';
 import { SEO } from '@wix/seo/components';
@@ -23,9 +24,13 @@ const rawLang = Astro.params.lang;
 const postSlug = Astro.params.postSlug;
 
 if (!isLocale(rawLang) || !postSlug) {
-  return Astro.redirect(`/${DEFAULT_LOCALE}/blog`, 302);
+  return Astro.redirect('/blog', 302);
 }
 const locale = rawLang as Locale;
+
+if (locale === 'en') {
+  return Astro.redirect(localePath('en', `/blog/${postSlug}`), 301);
+}
 
 const [{ post, error }, navPages, seoTagsServiceConfig] = await Promise.all([
   getBlogPostBySlug(postSlug),
@@ -38,7 +43,7 @@ const [{ post, error }, navPages, seoTagsServiceConfig] = await Promise.all([
 ]);
 
 if (!post && !error) {
-  return Astro.redirect(`/${locale}/blog`, 302);
+  return Astro.redirect(localePath(locale, '/blog'), 302);
 }
 
 const title = (post as any)?.title || 'Blog post';
@@ -48,13 +53,18 @@ const cover = imgSrc((post as any)?.media?.wixMedia?.image || (post as any)?.cov
 <SiteLayout locale={locale} title="" pathWithoutLang={`/blog/${postSlug}`} navPages={navPages}>
   {seoTagsServiceConfig && <SEO.Tags seoTagsServiceConfig={seoTagsServiceConfig} slot="seo-tags" />}
 
-  <article class="blog-post">
+  <article class="blog-post" data-reveal>
     {error && <p class="dev-msg">{error}</p>}
     {
       post && (
         <>
+          <nav aria-label="Breadcrumb" class="blog-breadcrumb">
+            <a href={localePath(locale, '/blog')}>Blog</a>
+            <span aria-hidden="true">/</span>
+            <span class="blog-breadcrumb__current">{(post as any).title}</span>
+          </nav>
+          <h1 data-split data-reveal>{(post as any).title}</h1>
           <p class="blog-card__meta t-overline">{formatPostDate((post as any).firstPublishedDate, locale)}</p>
-          <h1>{(post as any).title}</h1>
           {cover && <img class="blog-post__cover" src={cover} alt="" />}
           <RicosContentViewer client:only="react" content={(post as any).richContent} />
         </>

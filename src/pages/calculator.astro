@@ -1,0 +1,22 @@
+---
+/**
+ * Calculator — EN unprefixed (`/calculator`).
+ * Top-level page; no breadcrumbs. Homepage type/buttons/gutters.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import CalculatorPage from '../components/sections/CalculatorPage.astro';
+import { listNavPages } from '../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Capacity calculator | Workofo"
+  description="Estimate the hours and capacity value locked in your current schedules. Adjust workforce inputs and see what demand-driven scheduling could unlock."
+  pathWithoutLang="/calculator"
+  navPages={navPages}
+>
+  <CalculatorPage locale={locale} />
+</SiteLayout>

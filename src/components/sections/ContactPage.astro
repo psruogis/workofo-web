@@ -1,0 +1,213 @@
+---
+/**
+ * Contact page — layout from contact-page-mock Contact.dc.html.
+ * Document-start hero (About/Jobs), homepage type/buttons/gutters.
+ */
+import type { Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+import { LOGIN_URL } from '../../lib/config';
+import ContactMessageForm from './ContactMessageForm';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/get-in-touch');
+const jobsHref = localePath(locale, '/jobs');
+
+const routes = [
+  {
+    href: demoHref,
+    dark: true,
+    title: 'See Workofo in action',
+    body: 'A demo tailored to your operation, your demand data and your rules.',
+    cta: 'Book a demo',
+    icon: 'demo' as const,
+    external: false,
+  },
+  {
+    href: LOGIN_URL,
+    dark: false,
+    title: 'Already a customer?',
+    body: 'Log in to Workofo, or ask Nora in the app for help with rules and settings.',
+    cta: 'Log in',
+    icon: 'login' as const,
+    external: true,
+  },
+  {
+    href: jobsHref,
+    dark: false,
+    title: 'Work with us',
+    body: "We're hiring engineers and builders in Copenhagen, London and Vilnius.",
+    cta: 'See open roles',
+    icon: 'jobs' as const,
+    external: false,
+  },
+] as const;
+
+const offices = [
+  {
+    city: 'Copenhagen',
+    region: 'Denmark · Headquarters',
+    lines: ['Amager Strandvej 230', '2300 Copenhagen'],
+    tel: '+45 6053 8020',
+    telHref: 'tel:+4560538020',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Amager+Strandvej+230+2300+Copenhagen',
+  },
+  {
+    city: 'London',
+    region: 'United Kingdom',
+    lines: ['52 Brook Street', 'London W1K 5DS'],
+    tel: '+44 203 764 7260',
+    telHref: 'tel:+442037647260',
+    maps: 'https://www.google.com/maps/search/?api=1&query=52+Brook+Street+London+W1K+5DS',
+  },
+  {
+    city: 'Vilnius',
+    region: 'Lithuania',
+    lines: ['Polocko g. 17-66', '01205 Vilnius'],
+    tel: '+370 618 000 57',
+    telHref: 'tel:+37061800057',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Polocko+g.+17-66+Vilnius',
+  },
+] as const;
+---
+
+<article class="contact-page">
+  <!-- HERO + ROUTES -->
+  <div class="contact-hero">
+    <div class="contact-hero__in">
+      <div class="contact-hero__copy" data-reveal>
+        <p class="t-overline contact-hero__eyebrow">Contact</p>
+        <h1 class="contact-hero__title" data-split>Talk to the people behind Workofo.</h1>
+        <p class="contact-hero__lede">
+          Questions about scheduling, partnerships or working with us? Pick the fastest route below, or send us a
+          message.
+        </p>
+      </div>
+
+      <div class="contact-routes" data-reveal>
+        {
+          routes.map((route) => (
+            <a
+              class:list={['contact-route', { 'contact-route--dark': route.dark }]}
+              href={route.href}
+              target={route.external ? '_blank' : undefined}
+              rel={route.external ? 'noreferrer noopener' : undefined}
+            >
+              <span class="contact-route__icon" aria-hidden="true">
+                {route.icon === 'demo' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+                    <path d="M3 10h18M8 3v4M16 3v4"></path>
+                  </svg>
+                )}
+                {route.icon === 'login' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M9.5 9a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.2"></path>
+                    <path d="M12 17h.01"></path>
+                  </svg>
+                )}
+                {route.icon === 'jobs' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+                    <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+                    <path d="M3 13h18"></path>
+                  </svg>
+                )}
+              </span>
+              <div>
+                <h2 class="contact-route__title">{route.title}</h2>
+                <p class="contact-route__body">{route.body}</p>
+              </div>
+              <span class="contact-route__go">
+                {route.cta}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- SEND A MESSAGE -->
+  <section class="contact-sec contact-sec--white" aria-labelledby="contact-message-heading">
+    <div class="contact-in">
+      <div class="contact-main">
+        <div class="contact-aside" data-reveal>
+          <h2 id="contact-message-heading" class="contact-h2" data-split>Send us a message</h2>
+          <p class="contact-lead">
+            Tell us what you need and the right person will get back to you within one working day.
+          </p>
+          <dl class="contact-dl">
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:contact@workofo.com">contact@workofo.com</a></dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd><a href="tel:+4560538020">+45 6053 8020</a></dd>
+            </div>
+            <div>
+              <dt>LinkedIn</dt>
+              <dd>
+                <a href="https://www.linkedin.com/company/workofo/" target="_blank" rel="noreferrer noopener">
+                  Workofo
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt>Company</dt>
+              <dd>Workofo Europe ApS · 42015784</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="contact-form-card" data-reveal>
+          <ContactMessageForm client:load locale={locale} demoHref={demoHref} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICES -->
+  <section class="about-sec about-sec--cream" aria-labelledby="contact-offices-heading">
+    <div class="about-in">
+      <div class="about-sh" data-reveal>
+        <h2 id="contact-offices-heading" class="about-h2" data-split>Our offices</h2>
+        <p class="about-lead">Three offices, one product. Visit us in Copenhagen, London or Vilnius.</p>
+      </div>
+      <div class="about-offices" data-reveal>
+        {
+          offices.map((office) => (
+            <div class="about-office">
+              <div class="about-office__head">
+                <h3 class="about-h3">{office.city}</h3>
+                <span class="about-office__region">{office.region}</span>
+              </div>
+              <p class="about-txt about-office__addr">
+                {office.lines[0]}
+                <br />
+                {office.lines[1]}
+              </p>
+              <a class="contact-dir" href={office.maps} target="_blank" rel="noreferrer noopener">
+                Get directions
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </a>
+              <div class="about-office__contact">
+                <a href={office.telHref}>{office.tel}</a>
+                <a href="mailto:contact@workofo.com">contact@workofo.com</a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</article>
