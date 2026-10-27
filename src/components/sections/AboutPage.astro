@@ -16,18 +16,18 @@ const jobsHref = localePath(locale, '/jobs');
 
 const principles = [
   {
-    title: 'Demand drives the schedule',
-    body: "Last week's schedule does not say everything about next week's staffing need. First a forecast of the work ahead, then we build the schedule.",
+    title: 'Demand shapes the schedule',
+    body: "Last week's schedule cannot tell you everything about next week's staffing needs. We forecast the work ahead first, then build the schedule.",
     icon: 'demand' as const,
   },
   {
-    title: 'Rules are there from the start',
-    body: 'Working-time rules, collective agreements, employment terms and skill requirements shape how the schedule is built. You should not have to check everything by hand.',
+    title: 'Rules are built in from the start',
+    body: 'Working-time rules, collective agreements, employment terms and skill requirements shape the schedule. You should not have to check everything by hand.',
     icon: 'rules' as const,
   },
   {
     title: 'You have the final say',
-    body: 'Workofo does the calculations. You review, adjust and publish the schedule. Employees get a fair share of shifts and visibility into the plan.',
+    body: 'Workofo does the calculations. You review, adjust and publish the schedule. Employees get a fair distribution of shifts and visibility into the plan.',
     icon: 'people' as const,
   },
 ] as const;
@@ -71,29 +71,22 @@ const stats = [
   { value: '3', label: 'offices in Europe' },
 ] as const;
 
-const storyPath = [
-  { title: 'Mathematics and computer science olympiads', detail: 'Representing Lithuania' },
-  { title: 'Data consultancy for banks', detail: 'Analysis and modeling' },
-  { title: 'Restaurants', detail: 'Shifts that follow the lunch rush' },
-  { title: 'Workofo', detail: 'Contact centres, airports and more' },
-] as const;
-
 const storyLead =
-  'He had represented Lithuania in international olympiads in mathematics and computer science, and run a consultancy that analyzed data for banks. Using that knowledge closer to people\'s everyday lives appealed more. Contacts in the restaurant industry gave him that chance. There were problems to solve.';
+  'He had represented Lithuania in international olympiads in mathematics and computer science and run a consultancy analysing data for banks. But he wanted to use his knowledge to solve problems closer to people\'s everyday lives. Contacts in the restaurant industry gave him the opportunity. There were problems to solve.';
 
 const storyBody = [
-  'So Remigijus Staniulis built a team. They began testing different ideas.',
-  'A restaurant has its own rhythm. The smell of morning coffee, the murmur of the lunch rush, the clatter from the dish pit when the room empties. A gastronomic cycle. But when the team compared schedules with real demand, they saw the same working hours returning week after week. Many started and finished at the same time, even though staffing need rose and fell through the day.',
+  'So Remigijus Staniulis built a team. And they began testing ideas.',
+  'A restaurant’s day starts long before the lunch rush. The smell of morning coffee, the buzz of the lunch rush, the clatter of dishes as the room empties. The daily rhythm of restaurant life. But when the team compared schedules with actual demand, they saw the same working hours repeated week after week. Many shifts started and ended together, even though staffing needs rose and fell throughout the day.',
 ] as const;
 
 const storyAfterPull = [
-  'They began by letting morning shifts start and evening shifts end at different times. Then the fixed handover in the middle of the day could be reconsidered too. Hours that used to land in quiet periods could instead meet the lunch rush or reduce the need for overtime.',
-  'But moving start and end times was not enough. The kitchen still needed prep when the dining room was empty. The right skills were needed for each task. One employee wanted to study on Tuesdays; another preferred fixed hours. Working-time rules and rest also had to fit.',
-  'A manager can know the operation inside out and still struggle to see every combination. A schedule request that first looks impossible can work if another shift moves. Static templates kept the job manageable, but they also left opportunities undiscovered.',
-  'The team used mathematics to find better ways to allocate shifts. The calculation weighed the restaurant\'s needs together with employees\' preferences.',
-  'This is where Workofo took shape. The same principle then helped in more operations, including contact centres and airports. Different shifts, different skills. But the same need for staffing that follows demand more closely.',
-  'What should the new room be used for? Hours freed in one place can do more good in another. Maybe there is a new assignment to take on, or an overtime cost to cut.',
-  'For employees, a better schedule can make it easier to fit work and life outside work together.',
+  'They started by varying when morning shifts began and evening shifts ended. Then they could rethink the fixed midday handover too. Hours previously scheduled during quiet periods could instead cover the lunch rush or reduce overtime.',
+  'But changing start and finish times was only part of the job. The kitchen still needed preparation when the dining room was empty. Each task called for the right skills. One employee wanted to study on Tuesdays; another preferred fixed hours. Working-time rules and rest periods had to fit too.',
+  'A manager can know the business inside out and still struggle to see every possible combination. A shift request that seems impossible might work if another shift moves. Static templates made planning manageable, but left opportunities undiscovered.',
+  'The team used mathematics to find better ways to allocate shifts, weighing the restaurant’s needs alongside employees’ preferences.',
+  'This is where Workofo took shape. The principle went on to help contact centres, airports and other businesses. Different shifts, different skills. But the same need for staffing that responds to demand.',
+  'What could you do with the capacity you free up? Hours freed in one place can make a bigger difference elsewhere. Perhaps there is a new contract to take on, or an overtime bill to bring down.',
+  'For employees, a better schedule can make it easier to fit work around life outside it.',
 ] as const;
 ---
 
@@ -105,9 +98,9 @@ const storyAfterPull = [
         <div class="about-hero__copy" data-reveal>
           <h1 class="about-hero__title" data-split>Scheduling that follows the rhythm of your business.</h1>
           <p class="about-hero__lede">
-            Workofo uses AI and mathematical optimization to match staffing with demand. That can mean more
-            customers helped when they need it, less overtime, and room for new work, while making better use of
-            people's skills and weighing their schedule preferences.
+            Workofo uses AI and mathematical optimisation to match staffing with demand. That can mean more
+            customers helped when they need it, less overtime and room for new work, while making the most of
+            employees' skills and taking their scheduling preferences into account.
           </p>
         </div>
         <aside class="about-glance" aria-label="Workofo at a glance" data-reveal>
@@ -141,9 +134,9 @@ const storyAfterPull = [
             staffing need per location, down to 15-minute intervals.
           </p>
           <p class="about-lead about-lead--muted">
-            The price of freeing capacity in your own operation is deciding what to use it for. Less overtime,
-            better service, or capacity for new business. Maybe a mix of all three. We help you see the options and
-            what they mean for your business.
+            Freeing up capacity means deciding how to use it: less overtime, better service or room for new
+            business. Perhaps a mix of all three. We help you see the options and calculate what each could mean
+            for your business.
           </p>
         </div>
       </div>
@@ -165,7 +158,7 @@ const storyAfterPull = [
     <div class="about-in about-in--story" data-reveal>
       <div class="about-story__top">
         <h2 id="about-story-heading" class="about-h2 h2" data-split>
-          The lunch rush became a question for mathematics.
+          The lunch rush put mathematics to work.
         </h2>
       </div>
       <div class="about-story__grid">
@@ -173,32 +166,17 @@ const storyAfterPull = [
           <figure class="about-story__photo">
             <span class="about-story__ph">Photo: Remigijus Staniulis</span>
           </figure>
-          <ol class="about-story__path" aria-label="From mathematics to Workofo">
-            {
-              storyPath.map((step) => (
-                <li>
-                  <i aria-hidden="true" />
-                  <div>
-                    {step.title}
-                    <small>{step.detail}</small>
-                  </div>
-                </li>
-              ))
-            }
-          </ol>
+          <div class="about-story__path about-story__path--placeholder">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </div>
         </aside>
         <div class="about-story">
           <p class="about-lead about-story__lead">{storyLead}</p>
           {storyBody.map((p) => <p class="about-lead">{p}</p>)}
-          <p class="about-story__pull">There was something to calculate.</p>
+          <p class="about-story__pull">Here was a problem worth solving.</p>
           {storyAfterPull.map((p) => <p class="about-lead">{p}</p>)}
-          <p class="about-story__close">Advanced technology that makes everyday life work with more ease.</p>
+          <p class="about-story__close">Advanced technology that makes everyday work run more smoothly.</p>
           <div class="about-signoff">
-            <div class="about-signoff__sender">
-              <span class="about-signoff__script" aria-hidden="true">Remigijus Staniulis</span>
-              <span class="about-signoff__name">Remigijus Staniulis</span>
-              <span class="about-signoff__title">Founder</span>
-            </div>
             <div class="about-signoff__cta">
               <p class="h2 about-signoff__invite">
                 Tell us what you want to work better.<br />
@@ -302,8 +280,8 @@ const storyAfterPull = [
               Big challenges looking for sharp minds.
             </h2>
             <p class="about-lead">
-              We are looking for engineers and developers who thrive on complex numbers and needs, and who want to
-              solve scheduling's hardest problems. Come build with us.
+              We are looking for engineers and developers who enjoy working with numbers and complex needs, and
+              want to solve the hardest problems in scheduling. Come build and create with us.
             </p>
           </div>
           <div>
@@ -315,7 +293,7 @@ const storyAfterPull = [
             <h2 class="about-h2 h2 about-h2--light">
               Your staffing needs. Your rules. See what Workofo can do.
             </h2>
-            <p class="about-card__note">We usually respond within one working day.</p>
+            <p class="about-card__note">We respond within one working day.</p>
           </div>
           <div class="about-card__actions">
             <a class="btn btn--primary btn--cta" href={demoHref}>Book a demo</a>

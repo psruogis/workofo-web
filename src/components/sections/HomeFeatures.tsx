@@ -11,16 +11,16 @@ const STEPS = [
     body: 'See when and where your team is needed.',
   },
   {
-    title: 'Apply labor rules',
+    title: 'Apply labour rules',
     body: 'Bring contracts, skills and availability into the plan.',
   },
   {
-    title: 'Optimize schedules',
+    title: 'Optimise schedules',
     body: 'Build schedules around demand automatically.',
   },
   {
     title: 'Adapt to change',
-    body: 'Re-optimize when demand or availability shifts.',
+    body: 'Re-optimise when demand or availability shifts.',
   },
 ] as const;
 
@@ -35,8 +35,8 @@ export default function HomeFeatures() {
                 Employee scheduling that starts with demand, not last week's template.
               </h2>
               <p className="lede home-features__lede">
-                Workofo brings demand forecasting, labor rules and automated staff scheduling together,
-                helping you turn available hours into better service.
+                Workofo combines demand forecasting, labour rules and automated employee scheduling to put
+                time and skills where customers need them.
               </p>
             </header>
 

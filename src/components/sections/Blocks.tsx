@@ -26,7 +26,7 @@ const CLIENT_LOGOS = [
 /** Modern homepage hero — EN SEO copy used as placeholder for SE until rewritten. */
 const MODERN_HOME_HERO = {
   heading: 'AI-powered employee scheduling software built around real demand',
-  body: "Workofo forecasts demand, applies your labor rules and builds schedules automatically. Help more customers at busy times, reduce overtime and make better use of your team's skills.",
+  body: "Workofo forecasts demand, applies your labour rules and builds schedules automatically. Help more customers at busy times, reduce overtime and make better use of your team's skills.",
   primaryCta: 'Book a demo',
   secondaryCta: 'See how it works',
 } as const;

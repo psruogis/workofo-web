@@ -159,15 +159,15 @@ export default function ContactBookDemo({
       matchField(fields, ['challenge', 'message', 'hoping', 'solve']) ||
       ({
         target: 'message',
-        label: 'What would you like to improve?',
+        label: 'What would you like to improve about employee scheduling?',
         viewFieldType: 'TEXT_AREA',
-        placeholder: 'e.g. last-minute changes, overtime, labor rules, forecasting demand…',
+        placeholder: 'e.g. last-minute changes, overtime, labour rules, forecasting demand…',
       } as FieldModel);
     const tools =
       matchField(fields, ['tool', 'system', 'erp', 'software']) ||
       ({
         target: 'systems',
-        label: 'Tools you use today',
+        label: 'Which tools do you use today?',
         required: false,
         placeholder: 'e.g. Excel, an ERP system, another scheduling tool',
       } as FieldModel);
@@ -279,10 +279,9 @@ export default function ContactBookDemo({
             <div className="contact-demo__copy">
               <div className="contact-demo__intro" data-reveal>
                 <p className="t-overline contact-demo__eyebrow">Book a demo</p>
-                <h1 data-split>See Workofo with your own demand and rules.</h1>
+                <h1 data-split>See what Workofo can do with your demand data and scheduling rules.</h1>
                 <p className="lede contact-demo__lede">
-                  Plan staffing in 15-minute intervals, with your working-time rules built in. Tell us
-                  about your operation and we&apos;ll tailor the walkthrough to it.
+                  Plan staffing in 15-minute intervals, with your working-time rules built in.
                 </p>
                 <p className="contact-demo__next-title">What happens next</p>
                 <ol className="contact-demo__next">
@@ -445,13 +444,13 @@ export default function ContactBookDemo({
                 </div>
 
                 <label className="contact-demo__field contact-demo__field--full">
-                  <span>What would you like to improve?</span>
+                  <span>What would you like to improve about employee scheduling?</span>
                   <textarea
                     name={map.challenges.target}
                     rows={3}
                     placeholder={
                       map.challenges.placeholder ||
-                      'e.g. last-minute changes, overtime, labor rules, forecasting demand…'
+                      'e.g. last-minute changes, overtime, labour rules, forecasting demand…'
                     }
                   />
                   {errors[map.challenges.target] && (
@@ -461,7 +460,7 @@ export default function ContactBookDemo({
 
                 <label className="contact-demo__field contact-demo__field--full">
                   <span>
-                    Tools you use today <i>(optional)</i>
+                    Which tools do you use today? <i>(optional)</i>
                   </span>
                   <input
                     name={map.tools.target}
@@ -499,7 +498,7 @@ export default function ContactBookDemo({
                 {status === 'loading' ? ui('formSending', locale) : 'Book my demo'}
               </button>
               <p className="contact-demo__footnote">
-                We reply within one working day. No commitment.
+                We respond within one working day. No commitment.
               </p>
             </form>
           </div>

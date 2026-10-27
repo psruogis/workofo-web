@@ -11,7 +11,7 @@ const INDUSTRIES = [
     name: 'Retail',
     slug: 'retail',
     image: '/industries/retail.jpg',
-    body: 'Match labor to demand across stores, departments and fulfillment.',
+    body: 'Match labour to demand across stores, departments and fulfillment.',
   },
   {
     name: 'Contact Centre',
@@ -288,15 +288,15 @@ function buildFaqs(locale: Locale): Faq[] {
   return [
     {
       q: 'What is AI employee scheduling software?',
-      a: "AI employee scheduling software uses workload forecasts to build staff schedules around demand, skills and working-time rules. Workofo's demand-based scheduling helps you use available hours more effectively, with managers reviewing the plan and deciding what to publish.",
+      a: 'AI employee scheduling software uses workload forecasts to build staff schedules around demand, skills and working-time rules. Workofo combines demand-based scheduling with schedule optimization software to find better combinations of shifts and skills. Managers review the options and decide how to use the capacity released.',
     },
     {
-      q: 'How does Workofo forecast labor demand?',
+      q: 'How does Workofo forecast labour demand?',
       a: 'Workofo uses the drivers that define work in your business, such as sales, volumes, tasks or service targets, and forecasts staffing needs down to 15-minute intervals per location.',
     },
     {
-      q: 'Can Workofo handle labor law and union agreements?',
-      a: 'Yes. Workofo applies the labor rules, agreements, contracts, skills and availability configured for your operation. These requirements form part of the scheduling process, helping managers assess workable options without checking every combination by hand.',
+      q: 'Can Workofo handle labour law and union agreements?',
+      a: 'Yes. Workofo applies the labour rules, agreements, contracts, skills and availability configured for your operation. These requirements form part of the scheduling process, helping managers assess workable options without checking every combination by hand.',
     },
     {
       q: 'How much capacity can we unlock?',

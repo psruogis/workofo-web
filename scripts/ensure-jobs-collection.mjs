@@ -150,9 +150,9 @@ if (count === 0) {
           location: 'Vilnius, Lithuania',
           department: 'Engineering',
           employmentType: 'Hybrid',
-          summary: 'Build integrations and scalable backend features for AI-driven workforce optimization.',
+          summary: 'Build integrations and scalable backend features for AI-driven workforce optimisation.',
           description:
-            '<p>Build integrations and scalable backend features for AI-driven workforce optimization.</p>',
+            '<p>Build integrations and scalable backend features for AI-driven workforce optimisation.</p>',
           applyUrl: '/get-in-touch',
           applyEmail: '',
           sortOrder: 2,
