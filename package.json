@@ -24,6 +24,7 @@
     "@wix/ricos": "^11.6.2",
     "@wix/sdk": "^1.21.5",
     "@wix/seo": "^1.0.51",
+    "@wix/services-manager": "1.0.7",
     "astro": "^5.8.0",
     "typescript": "^5.8.3"
   },
