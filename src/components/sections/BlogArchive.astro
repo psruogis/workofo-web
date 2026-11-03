@@ -7,7 +7,7 @@ type Props = { posts: BlogPostSummary[]; error?: string; locale: Locale };
 const { posts, error, locale } = Astro.props as Props;
 const swedish = locale === 'se';
 const labels = swedish
-  ? { intro: ui('blogIntro', locale), search: 'Sök artiklar', all: 'Alla artiklar', planning: 'Bemanningsplanering', retail: 'Detaljhandel', trends: 'Branschtrender', cost: 'Kostnadskontroll', latest: 'Senaste artiklarna', read: 'Läs artikel', more: 'Visa fler artiklar', empty: 'Inga artiklar hittades.', article: 'artikel', articles: 'artiklar', minRead: 'min läsning' }
+  ? { intro: 'Idéer om bemanningsplanering, behovsstyrd schemaläggning och verksamheter som arbetar i skift.', search: 'Sök artiklar', all: 'Alla artiklar', planning: 'Bemanningsplanering', retail: 'Detaljhandel', trends: 'Branschtrender', cost: 'Kostnadskontroll', latest: 'Senaste artiklarna', read: 'Läs artikel', more: 'Visa fler artiklar', empty: 'Inga artiklar hittades.', article: 'artikel', articles: 'artiklar', minRead: 'min läsning' }
   : { intro: 'Ideas on workforce planning, demand-based scheduling and running shift-based operations.', search: 'Search articles', all: 'All articles', planning: 'Workforce planning', retail: 'Retail', trends: 'Industry trends', cost: 'Cost control', latest: 'Latest articles', read: 'Read article', more: 'Load more articles', empty: 'No articles found.', article: 'article', articles: 'articles', minRead: 'min read' };
 const topics = ['all', 'planning', 'retail', 'trends', 'cost'] as const;
 type Topic = (typeof topics)[number];
