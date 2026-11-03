@@ -4,7 +4,6 @@ import { LOGIN_URL, SITE_NAME } from '../lib/config';
 import { isIndustrySlug, listIndustrySolutions, type IndustrySlug } from '../lib/solutions';
 import { localePath, industryPath, normalizePath } from '../lib/paths';
 import FlagIcon from '../components/FlagIcon.astro';
-import NavMenuIcon from '../components/NavMenuIcon.astro';
 import '../styles/global.css';
 
 type NavPage = { slug?: string; title?: string; navLabel?: string; navOrder?: number };
@@ -15,9 +14,10 @@ type Props = {
   description?: string;
   pathWithoutLang?: string;
   navPages?: NavPage[];
+  headerBlend?: boolean;
 };
 
-const { locale, title, description, pathWithoutLang = '', navPages = [] } = Astro.props;
+const { locale, title, description, pathWithoutLang = '', navPages = [], headerBlend = false } = Astro.props;
 const lang = htmlLang(locale);
 const origin = Astro.url.origin;
 const currentPath = normalizePath(pathWithoutLang);
@@ -68,6 +68,7 @@ const industryNav = [
 }));
 
 const demoHref = localePath(locale, '/get-in-touch');
+const productHref = localePath(locale, '/product');
 const homeHref = localePath(locale, '/');
 const aboutHref = localePath(locale, '/about');
 const jobsHref = localePath(locale, '/jobs');
@@ -77,89 +78,7 @@ const calculatorHref = localePath(locale, '/calculator');
 const privacyHref = localePath(locale, '/privacy');
 const cookieHref = localePath(locale, '/cookie-policy');
 const linkedInHref = 'https://www.linkedin.com/company/workofo';
-/** No /industries index — jump to homepage industries band */
-
-type ProductMenuIcon =
-  | 'forecast'
-  | 'calendar'
-  | 'shield'
-  | 'spark'
-  | 'chart'
-  | 'transfer'
-  | 'chat'
-  | 'phone'
-  | 'swap'
-  | 'arrow';
-
-type ProductMenuItem = {
-  title: string;
-  description: string;
-  icon: ProductMenuIcon;
-};
-
-/** Product mega — visual only for now (no hrefs / click-through). */
-const productMenuGroups: Array<{ label: string; items: ProductMenuItem[] }> = [
-  {
-    label: 'Plan',
-    items: [
-      {
-        title: 'Demand forecasting',
-        description: 'Workload per location in 15-minute intervals',
-        icon: 'forecast',
-      },
-      {
-        title: 'Automatic scheduling',
-        description: 'Optimized shifts built from demand',
-        icon: 'calendar',
-      },
-      {
-        title: 'Rules & compliance',
-        description: 'Labor law, agreements and contracts built in',
-        icon: 'shield',
-      },
-    ],
-  },
-  {
-    label: 'Optimize',
-    items: [
-      {
-        title: 'Recommendations',
-        description: 'Savings and fixes ranked by impact',
-        icon: 'spark',
-      },
-      {
-        title: 'Workload coverage',
-        description: 'Optimized vs actual, need vs staffed',
-        icon: 'chart',
-      },
-      {
-        title: 'Multi-site staffing',
-        description: 'Lend and borrow hours between sites',
-        icon: 'transfer',
-      },
-    ],
-  },
-  {
-    label: 'Engage',
-    items: [
-      {
-        title: 'Nora AI assistant',
-        description: 'Answers about rules and settings, in the schedule',
-        icon: 'chat',
-      },
-      {
-        title: 'Employee app',
-        description: 'Shifts, availability and leave on iOS and Android',
-        icon: 'phone',
-      },
-      {
-        title: 'Open shifts & swaps',
-        description: 'Offer, accept and swap shifts in minutes',
-        icon: 'swap',
-      },
-    ],
-  },
-];
+const allIndustriesHref = `${homeHref}#industries`;
 
 /** Company — name-only (no descriptions). Contact is /contact, not get-in-touch. */
 const companyLinks = [
@@ -235,7 +154,7 @@ function alternateHref(targetLocale: Locale): string {
     <link rel="alternate" hreflang="x-default" href={alternateHref('en')} />
     <slot name="head" />
   </head>
-  <body>
+  <body class:list={[{ 'product-page-shell': headerBlend }]}>
     {/* Strip Wix Headless BODY_START badge (see global.css #wixheadless-banner-container). */}
     <script is:inline>
       (() => {
@@ -259,64 +178,9 @@ function alternateHref(targetLocale: Locale): string {
           />
         </a>
         <nav class="site-nav" aria-label="Primary">
-          <details class="nav-dropdown nav-dropdown--product">
-            <summary class="nav-dropdown__trigger">
-              Product
-              <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </summary>
-            <div class="nav-mega" role="region" aria-label="Product menu">
-              <div class="nav-mega__main">
-                <div class="nav-mega__cols">
-                  {
-                    productMenuGroups.map((group) => (
-                      <div class="nav-mega__col">
-                        <p class="nav-mega__k">{group.label}</p>
-                        <ul class="nav-mega__list">
-                          {group.items.map((item) => (
-                            <li>
-                              <div class="nav-mega__item">
-                                <span class="nav-mega__ic">
-                                  <NavMenuIcon name={item.icon} />
-                                </span>
-                                <span>
-                                  <span class="nav-mega__t">{item.title}</span>
-                                  <span class="nav-mega__d">{item.description}</span>
-                                </span>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))
-                  }
-                </div>
-              </div>
-              <aside class="nav-mega__feat">
-                <div class="nav-mega__shot">
-                  <img
-                    src="/nav/product-nora.png"
-                    alt="Workofo monthly schedule with Nora, the AI assistant"
-                    width="640"
-                    height="400"
-                    decoding="async"
-                  />
-                </div>
-                <p class="nav-mega__ft">Meet Nora</p>
-                <p class="nav-mega__fd">
-                  Workofo's AI assistant answers questions about rules, settings and schedules, right where you
-                  plan.
-                </p>
-                <div class="nav-mega__fb">
-                  See how Nora works
-                  <NavMenuIcon name="arrow" size={14} />
-                </div>
-              </aside>
-            </div>
-          </details>
+          <a class:list={['site-nav__product', { 'is-active': currentPath === '/product' }]} href={productHref} aria-current={currentPath === '/product' ? 'page' : undefined}>Product</a>
           <details class:list={['nav-dropdown', 'nav-dropdown--industries', { 'is-active': isSolutionsActive }]}>
-            <summary class="nav-dropdown__trigger">
+            <summary class="nav-dropdown__trigger" aria-expanded="false">
               {ui('solutions', locale)}
               <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -341,6 +205,7 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
+              <a class="nav-dropdown__all" href={allIndustriesHref}>All industries <span aria-hidden="true">→</span></a>
             </div>
           </details>
           {
@@ -351,7 +216,7 @@ function alternateHref(targetLocale: Locale): string {
               ))
           }
           <details class:list={['nav-dropdown', 'nav-dropdown--resources', { 'is-active': isResourcesActive }]}>
-            <summary class="nav-dropdown__trigger">
+            <summary class="nav-dropdown__trigger" aria-expanded="false">
               Resources
               <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -391,7 +256,7 @@ function alternateHref(targetLocale: Locale): string {
             </div>
           </details>
           <details class:list={['nav-dropdown', 'nav-dropdown--company', { 'is-active': isCompanyActive }]}>
-            <summary class="nav-dropdown__trigger">
+            <summary class="nav-dropdown__trigger" aria-expanded="false">
               Company
               <svg class="nav-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -425,7 +290,7 @@ function alternateHref(targetLocale: Locale): string {
         </nav>
         <div class="header-actions">
           <details class="lang-dropdown">
-            <summary class="lang-dropdown__trigger" aria-label="Language">
+            <summary class="lang-dropdown__trigger" aria-label="Language" aria-expanded="false">
               <FlagIcon locale={locale} />
               <span class="lang-dropdown__code">{LOCALE_LABELS[locale]}</span>
               <svg class="lang-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
@@ -489,44 +354,10 @@ function alternateHref(targetLocale: Locale): string {
         </div>
 
         <div class="mobile-nav__body">
-          <details class="mobile-acc">
-            <summary class="mobile-acc__h">
-              Product
-              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-                <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </summary>
-            <div class="mobile-acc__b">
-              {
-                productMenuGroups.map((group) => (
-                  <div class="mobile-acc__group">
-                    <p class="nav-mega__k">{group.label}</p>
-                    {group.items.map((item) => (
-                      <div class="nav-mega__item">
-                        <span class="nav-mega__ic">
-                          <NavMenuIcon name={item.icon} />
-                        </span>
-                        <span>
-                          <span class="nav-mega__t">{item.title}</span>
-                          <span class="nav-mega__d">{item.description}</span>
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ))
-              }
-              <div class="mobile-acc__nora">
-                <p class="nav-mega__ft">Meet Nora</p>
-                <p class="nav-mega__fd">
-                  Workofo's AI assistant answers questions about rules, settings and schedules, right where you
-                  plan.
-                </p>
-              </div>
-            </div>
-          </details>
+          <a class="mobile-acc__flat" href={productHref} aria-current={currentPath === '/product' ? 'page' : undefined}>Product</a>
 
           <details class="mobile-acc">
-            <summary class="mobile-acc__h">
+            <summary class="mobile-acc__h" aria-expanded="false">
               {ui('solutions', locale)}
               <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -541,6 +372,7 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
+              <a class="nav-dropdown__all" href={allIndustriesHref}>All industries <span aria-hidden="true">→</span></a>
             </div>
           </details>
 
@@ -555,7 +387,7 @@ function alternateHref(targetLocale: Locale): string {
           }
 
           <details class="mobile-acc">
-            <summary class="mobile-acc__h">
+            <summary class="mobile-acc__h" aria-expanded="false">
               Resources
               <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -583,7 +415,7 @@ function alternateHref(targetLocale: Locale): string {
           </details>
 
           <details class="mobile-acc">
-            <summary class="mobile-acc__h">
+            <summary class="mobile-acc__h" aria-expanded="false">
               Company
               <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -639,6 +471,17 @@ function alternateHref(targetLocale: Locale): string {
                   </li>
                 ))
               }
+            </ul>
+          </nav>
+
+          <nav class="site-footer__col" aria-label="Product">
+            <h2 class="site-footer__heading">Product</h2>
+            <ul class="site-footer__list">
+              <li><a href={productHref}>Product overview</a></li>
+              <li><a href={`${productHref}#forecasting`}>Demand forecasting</a></li>
+              <li><a href={`${productHref}#scheduling`}>Automatic scheduling</a></li>
+              <li><a href={`${productHref}#nora`}>Nora AI assistant</a></li>
+              <li><a href={`${productHref}#app`}>Employee app</a></li>
             </ul>
           </nav>
 

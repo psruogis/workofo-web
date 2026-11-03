@@ -1,0 +1,323 @@
+---
+import HomeBottomCta from './HomeBottomCta.astro';
+import { type Locale } from '../../lib/locales';
+import { localePath, industryPath } from '../../lib/paths';
+
+type Props = { locale: Locale };
+const { locale } = Astro.props as Props;
+const demoHref = localePath(locale, '/book-a-demo');
+const industries = [
+  { slug: 'retail', title: 'Retail', description: 'Staff every store around footfall' },
+  { slug: 'contact-centre', title: 'Contact centres', description: 'Meet service levels on every channel' },
+  { slug: 'aviation', title: 'Aviation', description: 'Ground handling around every flight' },
+  { slug: 'restaurants', title: 'Restaurants', description: 'Staff every rush, kitchen to floor' },
+  { slug: 'logistics', title: 'Logistics', description: 'Plan zones around your volumes' },
+] as const;
+const faqs = [
+  { question: 'What is workforce management software?', answer: 'Workforce management software helps shift-based businesses forecast demand, build schedules and manage changes. Workofo does this from demand: it forecasts workload, builds optimized schedules within your rules and recommends improvements.' },
+  { question: 'How does Workofo forecast demand?', answer: 'It uses your sales, volumes, tasks and service targets, together with promotions, seasonality, weather and events, to forecast workload in 15-minute intervals per location.' },
+  { question: 'Does Workofo follow labour law and agreements?', answer: 'Yes. Labour law, union agreements, contracts and skills are applied to every schedule, so compliance never depends on manual checks.' },
+  { question: 'What is Nora?', answer: "Nora is Workofo's AI assistant. It answers questions about rules, settings and schedules, using the schedule you have open, and gets your request to the right person." },
+  { question: 'Do managers keep control?', answer: 'Yes. Workofo suggests the schedule and the changes; managers review, adjust and publish.' },
+];
+const faqJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+});
+const dayHighlights = [
+  { day: 'Mon 6 Jul', hours: '94.8 h', left: '15.35%' },
+  { day: 'Tue 7 Jul', hours: '93.9 h', left: '27.45%' },
+  { day: 'Wed 8 Jul', hours: '81.1 h', left: '39.55%' },
+  { day: 'Thu 9 Jul', hours: '91.2 h', left: '51.65%' },
+];
+---
+
+<div class="product-page">
+  <script type="application/ld+json" set:html={faqJsonLd} />
+  <div class="product-top">
+    <section class="product-hero" aria-labelledby="product-heading">
+      <div class="product-wrap">
+        <div class="product-hero__copy">
+          <h1 id="product-heading">Workforce management software that plans from demand</h1>
+          <p>Workofo forecasts workload, builds schedules within your rules and shows what to change next. One platform for planners, managers and employees.</p>
+          <div class="product-hero__actions">
+            <a class="product-button product-button--dark" href={demoHref}>Book a demo</a>
+            <a class="product-button product-button--light" href="#platform">Explore the platform <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+          </div>
+        </div>
+
+        <div class="product-process" role="img" aria-label="Sales, footfall, volumes, flight plans, weather and employee data feed Workofo's forecast. Workofo then builds schedules within your rules and ranks improvements before publishing schedules to payroll and the employee app.">
+          <div class="product-process__end"><strong>Your data</strong>{['Sales', 'Footfall', 'Volumes', 'Flight plans', 'Weather', 'Employee data'].map((item) => <span>{item}</span>)}</div>
+          <div class="product-process__card">
+            <span class="product-process__number">01</span><h2>Forecast</h2><p>Workload per site, every 15 minutes</p>
+            <div class="product-process__bars" aria-hidden="true">{[20,22,24,28,35,48,62,74,82,78,66,54,44,39,42,52,66,79,92,100,94,82,68,53,41,36,40,45,38,30,24,19].map((height) => <i style={`height:${height}%`}></i>)}</div>
+          </div>
+          <div class="product-process__card">
+            <span class="product-process__number">02</span><h2>Schedule</h2><p>Shifts placed where the work is</p>
+            <div class="product-process__lanes" aria-hidden="true"><span><i style="left:8%;width:46%"></i></span><span><i style="left:20%;width:58%"></i></span><span><i style="left:38%;width:52%"></i></span><span><i style="left:52%;width:44%"></i></span></div>
+            <span class="product-process__ok">✓ Within your rules</span>
+          </div>
+          <div class="product-process__card">
+            <span class="product-process__number">03</span><h2>Optimize</h2><p>Changes ranked by hours saved</p>
+            <div class="product-process__recs" aria-hidden="true"><span>Shorten a time window<i style="width:86%"></i></span><span>Move hours to the peak<i style="width:64%"></i></span><span>Share staff across sites<i style="width:42%"></i></span></div>
+          </div>
+          <div class="product-process__end product-process__end--out"><strong>Out to</strong><span><i aria-hidden="true">✓</i> Published schedule</span><span><i aria-hidden="true">✓</i> Payroll</span><span><i aria-hidden="true">✓</i> Employee app</span></div>
+        </div>
+        <a class="product-nora-link" href="#nora">✦ Ask Nora at every step <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+    <section class="product-trust" aria-label="Trusted by teams across Europe">
+      <div class="product-wrap"><p>Trusted by teams across Europe</p><ul>{[
+        ['Telenordi', 'telenordi.png'], ['Senukai', 'senukai.png'], ['Barbora', 'barbora.png'], ['Tele2', 'tele2.png'], ['Planas Chuliganas', 'planas-chuliganas.png'],
+      ].map(([name, image]) => <li><img src={`/clients/${image}?v=2`} alt={name} loading="lazy" /></li>)}</ul></div>
+    </section>
+  </div>
+
+  <section class="product-section product-features" id="platform" aria-labelledby="product-features-heading">
+    <div class="product-wrap">
+      <div class="product-section__head"><h2 id="product-features-heading">Everything in one platform</h2><p>Forecasting, scheduling, an AI assistant and an app for every employee. Four parts that work as one.</p></div>
+      <div class="product-features__grid">
+        <article class="product-feature product-feature--wide" id="forecasting">
+          <div class="product-feature__visual product-feature__visual--forecast" aria-hidden="true">
+            <svg viewBox="0 0 500 180" preserveAspectRatio="none"><defs><linearGradient id="product-forecast-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#df5c46" stop-opacity=".24"/><stop offset="1" stop-color="#df5c46" stop-opacity="0"/></linearGradient></defs><path d="M0 150 C50 148 70 135 100 100 S150 60 190 110 S250 145 290 110 S340 35 385 55 S450 140 500 150 L500 180 L0 180Z" fill="url(#product-forecast-fill)"/><path d="M0 150 C50 148 70 135 100 100 S150 60 190 110 S250 145 290 110 S340 35 385 55 S450 140 500 150" fill="none" stroke="#df5c46" stroke-width="3"/><circle cx="375" cy="52" r="5" fill="#fff" stroke="#df5c46" stroke-width="3"/></svg><span>Peak demand</span>
+          </div>
+          <div class="product-feature__copy"><h3>Demand forecasting</h3><p>Know the workload for every site in 15-minute intervals, before you plan a single shift.</p><ul><li>Forecasts from sales, volumes, tasks and events</li><li>Need versus scheduled staff, day by day</li><li>Multi-site planning and shared hours</li></ul></div>
+        </article>
+        <article class="product-feature" id="scheduling">
+          <div class="product-feature__visual product-feature__visual--schedule" aria-hidden="true"><div class="product-feature__schedule">{['AH','CE','EP','ER'].map((name, i) => <div><b>{name}</b><span><i style={`left:${[6,22,40,30][i]}%;width:${[52,60,48,42][i]}%`}></i></span></div>)}</div><small>✓ Rules, contracts and skills OK</small></div>
+          <div class="product-feature__copy"><h3>Automatic scheduling</h3><p>Optimized shifts built from demand, within your rules. Workofo also shows what to change next.</p><ul><li>Labour law, agreements, contracts and skills applied</li><li>Recommendations ranked by hours saved</li><li>Managers review, adjust and publish</li></ul></div>
+        </article>
+        <article class="product-feature product-feature--dark" id="nora">
+          <div class="product-feature__visual product-feature__visual--nora" aria-hidden="true"><span class="product-feature__question">What can Nora do?</span><span class="product-feature__answer"><b>✧ Nora</b>Nora can help explain Workofo features and current configuration, answer how-to questions, investigate schedule and employee issues, check shift swaps, review integrations, and advise on reports.</span></div>
+          <div class="product-feature__copy"><h3>Nora AI assistant</h3><p>Answers about rules, settings and schedules, right where you plan.</p><ul><li>Explains features and your configuration</li><li>Investigates schedule and employee issues</li><li>Checks shift swaps and advises on reports</li></ul></div>
+        </article>
+        <article class="product-feature product-feature--wide" id="app">
+          <div class="product-feature__visual product-feature__visual--app" aria-hidden="true"><div class="product-feature__phone"><div class="product-feature__notch"></div><span><b>Shift offered</b><small>Sat 07:00–13:00</small></span><span><b>You accepted the shift</b><small>Added to your schedule</small></span><span><b>Swap approved</b><small>By your manager</small></span></div></div>
+          <div class="product-feature__copy"><h3>Employee app</h3><p>Shifts, availability, open shifts and swaps for every employee, on iOS and Android.</p><ul><li>See shifts and update availability</li><li>Pick up open shifts and swap with colleagues</li><li>Managers approve requests on the go</li></ul></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-section product-week" id="weekly-view" aria-labelledby="product-week-heading"><div class="product-wrap">
+    <div class="product-section__head"><h2 id="product-week-heading">The whole week, planned to the quarter hour</h2><p>This is the real schedule view. Hover a day to see the forecast need Workofo plans against.</p></div>
+    <figure class="product-week__frame"><div class="product-week__bar"><i></i><i></i><i></i><span>Schedules · Weekly view</span></div><div class="product-week__image" data-product-spotlight><img src="/product/weekly-schedule-anonymized.png" alt="Anonymized Workofo weekly schedule showing forecast curves and planned shifts for each day" loading="lazy" />{dayHighlights.map((item, index) => <div class="product-week__day" data-spotlight-day={index} style={`left:${item.left}`} tabindex="0" aria-label={`${item.day}: forecast need ${item.hours}`}><span><b>{item.day}</b><small><i aria-hidden="true"></i>Forecast need <strong>{item.hours}</strong></small><small>Planned in 15-minute intervals</small></span></div>)}</div></figure>
+  </div></section>
+
+  <section class="product-multisite" id="multi-site" aria-labelledby="product-multisite-heading"><div class="product-wrap product-multisite__grid"><div><h2 id="product-multisite-heading">One platform, every site</h2><p>Plan every location and team in one system. Move hours to where the work is, and let sites share people when one runs short.</p></div><dl><div><dt>5–15%</dt><dd><b>More effective capacity</b><span>Hours move from quiet periods to peaks, so the same team covers more of the demand.</span></dd></div><div><dt>15 min</dt><dd><b>Forecast intervals</b><span>Demand is planned per site in 15-minute intervals, not per day or per week.</span></dd></div><div><dt>20,000+</dt><dd><b>Employees in one plan</b><span>From a single site with 200 employees to networks of 20,000 and more.</span></dd></div></dl></div></section>
+
+  <section class="product-section product-industries" aria-labelledby="product-industries-heading"><div class="product-wrap"><div class="product-section__head"><h2 id="product-industries-heading">Set up for your industry</h2><p>The same platform, configured for how work runs in your operation.</p></div><div class="product-industries__grid">{industries.map((item) => <a href={industryPath(locale, item.slug)}><strong>{item.title}</strong><span>{item.description}</span><i aria-hidden="true">→</i></a>)}</div></div></section>
+
+  <section class="product-section product-faq" aria-labelledby="product-faq-heading"><div class="product-wrap product-faq__grid"><div><h2 id="product-faq-heading">The Workofo platform, answered</h2><p>Questions about how it works? Bring us your scheduling rules and demand data.</p></div><div>{faqs.map((item, index) => <details open={index === 0}><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div></div></section>
+
+  <HomeBottomCta demoHref={demoHref} secondaryHref="#platform" sub="Bring your demand patterns, roles and labor rules. Let's explore where better scheduling could make a difference." note="We respond within one working day." animate={false} />
+</div>
+
+<script>
+  const spotlight = document.querySelector<HTMLElement>('[data-product-spotlight]');
+  if (spotlight) {
+    const days = Array.from(spotlight.querySelectorAll<HTMLElement>('[data-spotlight-day]'));
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let active = 0;
+    let paused = false;
+    const show = (index: number) => {
+      days.forEach((day, dayIndex) => day.classList.toggle('is-active', dayIndex === index));
+      active = index;
+    };
+    show(0);
+    days.forEach((day, index) => {
+      day.addEventListener('mouseenter', () => { paused = true; show(index); });
+      day.addEventListener('mouseleave', () => { paused = false; });
+      day.addEventListener('focus', () => { paused = true; show(index); });
+      day.addEventListener('blur', () => { paused = false; });
+    });
+    if (!reduced.matches) {
+      const timer = window.setInterval(() => { if (!paused && !reduced.matches) show((active + 1) % days.length); }, 2500);
+      window.addEventListener('pagehide', () => window.clearInterval(timer), { once: true });
+    }
+  }
+</script>
+
+<style>
+  .product-page { color: #111; background: #fff; font-family: var(--font-sans); }
+  .product-wrap { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 56px; }
+  .product-top { background: #ececea; }
+  .product-hero { padding: 72px 0 40px; background: radial-gradient(ellipse 55% 38% at 52% 75%, rgba(223,92,70,.11), transparent 80%), #ececea; }
+  .product-hero__copy { display: flex; flex-direction: column; align-items: center; max-width: 880px; margin: 0 auto; text-align: center; }
+  .product-crumb { display: flex; gap: 10px; align-items: center; color: #6f6f6f; font-size: 14px; }
+  .product-crumb [aria-current] { color: #111; font-weight: 500; }
+  .product-hero h1 { margin: 0; color: #111; font-family: var(--font-display); font-size: clamp(42px,5.1vw,64px); font-weight: 600; line-height: 1.04; letter-spacing: -.03em; text-wrap: balance; }
+  .product-hero__copy > p { max-width: 640px; margin: 24px 0 0; color: #6f6f6f; font-size: 19.2px; line-height: 1.6; }
+  .product-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 36px; }
+  .product-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; height: 52px; padding: 0 26px; border: 1px solid; border-radius: 999px; font-size: 15px; font-weight: 500; line-height: 1; text-decoration: none; }
+  .product-button--dark { border-color: #111; background: #111; color: #fff; }
+  .product-button--dark:hover { background: #292929; }
+  .product-button--light { border-color: #e4e4e1; background: #fff; color: #111; }
+  .product-button--light:hover { border-color: #111; }
+  .product-button:focus-visible, .product-nora-link:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+  .product-process { display: grid; grid-template-columns: 148px repeat(3,minmax(0,1fr)) 158px; align-items: stretch; gap: 24px; margin-top: 72px; padding: 28px; border: 1px solid rgba(255,255,255,.8); border-radius: 28px; background: rgba(255,255,255,.58); box-shadow: 0 40px 80px -48px rgba(17,17,17,.3); }
+  .product-process__end { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 7px; min-width: 0; }
+  .product-process__end:first-child::after { content: ''; position: absolute; top: 50%; left: calc(100% + 1px); width: 24px; border-top: 2px dotted #df5c46; opacity: .65; }
+  .product-process__end strong { margin-bottom: 4px; color: #6f6f6f; font-size: 12px; font-weight: 600; }
+  .product-process__end span { max-width: 100%; box-sizing: border-box; padding: 6px 11px; border: 1px solid #e4e4e1; border-radius: 999px; background: #fff; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .product-process__end--out span { border-color: #111; background: #111; color: #fff; }
+  .product-process__end--out i { margin-right: 4px; color: #df5c46; font-style: normal; }
+  .product-process__card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 270px; padding: 20px; border: 1px solid #e4e4e1; border-radius: 20px; background: #fff; box-shadow: 0 12px 32px -16px rgba(17,17,17,.18); }
+  .product-process__card::after { content: ''; position: absolute; top: 50%; left: calc(100% + 1px); width: 24px; border-top: 2px dotted #df5c46; opacity: .65; }
+  .product-process__number { color: #df5c46; font-size: 12px; font-weight: 600; }
+  .product-process__card h2 { margin: 6px 0 0; font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+  .product-process__card p { margin: 4px 0 0; color: #6f6f6f; font-size: 13px; line-height: 1.45; }
+  .product-process__bars { display: flex; align-items: flex-end; gap: 2px; height: 90px; margin-top: auto; padding-top: 18px; }
+  .product-process__bars i { flex: 1; border-radius: 2px 2px 0 0; background: #df5c46; opacity: .85; }
+  .product-process__lanes { display: grid; gap: 7px; margin-top: auto; padding-top: 18px; }
+  .product-process__lanes span { position: relative; height: 13px; border-radius: 4px; background: #f2f2ef; }
+  .product-process__lanes i { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: #111; }
+  .product-process__ok { align-self: flex-start; margin-top: 12px; padding: 6px 10px; border-radius: 999px; background: #eef6ef; color: #1e6b3a; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .product-process__recs { display: grid; gap: 9px; margin-top: auto; padding-top: 18px; }
+  .product-process__recs span { font-size: 11px; line-height: 1.25; }
+  .product-process__recs i { display: block; height: 6px; margin-top: 5px; border-radius: 3px; background: linear-gradient(90deg,#df5c46,#ec8b78); }
+  .product-nora-link { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: max-content; max-width: 100%; min-height: 44px; margin: -22px auto 0; padding: 0 8px 0 16px; border-radius: 999px; background: #111; color: #fff; box-shadow: 0 20px 40px -20px rgba(17,17,17,.6); font-size: 14px; font-weight: 500; text-decoration: none; }
+  .product-nora-link span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; color: #111; }
+  .product-trust { padding: 36px 0 52px; }
+  .product-trust .product-wrap { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  .product-trust p { margin: 0; color: #7d7d7b; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-align: center; text-transform: uppercase; }
+  .product-trust ul { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px 65px; width: 100%; margin: 0; padding: 0; list-style: none; }
+  .product-trust li { display: grid; place-items: center; height: 42px; }
+  .product-trust img { display: block; max-width: 170px; max-height: 38px; width: auto; height: auto; object-fit: contain; filter: grayscale(1); opacity: .55; }
+  .product-section { background: #fff; }
+  .product-features { padding: 128px 0 72px; }
+  .product-section__head { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: end; margin-bottom: 56px; }
+  .product-section__head h2, .product-multisite h2, .product-faq h2 { max-width: 13em; margin: 0; font-family: var(--font-display); font-size: clamp(34px,3.7vw,46px); font-weight: 600; line-height: 1.08; letter-spacing: -.03em; }
+  .product-section__head p { justify-self: end; max-width: 28rem; margin: 0; color: #6f6f6f; font-size: 17px; line-height: 1.6; }
+  .product-features__grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 20px; }
+  .product-feature { grid-column: span 5; display: flex; flex-direction: column; overflow: hidden; border-radius: 28px; background: #f4f4f2; }
+  .product-feature--wide { grid-column: span 7; }
+  .product-feature--dark { background: #111; color: #fff; }
+  .product-feature__visual { position: relative; display: flex; flex: 1 0 280px; min-height: 280px; margin: 12px 12px 0; overflow: hidden; border-radius: 20px; background: #fff; }
+  .product-feature__copy { display: flex; flex-direction: column; align-items: flex-start; padding: 28px 32px 32px; }
+  .product-feature__copy h3 { margin: 0; font-family: var(--font-display); font-size: 28px; font-weight: 600; line-height: 1.15; letter-spacing: -.02em; }
+  .product-feature__copy p { max-width: 30rem; margin: 10px 0 0; color: #6f6f6f; font-size: 15.5px; line-height: 1.6; }
+  .product-feature--dark .product-feature__copy p { color: rgba(255,255,255,.65); }
+  .product-feature__copy ul { display: grid; gap: 10px; width: 100%; margin: 24px 0 0; padding: 20px 0 0; border-top: 1px solid #deded9; list-style: none; }
+  .product-feature--dark .product-feature__copy ul { border-top-color: rgba(255,255,255,.2); }
+  .product-feature__copy li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; font-weight: 500; line-height: 1.4; }
+  .product-feature__copy li::before { content: '✓'; flex: none; color: #df5c46; font-weight: 700; }
+  .product-feature__visual--forecast svg { position: absolute; left: 28px; bottom: 24px; width: calc(100% - 56px); height: 70%; }
+  .product-feature__visual--forecast::after { content: ''; position: absolute; right: 28px; bottom: 16px; left: 28px; height: 7px; background: repeating-linear-gradient(90deg, #d7d7d2 0 1px, transparent 1px 12px); }
+  .product-feature__visual--forecast > span { position: absolute; top: 33%; right: 19%; padding: 6px 10px; border-radius: 8px; background: #111; color: #fff; font-size: 12px; font-weight: 600; }
+  .product-feature__visual--schedule { flex-direction: column; justify-content: center; gap: 18px; padding: 28px; }
+  .product-feature__schedule { display: grid; gap: 12px; width: 100%; }
+  .product-feature__schedule > div { display: flex; align-items: center; gap: 12px; }
+  .product-feature__schedule b { display: grid; flex: none; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #ececea; color: #4a4f57; font-size: 11px; }
+  .product-feature__schedule span { position: relative; flex: 1; height: 26px; border-radius: 7px; background: repeating-linear-gradient(90deg,#f4f4f2 0 calc(12.5% - 1px),#e9e9e6 calc(12.5% - 1px) 12.5%); }
+  .product-feature__schedule i { position: absolute; top: 3px; bottom: 3px; border-radius: 5px; background: #111; }
+  .product-feature__schedule > div:last-child i { background: #df5c46; }
+  .product-feature__visual--schedule small { align-self: flex-start; padding: 7px 12px; border-radius: 999px; background: #eef6ef; color: #1e6b3a; font-size: 12px; font-weight: 600; }
+  .product-feature__visual--nora { flex-direction: column; justify-content: center; gap: 14px; padding: 28px; background: #1b1b1b; }
+  .product-feature__question { align-self: flex-end; padding: 9px 14px; border-radius: 12px 12px 4px 12px; background: #fff; color: #111; font-size: 14px; }
+  .product-feature__answer { display: flex; flex-direction: column; align-self: flex-start; gap: 6px; max-width: 92%; padding: 12px 14px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px 12px 12px 4px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); font-size: 13.5px; line-height: 1.55; }
+  .product-feature__answer b { color: #fff; font-size: 12px; }
+  .product-feature__visual--app { align-items: flex-end; justify-content: center; background: linear-gradient(180deg,#fff,#f4f4f2); }
+  .product-feature__phone { position: relative; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; width: 250px; height: 250px; margin-top: 30px; padding: 40px 14px 0; border: 6px solid #111; border-bottom: 0; border-radius: 36px 36px 0 0; background: #f4f4f2; }
+  .product-feature__notch { position: absolute; top: 10px; left: 50%; width: 70px; height: 18px; margin-left: -35px; border-radius: 12px; background: #111; }
+  .product-feature__phone > span { display: flex; flex-direction: column; padding: 10px 12px; border-radius: 14px; background: #fff; box-shadow: 0 8px 20px -12px rgba(17,17,17,.35); }
+  .product-feature__phone b { font-size: 12px; }
+  .product-feature__phone small { color: #6f6f6f; font-size: 11px; }
+  .product-week { padding: 72px 0 128px; }
+  .product-week__frame { overflow: hidden; margin: 0; border: 1px solid #e4e4e1; border-radius: 20px; background: #fff; box-shadow: 0 60px 120px -60px rgba(17,17,17,.4); }
+  .product-week__bar { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 18px; border-bottom: 1px solid #ececea; background: #fafaf8; }
+  .product-week__bar i { width: 10px; height: 10px; border-radius: 50%; background: #e1e0da; }
+  .product-week__bar span { margin-left: 12px; color: #4a4f57; font-size: 13px; font-weight: 500; }
+  .product-week__image { position: relative; aspect-ratio: 1.6; }
+  .product-week__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .product-week__day { position: absolute; top: 15%; bottom: 0; width: 12.1%; outline: none; }
+  .product-week__day::before { content: ''; position: absolute; inset: 0 2px; border-radius: 8px; box-shadow: inset 0 0 0 2px #111,0 0 0 9999px rgba(255,255,255,.62); opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .product-week__day > span { position: absolute; z-index: 1; top: 24%; left: 50%; display: flex; flex-direction: column; gap: 6px; box-sizing: border-box; width: 235px; padding: 14px 16px; transform: translate(-50%,6px); border-radius: 14px; background: #111; color: #fff; box-shadow: 0 20px 40px -16px rgba(17,17,17,.5); opacity: 0; transition: opacity .2s,transform .2s; pointer-events: none; }
+  .product-week__day.is-active::before, .product-week__day.is-active > span, .product-week__day:hover::before, .product-week__day:focus::before, .product-week__day:hover > span, .product-week__day:focus > span { opacity: 1; }
+  .product-week__day:hover > span, .product-week__day:focus > span { transform: translate(-50%,0); }
+  .product-week__day b { font-size: 14px; }
+  .product-week__day small { display: flex; justify-content: space-between; gap: 10px; color: #c9cbd0; font-size: 12px; white-space: nowrap; }
+  .product-week__day strong { color: #fff; }
+  .product-week__day small i { flex: none; align-self: center; width: 12px; height: 2px; background: #2b9ec2; }
+  .product-multisite { position: relative; overflow: hidden; padding: 128px 0; background: #0e0e0e; color: #fff; }
+  .product-multisite::before { content: ''; position: absolute; top: -35%; right: -12%; width: 900px; height: 900px; background: radial-gradient(closest-side,rgba(223,92,70,.16),transparent); pointer-events: none; }
+  .product-multisite__grid { position: relative; display: grid; grid-template-columns: 1fr 1.25fr; gap: 72px; }
+  .product-multisite__grid > div:first-child { align-self: start; }
+  .product-multisite p { max-width: 26rem; margin: 20px 0 0; color: #a9abb0; font-size: 17px; line-height: 1.6; }
+  .product-multisite a { display: inline-flex; gap: 8px; margin-top: 28px; padding-bottom: 5px; border-bottom: 1px solid #fff; color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; }
+  .product-multisite dl { margin: 0; border-bottom: 1px solid rgba(255,255,255,.14); }
+  .product-multisite dl > div { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 32px 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .product-multisite dt { font-family: var(--font-display); font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -.03em; white-space: nowrap; }
+  .product-multisite dd { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+  .product-multisite dd b { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+  .product-multisite dd span { color: #9a9fa8; font-size: 15px; line-height: 1.6; }
+  .product-industries { padding: 120px 0 64px; }
+  .product-industries__grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 12px; }
+  .product-industries__grid a { display: flex; flex-direction: column; gap: 8px; min-height: 168px; padding: 24px; border-radius: 20px; background: #f4f4f2; color: #111; text-decoration: none; }
+  .product-industries__grid a:hover { background: #ececea; }
+  .product-industries__grid a:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+  .product-industries__grid strong { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+  .product-industries__grid span { color: #6f6f6f; font-size: 14px; line-height: 1.5; }
+  .product-industries__grid i { margin-top: auto; font-size: 20px; font-style: normal; }
+  .product-faq { padding: 80px 0 120px; }
+  .product-faq__grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 72px; }
+  .product-faq__grid > div:first-child p { max-width: 25rem; margin: 20px 0 0; color: #6f6f6f; font-size: 16px; line-height: 1.6; }
+  .product-faq details { border-top: 1px solid #e6e6e3; }
+  .product-faq details:last-child { border-bottom: 1px solid #e6e6e3; }
+  .product-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 0; font-family: var(--font-display); font-size: 21px; font-weight: 600; line-height: 1.3; list-style: none; cursor: pointer; }
+  .product-faq summary::-webkit-details-marker { display: none; }
+  .product-faq summary span { display: grid; flex: none; place-items: center; width: 32px; height: 32px; border: 1px solid #e0e0dc; border-radius: 50%; font-family: var(--font-sans); font-size: 23px; font-weight: 400; }
+  .product-faq details[open] summary span { background: #111; color: #fff; transform: rotate(45deg); }
+  .product-faq details p { margin: -6px 0 0; padding: 0 56px 26px 0; color: #6f6f6f; font-size: 15.5px; line-height: 1.65; }
+  @media (max-width: 1100px) {
+    .product-process { grid-template-columns: 1fr; }
+    .product-process__end { grid-column: auto; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+    .product-process__end strong { flex-basis: 100%; }
+    .product-process__card { min-height: 180px; }
+    .product-process__end:first-child::after,
+    .product-process__card::after { top: calc(100% + 1px); left: 50%; width: 0; height: 24px; border-top: 0; border-left: 2px dotted #df5c46; }
+  }
+  @media (max-width: 900px) {
+    .product-wrap { padding: 0 20px; }
+    .product-hero { padding: 48px 0 32px; }
+    .product-hero h1 { font-size: 40px; }
+    .product-hero__copy > p { font-size: 17px; }
+    .product-process { gap: 12px; margin-top: 48px; padding: 16px; }
+    .product-process__card { min-height: 230px; padding: 16px; }
+    .product-features { padding: 80px 0 40px; }
+    .product-section__head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
+    .product-section__head p { justify-self: start; }
+    .product-feature { grid-column: 1 / -1; }
+    .product-feature__visual { flex-basis: 230px; min-height: 230px; }
+    .product-week { padding: 40px 0 80px; }
+    .product-week__day { display: none; }
+    .product-multisite { padding: 88px 0; }
+    .product-multisite__grid, .product-faq__grid { grid-template-columns: 1fr; gap: 36px; }
+    .product-multisite dl > div { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+    .product-multisite dt { font-size: 36px; }
+    .product-industries { padding: 80px 0 40px; }
+    .product-industries__grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .product-industries__grid a { min-height: 130px; }
+    .product-faq { padding: 72px 0; }
+  }
+  @media (max-width: 640px) {
+    .product-hero__actions { width: 100%; }
+    .product-button { width: 100%; }
+    .product-process { grid-template-columns: 1fr; }
+    .product-process__end { grid-column: auto; }
+    .product-process__card { min-height: 190px; }
+    .product-trust ul { gap: 16px 28px; }
+    .product-trust img { max-width: 115px; max-height: 32px; }
+    .product-feature__copy { padding: 24px; }
+    .product-industries__grid { grid-template-columns: 1fr; }
+    .product-industries__grid a { min-height: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .product-week__day::before, .product-week__day > span { transition: none; }
+  }
+</style>

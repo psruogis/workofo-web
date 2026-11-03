@@ -1,0 +1,20 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ProductOverview from '../../components/sections/ProductOverview.astro';
+import { listNavPages } from '../../lib/cms';
+
+const locale = 'en' as const;
+const navPages = await listNavPages(locale);
+---
+
+<SiteLayout
+  locale={locale}
+  title="Workforce management software | Workofo"
+  description="Workofo is workforce management software that forecasts demand, builds schedules within your rules and shows what to change next. One platform for planners, managers and employees."
+  pathWithoutLang="/product"
+  navPages={navPages}
+  headerBlend={true}
+>
+  <link slot="seo-tags" rel="canonical" href={`https://${Astro.url.host}/product`} />
+  <ProductOverview locale={locale} />
+</SiteLayout>

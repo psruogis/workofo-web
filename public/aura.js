@@ -56,6 +56,9 @@
     allDropdowns().forEach((details) => {
       let openTimer = 0;
       let closeTimer = 0;
+      const trigger = details.querySelector('summary');
+      const syncExpanded = () => trigger?.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+      syncExpanded();
 
       const clearTimers = () => {
         window.clearTimeout(openTimer);
@@ -80,8 +83,17 @@
       });
 
       details.addEventListener('toggle', () => {
+        syncExpanded();
         if (details.open) closeOthers(details);
       });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const active = allDropdowns().find((details) => details.open);
+      if (!active) return;
+      active.open = false;
+      active.querySelector('summary')?.focus();
     });
 
     document.addEventListener('pointerdown', (e) => {
@@ -93,6 +105,13 @@
       });
     });
   })();
+
+  document.querySelectorAll('details.mobile-acc').forEach((details) => {
+    const summary = details.querySelector('summary');
+    const syncExpanded = () => summary?.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+    syncExpanded();
+    details.addEventListener('toggle', syncExpanded);
+  });
 
   /** Mobile full-screen nav drawer */
   (function setupMobileNav() {
