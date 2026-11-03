@@ -1,9 +1,11 @@
 ---
 import SiteLayout from '../../../layouts/SiteLayout.astro';
 import { isLocale, ui, type Locale } from '../../../lib/locales';
-import { listBlogPosts, formatPostDate } from '../../../lib/blog';
+import { listBlogPosts } from '../../../lib/blog';
 import { listNavPages } from '../../../lib/cms';
 import { localePath } from '../../../lib/paths';
+import BlogArchive from '../../../components/sections/BlogArchive.astro';
+import HomeBottomCta from '../../../components/sections/HomeBottomCta.astro';
 
 const rawLang = Astro.params.lang;
 if (!isLocale(rawLang)) {
@@ -15,39 +17,11 @@ if (locale === 'en') {
   return Astro.redirect('/blog', 301);
 }
 
-const { posts: blogPosts, error } = await listBlogPosts();
+const { posts: blogPosts, error } = await listBlogPosts(100);
 const navPages = await listNavPages(locale);
 ---
 
 <SiteLayout locale={locale} title={ui('blog', locale)} pathWithoutLang="/blog" navPages={navPages}>
-  <section class="blog-list" data-reveal>
-    <p class="t-overline section__eyebrow">{ui('blog', locale)}</p>
-    <h1 data-split>{ui('blog', locale)}</h1>
-    <p class="lede">{ui('blogIntro', locale)}</p>
-
-    {error && <p class="dev-msg">{error}</p>}
-
-    {
-      !error && blogPosts.length === 0 && (
-        <p class="muted">{ui('blogEmpty', locale)}</p>
-      )
-    }
-
-    <div class="blog-list__grid" data-reveal>
-      {
-        blogPosts.map((post) => (
-          <article class="blog-card">
-            <a href={localePath(locale, `/blog/${post.slug}`)}>
-              <div class="blog-card__cover">
-                {post.coverImageUrl ? <img src={post.coverImageUrl} alt="" /> : null}
-              </div>
-              <h2>{post.title}</h2>
-              <p class="blog-card__meta">{formatPostDate(post.firstPublishedDate, locale)}</p>
-              {post.excerpt && <p>{post.excerpt}</p>}
-            </a>
-          </article>
-        ))
-      }
-    </div>
-  </section>
+  <BlogArchive posts={blogPosts} error={error} locale={locale} />
+  <HomeBottomCta demoHref={localePath(locale, '/get-in-touch')} secondaryHref={`${localePath(locale, '/')}#home-features`} />
 </SiteLayout>

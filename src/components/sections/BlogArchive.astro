@@ -1,0 +1,230 @@
+---
+import type { BlogPostSummary } from '../../lib/blog';
+import { ui, type Locale } from '../../lib/locales';
+import { localePath } from '../../lib/paths';
+
+type Props = { posts: BlogPostSummary[]; error?: string; locale: Locale };
+const { posts, error, locale } = Astro.props as Props;
+const swedish = locale === 'se';
+const labels = swedish
+  ? { intro: ui('blogIntro', locale), search: 'Sök artiklar', all: 'Alla artiklar', planning: 'Bemanningsplanering', retail: 'Detaljhandel', trends: 'Branschtrender', cost: 'Kostnadskontroll', latest: 'Senaste artiklarna', read: 'Läs artikel', more: 'Visa fler artiklar', empty: 'Inga artiklar hittades.', article: 'artikel', articles: 'artiklar', minRead: 'min läsning' }
+  : { intro: 'Ideas on workforce planning, demand-based scheduling and running shift-based operations.', search: 'Search articles', all: 'All articles', planning: 'Workforce planning', retail: 'Retail', trends: 'Industry trends', cost: 'Cost control', latest: 'Latest articles', read: 'Read article', more: 'Load more articles', empty: 'No articles found.', article: 'article', articles: 'articles', minRead: 'min read' };
+const topics = ['all', 'planning', 'retail', 'trends', 'cost'] as const;
+type Topic = (typeof topics)[number];
+const classify = (post: BlogPostSummary): Exclude<Topic, 'all'> => {
+  const text = `${post.slug ?? ''} ${post.title ?? ''}`.toLowerCase();
+  if (/retail|shop/.test(text)) return 'retail';
+  if (/cost|expense|overtime/.test(text)) return 'cost';
+  if (/trend|future|industry/.test(text)) return 'trends';
+  return 'planning';
+};
+const viewPosts = posts.filter((post) => post.slug && post.title).map((post) => {
+  const author = 'Workofo';
+  return { ...post, topic: classify(post), author, initials: author.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase(), search: `${post.title} ${post.excerpt ?? ''}`.toLowerCase() };
+});
+const featured = viewPosts.find((post) => post.slug?.includes('industry-trends')) ?? viewPosts[0];
+const counts = Object.fromEntries(topics.map((topic) => [topic, topic === 'all' ? viewPosts.length : viewPosts.filter((post) => post.topic === topic).length]));
+const topicLabel = (topic: Exclude<Topic, 'all'>) => labels[topic];
+---
+
+<div class="blog-archive" data-blog-archive data-blog-error={error ? 'true' : 'false'} lang={swedish ? 'sv' : 'en'}>
+  <section class="blog-archive__hero" aria-labelledby="blog-archive-heading">
+    <div class="blog-archive__wrap">
+      <div class="blog-archive__hero-row">
+        <div>
+          <h1 id="blog-archive-heading">{ui('blog', locale)}</h1>
+          <p>{labels.intro}</p>
+        </div>
+        <form class="blog-archive__search" role="search" data-blog-search-form>
+          <label class="sr-only" for="blog-archive-search">{labels.search}</label>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+          <input id="blog-archive-search" type="search" placeholder={labels.search} autocomplete="off" data-blog-search />
+        </form>
+      </div>
+      <div class="blog-archive__filters" role="group" aria-label={swedish ? 'Filtrera efter ämne' : 'Filter by topic'}>
+        {topics.map((topic) => (
+          <button type="button" class="blog-archive__filter" data-blog-topic={topic} aria-pressed={topic === 'all' ? 'true' : 'false'}>
+            {labels[topic]} <span>{counts[topic]}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-archive__main" aria-label={swedish ? 'Artiklar' : 'Articles'}>
+    <div class="blog-archive__wrap">
+      {error && <p class="blog-archive__message">{error}</p>}
+      {!error && viewPosts.length === 0 && <p class="blog-archive__message">{ui('blogEmpty', locale)}</p>}
+      {featured && (
+        <article class="blog-archive__featured" data-blog-featured>
+          <a class="blog-archive__featured-link" href={localePath(locale, `/blog/${featured.slug}`)}>
+            <div class:list={['blog-archive__cover', 'blog-archive__cover--large', `blog-archive__cover--${featured.topic}`]}>
+              {featured.coverImageUrl && <img src={featured.coverImageUrl} alt="" loading="eager" />}
+            </div>
+            <div class="blog-archive__featured-copy">
+              <span class="blog-archive__category">{topicLabel(featured.topic)}</span>
+              <h2>{featured.title}</h2>
+              {featured.excerpt && <p class="blog-archive__excerpt">{featured.excerpt}</p>}
+              <div class="blog-archive__meta"><span class="blog-archive__avatar" aria-hidden="true">{featured.initials}</span><span class="blog-archive__author">{featured.author}</span>{featured.minutesToRead && <><span class="blog-archive__dot" aria-hidden="true"></span><span>{featured.minutesToRead} {labels.minRead}</span></>}</div>
+              <span class="blog-archive__read">{labels.read}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+            </div>
+          </a>
+        </article>
+      )}
+      <div class="blog-archive__list-head">
+        <h2 data-blog-list-title>{labels.latest}</h2>
+        <span aria-live="polite" data-blog-list-count>{viewPosts.length} {viewPosts.length === 1 ? labels.article : labels.articles}</span>
+      </div>
+      <div class="blog-archive__grid">
+        {viewPosts.map((post) => (
+          <article class="blog-archive__card" data-blog-card data-topic={post.topic} data-search={post.search} data-featured={post._id === featured?._id ? 'true' : 'false'}>
+            <a href={localePath(locale, `/blog/${post.slug}`)}>
+              <div class:list={['blog-archive__cover', `blog-archive__cover--${post.topic}`]}>
+                {post.coverImageUrl && <img src={post.coverImageUrl} alt="" loading="lazy" />}
+              </div>
+              <div class="blog-archive__card-copy">
+                <span class="blog-archive__category">{topicLabel(post.topic)}</span>
+                <h3>{post.title}</h3>
+                {post.excerpt && <p class="blog-archive__excerpt">{post.excerpt}</p>}
+                <div class="blog-archive__meta"><span class="blog-archive__avatar" aria-hidden="true">{post.initials}</span><span class="blog-archive__author">{post.author}</span>{post.minutesToRead && <><span class="blog-archive__dot" aria-hidden="true"></span><span>{post.minutesToRead} {labels.minRead}</span></>}</div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="blog-archive__message" data-blog-empty hidden>{labels.empty}</p>
+      <div class="blog-archive__more" data-blog-more-wrap hidden><button type="button" data-blog-more>{labels.more}</button></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-blog-archive]').forEach((archive) => {
+    const search = archive.querySelector<HTMLInputElement>('[data-blog-search]');
+    const form = archive.querySelector<HTMLFormElement>('[data-blog-search-form]');
+    const filters = Array.from(archive.querySelectorAll<HTMLButtonElement>('[data-blog-topic]'));
+    const cards = Array.from(archive.querySelectorAll<HTMLElement>('[data-blog-card]'));
+    const featured = archive.querySelector<HTMLElement>('[data-blog-featured]');
+    const listTitle = archive.querySelector<HTMLElement>('[data-blog-list-title]');
+    const listCount = archive.querySelector<HTMLElement>('[data-blog-list-count]');
+    const empty = archive.querySelector<HTMLElement>('[data-blog-empty]');
+    const moreWrap = archive.querySelector<HTMLElement>('[data-blog-more-wrap]');
+    const more = archive.querySelector<HTMLButtonElement>('[data-blog-more]');
+    if (!search || !listTitle || !listCount || !empty || !moreWrap || !more) return;
+    const latestTitle = listTitle.textContent ?? '';
+    const singular = archive.lang === 'sv' ? 'artikel' : 'article';
+    const plural = archive.lang === 'sv' ? 'artiklar' : 'articles';
+    let active = 'all';
+    let limit = 3;
+    const update = () => {
+      const query = search.value.trim().toLocaleLowerCase();
+      const showFeatured = active === 'all' && query === '' && Boolean(featured);
+      if (featured) featured.hidden = !showFeatured;
+      const matches = cards.filter((card) => (active === 'all' || card.dataset.topic === active) && (card.dataset.search ?? '').includes(query));
+      const gridMatches = matches.filter((card) => !(showFeatured && card.dataset.featured === 'true'));
+      cards.forEach((card) => { card.hidden = !gridMatches.includes(card) || gridMatches.indexOf(card) >= limit; });
+      const selected = filters.find((button) => button.dataset.blogTopic === active);
+      listTitle.textContent = active === 'all' ? latestTitle : (selected?.firstChild?.textContent?.trim() ?? latestTitle);
+      listCount.textContent = `${matches.length} ${matches.length === 1 ? singular : plural}`;
+      empty.hidden = matches.length > 0 || archive.dataset.blogError === 'true';
+      moreWrap.hidden = gridMatches.length <= limit;
+      filters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.blogTopic === active)));
+    };
+    form?.addEventListener('submit', (event) => event.preventDefault());
+    search.addEventListener('input', () => { limit = 3; update(); });
+    filters.forEach((button) => button.addEventListener('click', () => { active = button.dataset.blogTopic ?? 'all'; limit = 3; update(); }));
+    more.addEventListener('click', () => { limit += 6; update(); });
+    update();
+  });
+</script>
+
+<style>
+  .blog-archive { color: #111; background: #fff; }
+  .blog-archive [hidden] { display: none !important; }
+  .blog-archive__wrap { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 56px; }
+  .blog-archive__hero {
+    padding: 80px 0 48px;
+    background: radial-gradient(ellipse 45% 65% at 5% 15%, rgba(223,92,70,.12), transparent 75%), #ececea;
+  }
+  .blog-archive__hero-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,420px); align-items: end; gap: 48px; }
+  .blog-archive__hero h1 { margin: 0; font-family: var(--font-display); font-size: 72px; font-weight: 600; line-height: 1; letter-spacing: -.035em; }
+  .blog-archive__hero p { margin: 20px 0 0; max-width: 34rem; font-family: var(--font-sans); font-size: 19.2px; line-height: 1.6; color: #6f6f6f; }
+  .blog-archive__search { position: relative; }
+  .blog-archive__search svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #6f6f6f; pointer-events: none; }
+  .blog-archive__search input {
+    box-sizing: border-box; width: 100%; height: 52px; padding: 0 20px 0 48px;
+    border: 1px solid #e4e4e1; border-radius: 999px; outline: none;
+    background: #fff; color: #111; font-family: var(--font-sans); font-size: 15.2px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .blog-archive__search input::placeholder { color: #8a8a87; }
+  .blog-archive__search input:focus { border-color: #111; box-shadow: 0 0 0 4px rgba(17,17,17,.06); }
+  .blog-archive__filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+  .blog-archive__filter {
+    display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; height: 40px; padding: 0 16px;
+    border: 1px solid #e4e4e1; border-radius: 999px; background: rgba(255,255,255,.7);
+    color: #111; font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1;
+    white-space: nowrap; cursor: pointer; transition: background .2s, border-color .2s, color .2s;
+  }
+  .blog-archive__filter:hover { border-color: #111; }
+  .blog-archive__filter[aria-pressed='true'] { border-color: #111; background: #111; color: #fff; }
+  .blog-archive__filter:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+  .blog-archive__filter span { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .55; }
+  .blog-archive__main { padding: 64px 0 112px; background: #fff; }
+  .blog-archive__featured { margin-bottom: 96px; }
+  .blog-archive__featured-link { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); align-items: center; gap: 56px; color: #111; text-decoration: none; }
+  .blog-archive__cover { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 22px; background: #ececea; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .blog-archive__cover::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 78% 18%, rgba(223,92,70,.28), transparent 70%), radial-gradient(ellipse 50% 60% at 10% 100%, rgba(255,255,255,.75), transparent 70%); }
+  .blog-archive__cover--large { aspect-ratio: 16 / 10.5; border-radius: 28px; }
+  .blog-archive__cover--planning::before { background: radial-gradient(ellipse 60% 70% at 20% 20%, rgba(223,92,70,.22), transparent 70%), radial-gradient(ellipse 50% 60% at 90% 100%, rgba(255,255,255,.75), transparent 70%); }
+  .blog-archive__cover--retail { background: #e6e5e1; }
+  .blog-archive__cover--retail::before { background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(223,92,70,.24), transparent 70%); }
+  .blog-archive__cover--cost { background: #1a1a1a; }
+  .blog-archive__cover--cost::before { background: radial-gradient(ellipse 60% 70% at 80% 80%, rgba(223,92,70,.35), transparent 70%); }
+  .blog-archive__cover img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .blog-archive__featured-link:hover .blog-archive__cover, .blog-archive__card a:hover .blog-archive__cover { transform: scale(.985); }
+  .blog-archive__featured-link:focus-visible, .blog-archive__card a:focus-visible { outline: 2px solid #111; outline-offset: 6px; border-radius: 22px; }
+  .blog-archive__featured-copy, .blog-archive__card-copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .blog-archive__category { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #f4f4f2; color: #111; font-family: var(--font-sans); font-size: 12.5px; font-weight: 500; }
+  .blog-archive__featured h2 { margin: 20px 0 0; font-family: var(--font-display); font-size: 40px; font-weight: 600; line-height: 1.1; letter-spacing: -.025em; color: #0a0a0a; text-wrap: balance; }
+  .blog-archive__excerpt { margin: 16px 0 0; font-family: var(--font-sans); font-size: 16px; line-height: 1.6; color: #6f6f6f; }
+  .blog-archive__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; color: #6f6f6f; font-family: var(--font-sans); font-size: 14px; }
+  .blog-archive__avatar { display: flex; flex: none; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #111; color: #fff; font-size: 11.5px; font-weight: 600; }
+  .blog-archive__author { color: #111; font-weight: 500; }
+  .blog-archive__dot { width: 3px; height: 3px; border-radius: 50%; background: #b5b5b1; }
+  .blog-archive__read { display: inline-flex; align-items: center; gap: 8px; margin-top: 32px; padding-bottom: 5px; border-bottom: 1.5px solid #111; color: #111; font-family: var(--font-sans); font-size: 15px; font-weight: 600; }
+  .blog-archive__read svg { transition: transform .2s; }
+  .blog-archive__featured-link:hover .blog-archive__read svg { transform: translateX(4px); }
+  .blog-archive__list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-bottom: 24px; margin-bottom: 40px; border-bottom: 1px solid #e6e6e3; }
+  .blog-archive__list-head h2 { margin: 0; color: #0a0a0a; font-family: var(--font-display); font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
+  .blog-archive__list-head span { color: #6f6f6f; font-family: var(--font-sans); font-size: 14px; white-space: nowrap; }
+  .blog-archive__grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 56px 32px; }
+  .blog-archive__card a { display: flex; flex-direction: column; height: 100%; color: #111; text-decoration: none; }
+  .blog-archive__card-copy { padding-top: 24px; }
+  .blog-archive__card h3 { margin: 16px 0 0; color: #0a0a0a; font-family: var(--font-display); font-size: 23px; font-weight: 600; line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
+  .blog-archive__card a:hover h3 { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+  .blog-archive__card .blog-archive__excerpt { margin-top: 10px; font-size: 15px; }
+  .blog-archive__card .blog-archive__meta { margin-top: 20px; font-size: 13.5px; }
+  .blog-archive__card .blog-archive__avatar { width: 28px; height: 28px; font-size: 10.5px; }
+  .blog-archive__message { margin: 24px 0; color: #6f6f6f; font-family: var(--font-sans); font-size: 16px; }
+  .blog-archive__more { display: flex; justify-content: center; margin-top: 72px; }
+  .blog-archive__more button { height: 52px; padding: 0 26px; border: 1px solid #e4e4e1; border-radius: 999px; background: #fff; color: #111; font-family: var(--font-sans); font-size: 15.2px; font-weight: 500; cursor: pointer; }
+  .blog-archive__more button:hover { border-color: #111; }
+  .blog-archive__more button:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+  @media (max-width: 900px) {
+    .blog-archive__wrap { padding: 0 20px; }
+    .blog-archive__hero { padding: 48px 0 32px; }
+    .blog-archive__hero-row { grid-template-columns: 1fr; gap: 28px; }
+    .blog-archive__hero h1 { font-size: 52px; }
+    .blog-archive__hero p { font-size: 17px; }
+    .blog-archive__filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; margin-top: 28px; scrollbar-width: none; }
+    .blog-archive__filters::-webkit-scrollbar { display: none; }
+    .blog-archive__filter { flex: none; }
+    .blog-archive__main { padding: 40px 0 72px; }
+    .blog-archive__featured { margin-bottom: 64px; }
+    .blog-archive__featured-link { grid-template-columns: 1fr; gap: 24px; }
+    .blog-archive__featured h2 { font-size: 30px; }
+    .blog-archive__grid { grid-template-columns: 1fr; gap: 48px; }
+    .blog-archive__list-head h2 { font-size: 26px; }
+  }
+</style>

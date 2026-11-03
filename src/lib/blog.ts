@@ -8,6 +8,7 @@ export type BlogPostSummary = {
   excerpt?: string;
   firstPublishedDate?: string | Date;
   coverImageUrl?: string;
+  minutesToRead?: number;
 };
 
 export async function listBlogPosts(limit = 20): Promise<{ posts: BlogPostSummary[]; error?: string }> {
@@ -25,6 +26,7 @@ export async function listBlogPosts(limit = 20): Promise<{ posts: BlogPostSummar
       excerpt: p.excerpt || p.plainContent?.slice?.(0, 160) || '',
       firstPublishedDate: p.firstPublishedDate,
       coverImageUrl: imgSrc(p.media?.wixMedia?.image || p.coverImage || p.media?.image, 800, 500),
+      minutesToRead: p.minutesToRead,
     }));
     return { posts: list };
   } catch (err) {

@@ -78,7 +78,6 @@ const privacyHref = localePath(locale, '/privacy');
 const cookieHref = localePath(locale, '/cookie-policy');
 const linkedInHref = 'https://www.linkedin.com/company/workofo';
 /** No /industries index — jump to homepage industries band */
-const allIndustriesHref = `${localePath(locale, '/')}#industries`;
 
 type ProductMenuIcon =
   | 'forecast'
@@ -342,11 +341,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <div class="nav-dropdown__divider" aria-hidden="true"></div>
-              <a class="nav-dropdown__all" href={allIndustriesHref}>
-                All industries
-                <NavMenuIcon name="arrow" size={14} />
-              </a>
             </div>
           </details>
           {
@@ -547,10 +541,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <a class="nav-dropdown__all" href={allIndustriesHref}>
-                All industries
-                <NavMenuIcon name="arrow" size={14} />
-              </a>
             </div>
           </details>
 
