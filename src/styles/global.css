@@ -5730,7 +5730,7 @@ body:has(.home-top-band) .site-header.is-scrolled {
   background: #fff;
   font-family: var(--font-sans);
 }
-.retail-page a:not(.btn):not(.pill):not(.ind):not(.textlink):not(.navlink) {
+.retail-page a:not(.btn):not(.pill):not(.ind):not(.textlink):not(.navlink):not(.home-cta__button) {
   color: inherit;
 }
 /* Mock layout primitives scoped to retail - same 1440 + gutter grid as chrome */
