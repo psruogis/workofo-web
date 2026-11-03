@@ -1,13 +1,26 @@
 ---
 /**
  * Integrations hub (Flows in/out copy). Homepage only.
- * Orbit diagram removed; keep heading, lead, flow list, and CTA.
+ * Homepage integrations graphic and flow copy.
  */
 type Props = {
   demoHref: string;
 };
 
 const { demoHref } = Astro.props as Props;
+
+const integrations = [
+  { name: 'Google sign-in', image: 'google.svg', x: 312, y: 75, left: '50%', top: '13.39%', size: '54%' },
+  { name: 'Microsoft Entra ID', image: 'microsoft-entra.png', x: 432.5, y: 114.2, left: '69.31%', top: '20.38%', size: '58%' },
+  { name: 'OpenID Connect', image: 'openid-connect.svg', x: 507, y: 216.7, left: '81.24%', top: '38.69%', size: '48%' },
+  { name: 'HiBob', image: 'hibob.svg', x: 507, y: 343.3, left: '81.24%', top: '61.31%', size: '52%' },
+  { name: 'Fujitsu Persona', image: 'fujitsu-persona.png', x: 432.5, y: 445.8, left: '69.31%', top: '79.62%', size: '60%' },
+  { name: 'Microsoft Dynamics 365', image: 'dynamics-365.svg', x: 312, y: 485, left: '50%', top: '86.61%', size: '52%' },
+  { name: 'Caspeco', image: 'caspeco.png', x: 191.5, y: 445.8, left: '30.69%', top: '79.62%', size: '66%' },
+  { name: 'Finavia', image: 'finavia.webp', x: 117, y: 343.3, left: '18.76%', top: '61.31%', size: '58%' },
+  { name: 'Apple WeatherKit', image: 'apple-weatherkit.webp', x: 117, y: 216.7, left: '18.76%', top: '38.69%', size: '62%' },
+  { name: 'Elyra', image: 'elyra.png', x: 191.5, y: 114.2, left: '30.69%', top: '20.38%', size: '58%' },
+] as const;
 ---
 
 <section id="integrations" class="integrations-hub" aria-labelledby="integrations-hub-heading">
@@ -68,6 +81,39 @@ const { demoHref } = Astro.props as Props;
       </div>
       <div>
         <a class="btn btn--primary" href={demoHref}>Talk to us about your systems</a>
+      </div>
+    </div>
+    <div
+      class="integrations-hub__visual"
+      role="img"
+      aria-label="Workofo connected to Google sign-in, Microsoft Entra ID, OpenID Connect, HiBob, Fujitsu Persona, Microsoft Dynamics 365, Caspeco, Finavia, Apple WeatherKit and Elyra, plus 15 more integrations."
+      data-reveal
+    >
+      <svg class="integrations-hub__visual-svg" viewBox="0 0 624 560" preserveAspectRatio="none" aria-hidden="true">
+        <circle class="integrations-hub__visual-ring" cx="312" cy="280" r="205" />
+        <circle class="integrations-hub__visual-ring integrations-hub__visual-ring--inner" cx="312" cy="280" r="128" />
+        <g class="integrations-hub__visual-spokes">
+          {integrations.map((item) => <line x1="312" y1="280" x2={item.x} y2={item.y} />)}
+        </g>
+        <g class="integrations-hub__visual-paths integrations-hub__visual-paths--in">
+          {integrations.map((item) => <path pathLength="100" d={`M${item.x} ${item.y}L312 280`} />)}
+        </g>
+        <g class="integrations-hub__visual-paths integrations-hub__visual-paths--out">
+          {integrations.map((item) => <path pathLength="100" d={`M312 280L${item.x} ${item.y}`} />)}
+        </g>
+      </svg>
+      {integrations.map((item) => (
+        <div class="integrations-hub__visual-tile" style={`left:${item.left};top:${item.top}`}>
+          <img src={`/integrations/${item.image}`} alt="" style={`width:${item.size};height:${item.size}`} loading="lazy" />
+        </div>
+      ))}
+      <div class="integrations-hub__visual-center">
+        <div class="integrations-hub__visual-brand">
+          <span class="integrations-hub__visual-halo integrations-hub__visual-halo--in" aria-hidden="true"></span>
+          <span class="integrations-hub__visual-halo integrations-hub__visual-halo--out" aria-hidden="true"></span>
+          <img src="/integrations/workofo.png" alt="" loading="lazy" />
+        </div>
+        <span class="integrations-hub__visual-more">+ 15 more integrations</span>
       </div>
     </div>
   </div>
