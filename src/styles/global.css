@@ -8145,14 +8145,18 @@ body:has(.home-top-band) .site-header.is-scrolled {
 .about-signoff__cta {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
-  /* Wide enough for H2 invite as two lines on desktop */
-  max-width: min(100%, 28rem);
-  flex: 1 1 18rem;
-  margin-left: auto;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
 }
 .about-signoff__invite {
   margin: 0;
+  max-width: 38rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   color: #111111;
   text-wrap: balance;
 }
