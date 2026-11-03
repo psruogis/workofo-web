@@ -141,6 +141,7 @@ const topicLabel = (topic: Exclude<Topic, 'all'>) => labels[topic];
 <style>
   .blog-archive { color: #111; background: #fff; }
   .blog-archive [hidden] { display: none !important; }
+  .blog-archive .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .blog-archive__wrap { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 56px; }
   .blog-archive__hero {
     padding: 80px 0 48px;
