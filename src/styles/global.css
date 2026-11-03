@@ -7125,15 +7125,21 @@ body:has(.home-top-band) .site-header.is-scrolled {
   vector-effect: non-scaling-stroke;
 }
 .integrations-hub__visual-paths {
-  animation: integrations-hub-visual-in 9s ease infinite;
+  animation: integrations-hub-visual-in 20s ease-in-out infinite;
 }
 .integrations-hub__visual-paths path {
   fill: none;
   stroke: #df5c46;
-  stroke-width: 4;
+  stroke-width: 3;
   stroke-linecap: round;
-  stroke-dasharray: 0.1 13;
-  animation: integrations-hub-visual-flow 1.1s linear infinite;
+  stroke-dasharray: 0.1 100;
+  opacity: 0;
+}
+.integrations-hub__visual-paths path:nth-child(2),
+.integrations-hub__visual-paths path:nth-child(6),
+.integrations-hub__visual-paths path:nth-child(9) {
+  opacity: .65;
+  animation: integrations-hub-visual-flow 7s linear infinite;
 }
 .integrations-hub__visual-paths--out {
   animation-name: integrations-hub-visual-out;
@@ -7208,7 +7214,7 @@ body:has(.home-top-band) .site-header.is-scrolled {
   white-space: nowrap;
 }
 @keyframes integrations-hub-visual-flow {
-  to { stroke-dashoffset: -13.1; }
+  to { stroke-dashoffset: -100.1; }
 }
 @keyframes integrations-hub-visual-in {
   0%, 45%, 100% { opacity: 1; }
@@ -9227,18 +9233,6 @@ body:has(.home-top-band) .site-header.is-scrolled {
   line-height: 1.4;
   color: #4a4f57;
 }
-.wf-cta__tm {
-  margin-left: auto;
-  align-self: flex-start;
-  margin-top: 1rem;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 0.6875rem;
-  line-height: 1.3;
-  color: #9a9ea5;
-  white-space: nowrap;
-}
-
 /* Final (static) stack resting state; sequence plays when data-reveal adds .is-in */
 .wf-cta__n1 {
   opacity: 0.22;

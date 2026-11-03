@@ -58,7 +58,7 @@ const DEFAULT_INDUSTRY_CHIPS = [
 const NEXT_STEPS = [
   {
     title: 'We read your request',
-    body: 'A scheduling specialist gets back to you within one working day.',
+    body: 'A scheduling specialist gets back to you about your request.',
   },
   {
     title: 'We tailor the demo',
@@ -498,7 +498,7 @@ export default function ContactBookDemo({
                 {status === 'loading' ? ui('formSending', locale) : 'Book my demo'}
               </button>
               <p className="contact-demo__footnote">
-                We respond within one working day. No commitment.
+                We'll get back to you about your demo. No commitment.
               </p>
             </form>
           </div>

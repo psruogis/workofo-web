@@ -20,7 +20,7 @@ const { demoHref, secondaryHref } = Astro.props as Props;
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
           </a>
         </div>
-        <p class="home-cta__note">We respond within one working day.</p>
+        <p class="home-cta__note">We'll get back to you to arrange your demo.</p>
       </div>
 
       <div class="home-cta__visual">
@@ -37,14 +37,14 @@ const { demoHref, secondaryHref } = Astro.props as Props;
             <div class="home-cta__step home-cta__step--received">
               <span class="home-cta__node" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg></span>
               <div class="home-cta__step-body">
-                <div class="home-cta__step-row"><span class="home-cta__step-title">Request received</span><span class="home-cta__time">09:12</span></div>
+                <div class="home-cta__step-row"><span class="home-cta__step-title">Request received</span></div>
                 <p class="home-cta__step-detail">We've got your details</p>
               </div>
             </div>
             <div class="home-cta__step home-cta__step--tailored">
               <span class="home-cta__node" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg></span>
               <div class="home-cta__step-body">
-                <div class="home-cta__step-row"><span class="home-cta__step-title">Demo tailored</span><span class="home-cta__time">09:40</span></div>
+                <div class="home-cta__step-row"><span class="home-cta__step-title">Demo tailored</span></div>
                 <p class="home-cta__step-detail">Built around your</p>
                 <div class="home-cta__chips"><span>Demand data</span><span>Roles</span><span>Labour rules</span></div>
               </div>
@@ -52,7 +52,7 @@ const { demoHref, secondaryHref } = Astro.props as Props;
             <div class="home-cta__step home-cta__step--booked">
               <span class="home-cta__node" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg></span>
               <div class="home-cta__step-body home-cta__step-body--card">
-                <div class="home-cta__step-row"><span class="home-cta__step-title">Demo booked</span><span class="home-cta__time">Thu 10:00</span></div>
+                <div class="home-cta__step-row"><span class="home-cta__step-title">Demo booked</span></div>
                 <p class="home-cta__step-detail">Walkthrough with your own data</p>
               </div>
             </div>
@@ -132,7 +132,6 @@ const { demoHref, secondaryHref } = Astro.props as Props;
   .home-cta__step--booked .home-cta__step-body { animation: home-cta-body-three 10s infinite; }
   .home-cta__step-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
   .home-cta__step-title { font-family: var(--font-sans); font-size: 15px; font-weight: 600; line-height: 1.3; color: #fff; }
-  .home-cta__time { flex: none; font-family: var(--font-sans); font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; color: rgba(255,255,255,.45); white-space: nowrap; }
   .home-cta__step-detail { margin: 4px 0 0; font-family: var(--font-sans); font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.58); }
   .home-cta__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .home-cta__chips span {
@@ -146,7 +145,7 @@ const { demoHref, secondaryHref } = Astro.props as Props;
   .home-cta__chips span:nth-child(3) { animation-delay: .5s; }
   .home-cta__step-body--card { margin: -10px 0 -12px -8px; padding: 10px 14px 12px 8px; border-radius: 14px; }
   .home-cta__step--booked .home-cta__step-title { animation: home-cta-booked-title 10s infinite; }
-  .home-cta__step--booked .home-cta__step-detail, .home-cta__step--booked .home-cta__time { animation: home-cta-booked-detail 10s infinite; }
+  .home-cta__step--booked .home-cta__step-detail { animation: home-cta-booked-detail 10s infinite; }
   @keyframes home-cta-blink { 50% { opacity: .25; } }
   @keyframes home-cta-status-progress { 0%, 56%, 96%, 100% { opacity: 1; } 60%, 92% { opacity: 0; } }
   @keyframes home-cta-status-booked { 0%, 56%, 96%, 100% { opacity: 0; transform: scale(.9); } 60%, 92% { opacity: 1; transform: none; } }
@@ -179,6 +178,6 @@ const { demoHref, secondaryHref } = Astro.props as Props;
     .home-cta__node { background: #df5c46; border-color: #df5c46; color: #fff; }
     .home-cta__step--booked .home-cta__node, .home-cta__step-body--card { background: #fff; }
     .home-cta__step--booked .home-cta__node, .home-cta__step--booked .home-cta__step-title { color: #111; }
-    .home-cta__step--booked .home-cta__step-detail, .home-cta__step--booked .home-cta__time { color: #5a5e64; }
+    .home-cta__step--booked .home-cta__step-detail { color: #5a5e64; }
   }
 </style>
