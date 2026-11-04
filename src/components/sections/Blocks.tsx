@@ -29,7 +29,17 @@ const MODERN_HOME_HERO = {
   body: "Workofo forecasts demand, applies your labour rules and builds schedules automatically. Help more customers at busy times, reduce overtime and make better use of your team's skills.",
   primaryCta: 'Book a demo',
   secondaryCta: 'See how it works',
+  lede: 'Workofo forecasts demand, applies your labour rules and builds schedules automatically.',
 } as const;
+
+/** Timeline hero: the H1 is set as four shifts on an hour grid (Paper "Hero P7"). */
+const TIMELINE_HOURS = ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
+const TIMELINE_SHIFTS = [
+  { text: 'AI-powered employee', time: '06–17', tone: 'floor' },
+  { text: 'scheduling software', time: '08–18', tone: 'kitchen' },
+  { text: 'built around', time: '10–16', tone: 'bar' },
+  { text: 'real demand.', time: '+ 14–22', tone: 'peak' },
+] as const;
 
 export function Hero({ section, locale = 'en' }: Props) {
   const modern = isModernHomeLocale(locale);
@@ -49,6 +59,38 @@ export function Hero({ section, locale = 'en' }: Props) {
   /** Product overview on the homepage (`HomeFeatures`); not a new page. */
   const secondaryHref = modern ? `${localePath(locale, '/')}#home-features` : WATCH_VIDEO_URL;
   const secondaryCta = modern ? MODERN_HOME_HERO.secondaryCta : ui('watchVideo', locale);
+
+  if (modern) {
+    return (
+      <section className="hero hero--timeline">
+        <div className="hero-tl">
+          <div className="hero-tl__hours" aria-hidden="true">
+            {TIMELINE_HOURS.map((h) => (
+              <span key={h}>{h}</span>
+            ))}
+          </div>
+          <div className="hero-tl__track">
+            <h1 className="hero-tl__title">
+              {TIMELINE_SHIFTS.map((s) => (
+                <span key={s.text} className={`hero-tl__shift hero-tl__shift--${s.tone}`} data-time={s.time}>
+                  {`${s.text} `}
+                </span>
+              ))}
+            </h1>
+          </div>
+          <p className="hero-tl__lede">{MODERN_HOME_HERO.lede}</p>
+          <div className="hero__actions hero-tl__actions">
+            <a className="btn btn--primary btn--cta" href={demoHref}>
+              {primaryCta}
+            </a>
+            <a className="btn btn--ghost btn--cta" href={secondaryHref}>
+              {secondaryCta}
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`hero${modern ? ' hero--en' : ''}`}>
