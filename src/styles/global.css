@@ -355,6 +355,8 @@ body:has(.blog-archive) .site-header {
   justify-self: center;
 }
 .site-nav > a {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: #111111;
   font-family: var(--font-sans);
@@ -363,10 +365,19 @@ body:has(.blog-archive) .site-header {
   line-height: 1;
   padding: 10px 14px;
   border-radius: var(--radius-full);
-  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.site-nav > .nav-dropdown {
+  display: flex;
+  align-items: center;
 }
 .site-nav > a:hover {
   color: #111111;
+}
+.site-nav > a.site-nav__product:hover,
+.site-nav > a.site-nav__product:focus-visible {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3px 12px rgba(17, 17, 17, 0.05);
 }
 .site-nav > a.site-nav__product.is-active {
   background: rgba(255, 255, 255, 0.75);

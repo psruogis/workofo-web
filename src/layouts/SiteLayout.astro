@@ -35,7 +35,14 @@ const solutions = listIndustrySolutions().map((item) => ({
   href: industryPath(locale, item.slug),
 }));
 
-/** Header Industries dropdown — order/copy from industries-dropdown.png */
+/** Alphabetical by the visible label in each language. */
+const swedishIndustryNames: Record<string, string> = {
+  retail: 'Handel',
+  'contact-centre': 'Kontaktcenter',
+  aviation: 'Flygplatser',
+  restaurants: 'Restauranger',
+  logistics: 'Logistik',
+};
 const industryNav = [
   {
     slug: 'retail' as const,
@@ -65,7 +72,10 @@ const industryNav = [
 ].map((item) => ({
   ...item,
   href: industryPath(locale, item.slug),
-}));
+})).sort((a, b) => {
+  const label = (item: typeof a) => locale === 'se' ? swedishIndustryNames[item.slug] : item.title;
+  return label(a).localeCompare(label(b), locale === 'se' ? 'sv' : locale);
+});
 
 const demoHref = localePath(locale, '/get-in-touch');
 const productHref = localePath(locale, '/product');
@@ -78,7 +88,6 @@ const calculatorHref = localePath(locale, '/calculator');
 const privacyHref = localePath(locale, '/privacy');
 const cookieHref = localePath(locale, '/cookie-policy');
 const linkedInHref = 'https://www.linkedin.com/company/workofo';
-const allIndustriesHref = `${homeHref}#industries`;
 
 /** Company — name-only (no descriptions). Contact is /contact, not get-in-touch. */
 const companyLinks = [
@@ -205,7 +214,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <a class="nav-dropdown__all" href={allIndustriesHref}>All industries <span aria-hidden="true">→</span></a>
             </div>
           </details>
           {
@@ -372,7 +380,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <a class="nav-dropdown__all" href={allIndustriesHref}>All industries <span aria-hidden="true">→</span></a>
             </div>
           </details>
 

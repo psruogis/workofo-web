@@ -15,12 +15,6 @@ const INDUSTRIES = [
     body: 'Match labour to demand across stores, departments and fulfillment.',
   },
   {
-    name: 'Contact Centre',
-    slug: 'contact-centre',
-    image: '/industries/contact-centre-hero.jpg',
-    body: 'Match agents to demand, skills and service targets across every queue.',
-  },
-  {
     name: 'Aviation',
     slug: 'aviation',
     image: '/industries/aviation-hero.jpg',
@@ -37,6 +31,12 @@ const INDUSTRIES = [
     slug: 'restaurants',
     image: '/industries/restaurants-hero.webp',
     body: 'Staff kitchen, bar and floor teams around every rush.',
+  },
+  {
+    name: 'Contact Centre',
+    slug: 'contact-centre',
+    image: '/industries/contact-centre-hero.jpg',
+    body: 'Match agents to demand, skills and service targets across every queue.',
   },
 ] as const;
 
