@@ -3,7 +3,7 @@
  * Calculator — top-level page (no breadcrumbs).
  * Hero offset matches About / Jobs / Customers; calculator reused as-is.
  */
-import CapacityCalculator from './CapacityCalculator';
+import { SwedishCapacityCalculator as CapacityCalculator } from './CapacityCalculator';
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
 
@@ -31,7 +31,7 @@ const demoHref = localePath(locale, '/get-in-touch');
   </header>
 
   <div data-reveal>
-  <CapacityCalculator
+  <CapacityCalculator locale={locale}
     client:load
     demoHref={demoHref}
     hideIntro

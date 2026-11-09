@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useEffect, useRef } from 'react';
 
 /**
@@ -125,3 +126,5 @@ export default function ArlandaCase() {
     </section>
   );
 }
+
+export const SwedishArlandaCase = withSwedish(ArlandaCase, 'home');

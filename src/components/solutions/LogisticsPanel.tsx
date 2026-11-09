@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 /**
  * Logistics zones graphic - adapted from Logistics.dc.html / logistics-panel extract.
  * Markup/CSS/motion from the artboard; manual tabs only (no auto-advance); US spelling labor.
@@ -209,3 +210,5 @@ export default function LogisticsPanel() {
 
   return <div className="retail-teams-artboard" ref={hostRef} />;
 }
+
+export const SwedishLogisticsPanel = withSwedish(LogisticsPanel, 'industries/logistics');

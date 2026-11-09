@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 /**
  * Aviation teams graphic - adapted from Aviation.dc.html / aviation-panel extract.
  * Markup/CSS/motion from the artboard; manual tabs only (no auto-advance); US spelling labor.
@@ -208,3 +209,5 @@ export default function AviationPanel() {
 
   return <div className="retail-teams-artboard" ref={hostRef} />;
 }
+
+export const SwedishAviationPanel = withSwedish(AviationPanel, 'industries/aviation');

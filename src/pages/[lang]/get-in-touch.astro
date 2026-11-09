@@ -4,7 +4,7 @@
  * `/en/get-in-touch` redirects to unprefixed `/get-in-touch`.
  */
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import ContactBookDemo from '../../components/sections/ContactBookDemo';
+import { SwedishContactBookDemo as ContactBookDemo } from '../../components/sections/ContactBookDemo';
 import { isLocale, type Locale } from '../../lib/locales';
 import { listNavPages } from '../../lib/cms';
 import { DEMO_FORM_ID } from '../../lib/config';

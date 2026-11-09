@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useMemo, useState, type FormEvent, type CSSProperties } from 'react';
 import { DEMO_FORM_ID } from '../../lib/config';
 import { ui, type Locale } from '../../lib/locales';
@@ -507,3 +508,5 @@ export default function ContactBookDemo({
     </section>
   );
 }
+
+export const SwedishContactBookDemo = withSwedish(ContactBookDemo, 'get-in-touch');

@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 /**
  * Retail One platform graphic - faithful extract of workofo-retail-teams-v4.html.
  * Markup/CSS/motion pasted from the artboard; manual tabs only (no auto-advance); US spelling fulfillment only.
@@ -216,3 +217,5 @@ export default function RetailPanel() {
 
   return <div className="retail-teams-artboard" ref={hostRef} />;
 }
+
+export const SwedishRetailPanel = withSwedish(RetailPanel, 'industries/retail');

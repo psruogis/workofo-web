@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 /**
  * Restaurants teams graphic - adapted from Restaurants.dc.html / restaurants-panel extract.
  * Markup/CSS/motion from the artboard; manual tabs only (no auto-advance); US spelling labor.
@@ -209,3 +210,5 @@ export default function RestaurantsPanel() {
 
   return <div className="retail-teams-artboard" ref={hostRef} />;
 }
+
+export const SwedishRestaurantsPanel = withSwedish(RestaurantsPanel, 'industries/restaurants');

@@ -6,7 +6,7 @@
  */
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
-import RetailPanel from './RetailPanel';
+import { SwedishRetailPanel as RetailPanel } from './RetailPanel';
 import BottomDemoCta from '../sections/BottomDemoCta.astro';
 
 type Props = {
@@ -183,7 +183,7 @@ const homeHref = localePath(locale, '/');
 <p class="lead">Forecast, schedule and adjust in one place. Nora and smart recommendations help managers respond to change and focus on their teams.</p>
 </div>
 <figure class="retail-platform__mat" data-reveal>
-  <RetailPanel client:load />
+  <RetailPanel locale={locale} client:load />
 </figure>
 </div>
 </section>

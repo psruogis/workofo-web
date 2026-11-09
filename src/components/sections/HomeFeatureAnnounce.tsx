@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import NoraChat from './NoraChat';
 
 type Props = {
@@ -39,3 +40,5 @@ export default function HomeFeatureAnnounce({ demoHref = '/get-in-touch' }: Prop
     </section>
   );
 }
+
+export const SwedishHomeFeatureAnnounce = withSwedish(HomeFeatureAnnounce, 'home');

@@ -4,6 +4,7 @@
  */
 import SiteLayout from '../../../layouts/SiteLayout.astro';
 import RicosContentViewer from '../../../components/RicosContentViewer';
+import { translateSwedishRichContent } from '../../../lib/swedish/copy';
 import { isLocale, type Locale } from '../../../lib/locales';
 import { getBlogPostBySlug, formatPostDate } from '../../../lib/blog';
 import { listNavPages } from '../../../lib/cms';
@@ -66,7 +67,7 @@ const cover = imgSrc((post as any)?.media?.wixMedia?.image || (post as any)?.cov
           <h1 data-split data-reveal>{(post as any).title}</h1>
           <p class="blog-card__meta t-overline">{formatPostDate((post as any).firstPublishedDate, locale)}</p>
           {cover && <img class="blog-post__cover" src={cover} alt="" />}
-          <RicosContentViewer client:only="react" content={(post as any).richContent} />
+          <RicosContentViewer client:only="react" content={locale === 'se' ? translateSwedishRichContent((post as any).richContent) : (post as any).richContent} />
         </>
       )
     }

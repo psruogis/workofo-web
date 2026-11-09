@@ -6,7 +6,7 @@
  */
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
-import LogisticsPanel from './LogisticsPanel';
+import { SwedishLogisticsPanel as LogisticsPanel } from './LogisticsPanel';
 import BottomDemoCta from '../sections/BottomDemoCta.astro';
 
 type Props = {
@@ -232,7 +232,7 @@ const homeHref = localePath(locale, '/');
 <p class="lead">See where each zone is short or over in a typical week, and how Workofo shifts the hours.</p>
 </div>
 <figure class="retail-platform__mat" data-reveal>
-  <LogisticsPanel client:load />
+  <LogisticsPanel locale={locale} client:load />
 </figure>
 </div>
 </section>

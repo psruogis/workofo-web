@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 /**
  * Contact Centre queue graphic - adapted from ContactCentre.dc.html.
  * Markup/CSS/motion from the artboard; manual tabs only (no auto-advance); US spelling labor.
@@ -207,3 +208,5 @@ export default function ContactCentrePanel() {
 
   return <div className="retail-teams-artboard" ref={hostRef} />;
 }
+
+export const SwedishContactCentrePanel = withSwedish(ContactCentrePanel, 'industries/contact-centre');

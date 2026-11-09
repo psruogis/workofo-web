@@ -14,12 +14,12 @@ import {
   Steps,
   Testimonial,
 } from './Blocks';
-import ArlandaCase from './ArlandaCase';
-import HomeFeatures from './HomeFeatures';
-import HomeFeatureAnnounce from './HomeFeatureAnnounce';
-import { HomeFaq, HomeIndustries } from './HomeJourney';
+import { SwedishArlandaCase as ArlandaCase } from './ArlandaCase';
+import { SwedishHomeFeatures as HomeFeatures } from './HomeFeatures';
+import { SwedishHomeFeatureAnnounce as HomeFeatureAnnounce } from './HomeFeatureAnnounce';
+import { HomeFaq, SwedishHomeIndustries as HomeIndustries } from './HomeJourney';
 import IntegrationsHub from './IntegrationsHub.astro';
-import DemoForm from './DemoForm';
+import { SwedishDemoForm as DemoForm } from './DemoForm';
 import HomeBottomCta from './HomeBottomCta.astro';
 
 type FormField = {
@@ -75,9 +75,9 @@ const SUPPORTED =
 {
   useModernHome && logoSection && (
     <>
-      <HomeFeatures client:load />
-      <ArlandaCase client:load />
-      <HomeFeatureAnnounce client:load demoHref={localePath(locale, '/get-in-touch')} />
+      <HomeFeatures locale={locale} client:load />
+      <ArlandaCase locale={locale} client:load />
+      <HomeFeatureAnnounce locale={locale} client:load demoHref={localePath(locale, '/get-in-touch')} />
       <HomeIndustries client:load locale={locale} />
       <IntegrationsHub demoHref={localePath(locale, '/get-in-touch')} />
       <HomeFaq locale={locale} />

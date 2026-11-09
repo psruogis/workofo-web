@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const THINK_MS = 800;
@@ -362,3 +363,5 @@ export default function CapacityCalculator({
     </section>
   );
 }
+
+export const SwedishCapacityCalculator = withSwedish(CapacityCalculator, 'calculator');

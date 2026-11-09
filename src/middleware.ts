@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import { legacyPathRedirect } from './lib/paths';
+import { translateSwedishHtml } from './lib/swedish/html';
 
 /**
  * English is the default locale and must not use `/en/…` in public URLs.
@@ -13,5 +14,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
     url.pathname = target;
     return context.redirect(url.pathname + url.search, 301);
   }
-  return next();
+  const response = await next();
+  if (pathname.startsWith('/se/') && response.headers.get('content-type')?.includes('text/html') && response.status === 200) {
+    const page = pathname.slice(4).replace(/\/$/, '') || 'home';
+    const html = translateSwedishHtml(await response.text(), page === 'book-a-demo' ? 'get-in-touch' : page);
+    const headers = new Headers(response.headers);
+    headers.delete('content-length');
+    headers.delete('etag');
+    headers.set('content-language', 'sv');
+    return new Response(html, { status: response.status, headers });
+  }
+  return response;
 });

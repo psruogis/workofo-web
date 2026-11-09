@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useMemo, useState, type FormEvent } from 'react';
 import { DEMO_FORM_ID } from '../../lib/config';
 import { ui, type Locale } from '../../lib/locales';
@@ -207,3 +208,5 @@ export default function DemoForm({
     </section>
   );
 }
+
+export const SwedishDemoForm = withSwedish(DemoForm, 'get-in-touch');

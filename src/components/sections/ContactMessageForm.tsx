@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useState, type FormEvent } from 'react';
 import { DEMO_FORM_ID } from '../../lib/config';
 import { ui, type Locale } from '../../lib/locales';
@@ -203,3 +204,5 @@ export default function ContactMessageForm({
     </form>
   );
 }
+
+export const SwedishContactMessageForm = withSwedish(ContactMessageForm, 'contact');

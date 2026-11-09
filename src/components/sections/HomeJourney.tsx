@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { industryPath, localePath } from '../../lib/paths';
@@ -355,3 +356,5 @@ export function HomeFaq({ locale = 'en' }: LocaleProps) {
     </section>
   );
 }
+
+export const SwedishHomeIndustries = withSwedish(HomeIndustries, 'home');

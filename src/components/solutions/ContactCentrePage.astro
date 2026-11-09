@@ -6,7 +6,7 @@
  */
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
-import ContactCentrePanel from './ContactCentrePanel';
+import { SwedishContactCentrePanel as ContactCentrePanel } from './ContactCentrePanel';
 import BottomDemoCta from '../sections/BottomDemoCta.astro';
 
 type Props = {
@@ -232,7 +232,7 @@ const homeHref = localePath(locale, '/');
 <p class="lead">See which queues are over- or understaffed, and how Workofo can rebalance the plan.</p>
 </div>
 <figure class="retail-platform__mat" data-reveal>
-  <ContactCentrePanel client:load />
+  <ContactCentrePanel locale={locale} client:load />
 </figure>
 </div>
 </section>

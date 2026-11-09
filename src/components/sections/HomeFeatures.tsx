@@ -1,3 +1,4 @@
+import { withSwedish } from '../../lib/swedish/react';
 import ProductPanel from './ProductPanel';
 
 /**
@@ -65,3 +66,5 @@ export default function HomeFeatures() {
     </section>
   );
 }
+
+export const SwedishHomeFeatures = withSwedish(HomeFeatures, 'home');

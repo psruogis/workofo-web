@@ -6,7 +6,7 @@
  */
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
-import RestaurantsPanel from './RestaurantsPanel';
+import { SwedishRestaurantsPanel as RestaurantsPanel } from './RestaurantsPanel';
 import BottomDemoCta from '../sections/BottomDemoCta.astro';
 
 type Props = {
@@ -232,7 +232,7 @@ const homeHref = localePath(locale, '/');
 <p class="lead">See where each team is short or over in a typical week, and how Workofo shifts the hours.</p>
 </div>
 <figure class="retail-platform__mat" data-reveal>
-  <RestaurantsPanel client:load />
+  <RestaurantsPanel locale={locale} client:load />
 </figure>
 </div>
 </section>

@@ -9,7 +9,8 @@ const SparkIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color
   </svg>
 );
 
-export default function NoraChat() {
+export default function NoraChat({ locale = 'en' }: { locale?: string } = {}) {
+  const message = locale === 'se' ? 'Ellen är sjuk i morgon. Registrera frånvaron och hitta någon som kan ta hennes pass.' : MSG;
   const [step, setStep] = useState(0);
   const [typed, setTyped] = useState('');
   const [sendPressed, setSendPressed] = useState(false);
@@ -84,11 +85,11 @@ export default function NoraChat() {
       setCurPress(false);
       park();
       let t = 1200;
-      for (let i = 0; i < MSG.length; i++) {
+      for (let i = 0; i < message.length; i++) {
         const n = i;
-        at(t + n * 42, () => setTyped(MSG.slice(0, n + 1)));
+        at(t + n * 42, () => setTyped(message.slice(0, n + 1)));
       }
-      t += MSG.length * 42 + 200;
+      t += message.length * 42 + 200;
       at(t - 500, () => moveTo(send, 0.5, 0.55));
       at((t += 900), () => {
         click(send, 0.5, 0.55);
