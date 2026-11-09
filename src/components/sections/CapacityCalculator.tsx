@@ -176,8 +176,8 @@ function SliderField({
       </div>
 
       <div className="calc-slider__bounds" aria-hidden="true">
-        <span>{minLabel}</span>
-        <span>{maxLabel}</span>
+        <span>{locale === 'se' ? minLabel.replace(/,/g, ' ') : minLabel}</span>
+        <span>{locale === 'se' ? maxLabel.replace(/,/g, ' ') : maxLabel}</span>
       </div>
       {hint ? <p className="calc-slider__hint">{hint}</p> : null}
     </div>

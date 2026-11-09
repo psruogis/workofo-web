@@ -1501,6 +1501,14 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 .capacity-calc--page .capacity-calc__inner {
   padding-top: 0;
 }
+.capacity-calc--page {
+  background: transparent;
+  overflow: visible;
+  isolation: auto;
+}
+.capacity-calc--page .capacity-calc__card {
+  background: #fff;
+}
 .capacity-calc__intro {
   max-width: 44rem;
   margin: 0 auto clamp(32px, 4vw, 48px);
@@ -8958,13 +8966,16 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 /* —— Calculator (`/calculator`) — top-level, no breadcrumbs —— */
 .calculator-page {
   width: 100%;
+  max-width: none;
+  align-self: stretch;
+  background: #ececea;
 }
 .calculator-hero {
   width: 100%;
-  background: #ECECE8;
+  background: transparent;
   box-sizing: border-box;
   /* No crumbs: H1 at --inner-title-pad-top */
-  padding: var(--inner-title-pad-top) 0 6.5rem;
+  padding: var(--inner-title-pad-top) 0 clamp(40px, 4vw, 64px);
   display: flex;
   justify-content: center;
 }
@@ -9002,7 +9013,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 }
 @media (max-width: 720px) {
   .calculator-hero {
-    padding-bottom: 4.5rem;
+    padding-bottom: 2.5rem;
   }
 }
 
