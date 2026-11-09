@@ -1,10 +1,13 @@
 import { withSwedish } from '../../lib/swedish/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { capacityEstimate, type RuleOption } from '../../lib/capacity-estimate';
+import type { Locale } from '../../lib/locales';
+import { swedishCopy, translateCopy } from '../../lib/swedish/copy';
 
 const THINK_MS = 800;
-const CAPACITY_GAIN = 0.12;
 
 type Props = {
+  locale?: Locale;
   demoHref?: string;
   /** Hide the section H2 intro when the page supplies its own H1. */
   hideIntro?: boolean;
@@ -13,37 +16,23 @@ type Props = {
 };
 
 function clampNumber(value: string, fallback: number, min = 0, max = 1_000_000) {
-  const n = Number(String(value).replace(/[^\d.]/g, ''));
+  const n = Number(String(value).replace(/\s/g, '').replace(',', '.'));
   if (!Number.isFinite(n)) return fallback;
   return Math.min(max, Math.max(min, n));
 }
 
-function formatHours(n: number): string {
-  return Math.round(n).toLocaleString('en-US');
+function formatHours(n: number, locale: Locale): string {
+  return n.toLocaleString(locale === 'se' ? 'sv-SE' : 'en-GB');
 }
-
-function formatMoney(n: number): string {
-  if (n >= 1_000_000) {
-    const m = n / 1_000_000;
-    const rounded = m >= 10 ? Math.round(m) : Math.round(m * 100) / 100;
-    const text = Number.isInteger(rounded)
-      ? String(rounded)
-      : rounded.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
-    return `€${text}m`;
-  }
-  if (n >= 1_000) {
-    const k = Math.round(n / 1000);
-    return `€${k.toLocaleString('en-US')}k`;
-  }
-  return `€${Math.round(n).toLocaleString('en-US')}`;
+function formatMoney(n: number, locale: Locale): string {
+  return new Intl.NumberFormat(locale === 'se' ? 'sv-SE' : 'en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
 }
-
-function formatDisplay(n: number, prefix?: string, suffix?: string) {
-  const core = Math.round(n).toLocaleString('en-US');
-  return `${prefix ?? ''}${core}${suffix ?? ''}`;
+function formatDisplay(n: number, prefix?: string, suffix?: string, locale: Locale = 'en') {
+  return `${prefix ?? ''}${n.toLocaleString(locale === 'se' ? 'sv-SE' : 'en-GB', {maximumFractionDigits: 2})}${suffix ?? ''}`;
 }
 
 type SliderFieldProps = {
+  locale?: Locale;
   id: string;
   label: string;
   value: string;
@@ -59,6 +48,7 @@ type SliderFieldProps = {
 };
 
 function SliderField({
+  locale = 'en',
   id,
   label,
   value,
@@ -72,6 +62,7 @@ function SliderField({
   minLabel,
   maxLabel,
 }: SliderFieldProps) {
+  const accessibleLabel = locale === 'se' ? translateCopy(label, swedishCopy('calculator')) : label;
   const numeric = clampNumber(value, min, min, max);
   const percent = ((numeric - min) / (max - min)) * 100;
   const [editing, setEditing] = useState(false);
@@ -79,14 +70,14 @@ function SliderField({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!editing) setDraft(String(Math.round(numeric)));
+    if (!editing) setDraft(String(numeric));
   }, [numeric, editing]);
 
   useEffect(() => {
     if (!editing || !inputRef.current) return;
     const el = inputRef.current;
     // Click-to-edit: select all. Key-to-edit: keep the typed digit and place caret at end.
-    if (draft === String(Math.round(numeric))) {
+    if (draft === String(numeric)) {
       el.select();
     } else {
       el.focus();
@@ -98,7 +89,7 @@ function SliderField({
 
   const commit = () => {
     const next = clampNumber(draft, numeric, min, max);
-    onChange(String(Math.round(next)));
+    onChange(String(Math.round(next * 100) / 100));
     setEditing(false);
   };
 
@@ -117,7 +108,7 @@ function SliderField({
               inputMode="decimal"
               value={draft}
               aria-label={label}
-              onChange={(e) => setDraft(e.target.value.replace(/[^\d.]/g, ''))}
+              onChange={(e) => setDraft(e.target.value.replace(/[^\d.,]/g, ''))}
               onBlur={commit}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -125,7 +116,7 @@ function SliderField({
                   commit();
                 }
                 if (e.key === 'Escape') {
-                  setDraft(String(Math.round(numeric)));
+                  setDraft(String(numeric));
                   setEditing(false);
                 }
               }}
@@ -145,10 +136,10 @@ function SliderField({
                 setEditing(true);
               }
             }}
-            aria-label={`Edit ${label}, currently ${formatDisplay(numeric, prefix, suffix)}`}
+            aria-label={locale === 'se' ? `Ändra ${accessibleLabel.toLowerCase()}, nuvarande värde ${formatDisplay(numeric, prefix, suffix, locale)}` : `Edit ${label}, currently ${formatDisplay(numeric, prefix, suffix, locale)}`}
           >
             <span className="calc-slider__value-text">
-              {formatDisplay(numeric, prefix, suffix)}
+              {formatDisplay(numeric, prefix, suffix, locale)}
             </span>
             <span className="calc-slider__edit" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 12 12" focusable="false">
@@ -194,26 +185,23 @@ function SliderField({
 }
 
 export default function CapacityCalculator({
+  locale = 'en',
   demoHref = '/get-in-touch',
   hideIntro = false,
   labelledBy,
 }: Props) {
-  const [employees, setEmployees] = useState('250');
-  const [hours, setHours] = useState('35');
-  const [cost, setCost] = useState('20');
+  const [employees, setEmployees] = useState('3000');
+  const [hours, setHours] = useState('70');
+  const [cost, setCost] = useState('8');
+
+  const [shift, setShift] = useState<RuleOption>(0);
+  const [days, setDays] = useState<RuleOption>(0);
+  const [mobility, setMobility] = useState<RuleOption>(0);
 
   const estimate = useMemo(() => {
-    const e = clampNumber(employees, 250, 10, 5000);
-    const h = clampNumber(hours, 35, 8, 60);
-    const c = clampNumber(cost, 20, 8, 100);
-    const weekly = e * h;
-    const monthHours = weekly * CAPACITY_GAIN * (52 / 12);
-    const yearValue = weekly * 52 * c * CAPACITY_GAIN;
-    return {
-      hoursLabel: formatHours(monthHours),
-      valueLabel: formatMoney(yearValue),
-    };
-  }, [employees, hours, cost]);
+    const result = capacityEstimate(clampNumber(employees, 3000, 0, 1_000_000), clampNumber(cost, 8, 0, 1000), clampNumber(hours, 70, 0, 100), shift, days, mobility);
+    return { percent: result.percent, hoursLabel: formatHours(result.hours, locale), valueLabel: formatMoney(result.value, locale) };
+  }, [employees, hours, cost, shift, days, mobility, locale]);
 
   const [shown, setShown] = useState(estimate);
   const [thinking, setThinking] = useState(false);
@@ -260,42 +248,59 @@ export default function CapacityCalculator({
 
               <SliderField
                 id="calc-employees"
-                label="Number of shift employees"
+                locale={locale}
+                label="Total employee hours per month"
                 value={employees}
                 onChange={setEmployees}
-                min={10}
-                max={2000}
-                step={10}
-                minLabel="10"
-                maxLabel="2,000"
+                min={0}
+                max={1_000_000}
+                step={1}
+                minLabel="0"
+                maxLabel="1,000,000"
               />
 
               <SliderField
                 id="calc-hours"
-                label="Average hours / week"
+                locale={locale}
+                label="Time staffed above the absolute minimum"
                 value={hours}
                 onChange={setHours}
-                min={8}
-                max={48}
+                min={0}
+                max={100}
                 step={1}
-                suffix="h"
-                minLabel="8h"
-                maxLabel="48h"
+                suffix="%"
+                minLabel="0%"
+                maxLabel="100%"
+                hint="Share of time with more than one employee, or more than the absolute minimum required."
               />
 
               <SliderField
                 id="calc-cost"
+                locale={locale}
                 label="Average hourly cost"
                 value={cost}
                 onChange={setCost}
-                min={10}
-                max={60}
-                step={1}
+                min={0}
+                max={1000}
+                step={0.01}
                 prefix="€"
-                minLabel="€10"
-                maxLabel="€60"
+                minLabel="€0"
+                maxLabel="€1,000"
                 hint="Include salary and employer costs."
               />
+
+              <fieldset className="calc-choices">
+                <legend>For full-time employees, each shift lasts</legend>
+                {['4–12.5 hours (flexible)', '6–10 hours', '7–9 hours'].map((label, i) => <label key={label} className="calc-choices__option"><input type="radio" name="calc-shift" checked={shift === i} onChange={() => setShift(i as RuleOption)} /><span>{label}</span></label>)}
+              </fieldset>
+              <fieldset className="calc-choices">
+                <legend>Consecutive working days</legend>
+                {['Up to 6 days, followed by at least 1 day off', 'Up to 5 days, followed by 1–2 days off', 'Up to 4 days, followed by 2–3 days off (long/short week)'].map((label, i) => <label key={label} className="calc-choices__option"><input type="radio" name="calc-days" checked={days === i} onChange={() => setDays(i as RuleOption)} /><span>{label}</span></label>)}
+              </fieldset>
+              <fieldset className="calc-choices">
+                <legend>Can employees work in other departments or locations?</legend>
+                {['Most employees can, at least a few days per month', 'Only a few employees can, for a few shifts per month', 'No, only in exceptional cases'].map((label, i) => <label key={label} className="calc-choices__option"><input type="radio" name="calc-mobility" checked={mobility === i} onChange={() => setMobility(i as RuleOption)} /><span>{label}</span></label>)}
+              </fieldset>
 
               <p className={`capacity-calc__live${thinking ? ' is-thinking' : ''}`}>
                 <span className="capacity-calc__dot" aria-hidden="true" />
@@ -313,6 +318,7 @@ export default function CapacityCalculator({
                 aria-live="polite"
                 aria-busy={thinking}
               >
+                <div className="capacity-calc__metric"><p className="capacity-calc__metric-label">Potential for redistribution or optimisation</p><p className="capacity-calc__value">{shown.percent}%</p></div>
                 <div className="capacity-calc__metric">
                   <p className="capacity-calc__metric-label">Hours unlocked per month</p>
                   <p className="capacity-calc__value">
@@ -324,7 +330,7 @@ export default function CapacityCalculator({
                   </p>
                 </div>
                 <div className="capacity-calc__metric">
-                  <p className="capacity-calc__metric-label">Annual capacity value</p>
+                  <p className="capacity-calc__metric-label">Monthly capacity value</p>
                   <p className="capacity-calc__value">
                     <span className="capacity-calc__approx" aria-label="approximately">
                       ≈
@@ -335,26 +341,15 @@ export default function CapacityCalculator({
               </div>
 
               <p className="capacity-calc__basis">
-                Based on 12% more effective capacity, within the typical 5–15% range.
+                An indicative estimate based on similar Workofo projects. Typical results are 5–15%; your inputs may produce a result outside that range. Final results depend on your operation.
               </p>
 
+              <p className="capacity-calc__basis">Capacity value represents time that could be redistributed or optimised, not guaranteed payroll savings.</p>
               <div className="capacity-calc__actions">
                 <a className="btn btn--primary capacity-calc__cta" href={demoHref}>
                   Book a demo
                 </a>
-                <span className="capacity-calc__hint">
-                  <button
-                    type="button"
-                    className="capacity-calc__hint-trigger"
-                    aria-describedby="calc-estimate-tip"
-                  >
-                    How we estimate
-                  </button>
-                  <span id="calc-estimate-tip" role="tooltip" className="capacity-calc__tooltip">
-                    Weekly hours × 12% illustrative capacity unlock, scaled to a month for hours and a year for
-                    capacity value using your average hourly cost.
-                  </span>
-                </span>
+                <details className="calc-method"><summary>How we estimate</summary><p>Working rules determine a base potential of 9–17%. Multiply by the share of time above minimum staffing and round to a whole percentage. Monthly hours × this percentage gives rounded hours; those hours × hourly rate gives the rounded monthly value in euros.</p></details>
               </div>
             </div>
           </div>

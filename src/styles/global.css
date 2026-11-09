@@ -9654,3 +9654,15 @@ body:not(.retail-page) .wf-cta-sec {
     gap: 2.5rem;
   }
 }
+
+/* Working-rule inputs for the optimisation calculator. */
+.calc-choices { min-width: 0; margin: 0; padding: 24px 0; border: 0; border-top: 1px solid #e3e3e0; }
+.calc-choices legend { float: left; width: 100%; margin: 0 0 14px; font-weight: 600; font-size: .95rem; }
+.calc-choices__option { display: flex; clear: both; align-items: flex-start; gap: 12px; padding: 12px; margin: 6px 0; border: 1px solid #dddeda; border-radius: 12px; background: #fff; cursor: pointer; font-size: .9rem; line-height: 1.5; }
+.calc-choices__option:has(input:checked) { border-color: #111; background: #ececea; }
+.calc-choices__option:focus-within { outline: 2px solid #111; outline-offset: 3px; }
+.calc-choices__option input { flex: none; margin: 4px 0 0; width: 16px; height: 16px; accent-color: #111; }
+.calc-method { font-size: .85rem; line-height: 1.6; color: #555; }
+.calc-method summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.calc-method p { margin: 12px 0 0; max-width: 38ch; }
+@media (min-width: 901px) { .capacity-calc__results { position: sticky; top: 110px; align-self: start; } }
