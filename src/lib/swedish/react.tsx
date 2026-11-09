@@ -1,5 +1,6 @@
 import React, { Children, cloneElement, isValidElement } from 'react';
 import { normalizeCopy, swedishCopy, translateCopy } from './copy';
+import { swedishHref } from './paths';
 
 /** Translate the existing component tree on both server and client. No DOM wrappers,
  * style changes or post-hydration text replacement. Cached component identities
@@ -24,6 +25,7 @@ export function withSwedish(Component: React.ComponentType<any>, page: string) {
     if (typeof node.type === 'function') return React.createElement(localized(node.type), { ...props, key: node.key });
     const next: any = {};
     for (const key of ['alt', 'title', 'aria-label', 'placeholder']) if (typeof props[key] === 'string') next[key] = translateCopy(props[key], copy);
+    if (typeof props.href === 'string') next.href = swedishHref(props.href);
     const whole = copy[normalizeCopy(text(props.children))];
     // Whole-copy entries preserve sentence flow; decorative numbers/icons remain
     // separate because only simple text blocks qualify here.

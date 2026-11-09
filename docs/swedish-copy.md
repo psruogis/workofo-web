@@ -25,3 +25,18 @@ Validation: production build passed; all 15 Swedish top-level routes returned
 HTTP 200 with Swedish headings. The visible server-rendered English content
 matched the previous live content on all 13 existing page types. Browser
 checks covered hydration, a demo-form selection and mobile homepage wrapping.
+
+## Swedish public URLs
+
+`src/lib/swedish/paths.ts` owns public Swedish slugs. CMS keys remain English;
+middleware rewrites Swedish requests internally and permanently redirects old
+`/se/home`, `/se/product`, `/se/blog`, and other English-slug URLs. Navigation,
+footer, language alternatives, article links and React links use the same map.
+Examples: `/se/startsida`, `/se/produkt`, `/se/blogg`, `/se/boka-demo`,
+`/se/branscher/kontaktcenter`. The seven existing blog posts and two job detail
+pages have individual Swedish slugs. Add a mapping when publishing new content.
+
+The Product and Blog archive outer surfaces explicitly span the viewport,
+including above 1440px; their inner content retains the existing 1440px grid.
+Checked at desktop and mobile widths with no horizontal overflow. Routing
+checks covered 25 Swedish pages and permanent redirects with query strings.

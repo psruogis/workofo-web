@@ -1,8 +1,9 @@
 import * as parse5 from 'parse5';
 import { normalizeCopy, swedishCopy, swedishPageTitle, swedishPageDescription, translateCopy } from './copy';
+import { swedishHref } from './paths';
 
 /** Source-location edits keep scripts, CSS, assets and markup byte-for-byte intact. */
-export function translateSwedishHtml(html: string, page: string): string {
+export function translateSwedishHtml(html: string, page: string, origin?: string): string {
   const copy = swedishCopy(page);
   const doc: any = parse5.parse(html, { sourceCodeLocationInfo: true });
   const edits: { start: number; end: number; value: string }[] = [];
@@ -14,7 +15,7 @@ export function translateSwedishHtml(html: string, page: string): string {
       const loc = n.sourceCodeLocation;
       try {
         const data = JSON.parse(content({ childNodes: n.childNodes }));
-        const translate = (v: any): any => typeof v === 'string' ? translateCopy(v, copy) : Array.isArray(v) ? v.map(translate) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k,x]) => [k,translate(x)])) : v;
+        const translate = (v: any): any => typeof v === 'string' ? swedishHref(translateCopy(v, copy), origin) : Array.isArray(v) ? v.map(translate) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k,x]) => [k,translate(x)])) : v;
         if (loc?.startTag && loc?.endTag) edits.push({start:loc.startTag.endOffset,end:loc.endTag.startOffset,value:JSON.stringify(translate(data)).replace(/</g,'\\u003c')});
       } catch { /* Leave third-party structured data intact if it is not JSON. */ }
       return;
@@ -25,9 +26,9 @@ export function translateSwedishHtml(html: string, page: string): string {
       edits.push({ start: loc.startTag.endOffset, end: loc.endTag.startOffset, value: escape(swedishPageTitle(page)!) }); return;
     }
     for (const attr of n.attrs ?? []) {
-      if (['alt', 'title', 'aria-label', 'placeholder', 'content'].includes(attr.name)) {
+      if (['alt', 'title', 'aria-label', 'placeholder', 'content', 'href', 'action'].includes(attr.name)) {
         const isDescription = n.tagName === 'meta' && n.attrs.some((a: any) => a.name === 'name' && a.value === 'description') && attr.name === 'content';
-        const value = isDescription ? swedishPageDescription(page) ?? translateCopy(attr.value, copy) : translateCopy(attr.value, copy);
+        const value = swedishHref(isDescription ? swedishPageDescription(page) ?? translateCopy(attr.value, copy) : translateCopy(attr.value, copy), origin);
         const al = loc?.attrs?.[attr.name];
         if (value !== attr.value && al) edits.push({ start: al.startOffset, end: al.endOffset, value: `${attr.name}="${escape(value)}"` });
       }
@@ -42,7 +43,7 @@ export function translateSwedishHtml(html: string, page: string): string {
         for (const a of (n.childNodes ?? []).filter((c: any) => c.tagName === 'a')) {
           const label = translateCopy(content(a), copy).trim();
           const href = a.attrs.find((x: any) => x.name === 'href')?.value;
-          if (href && label && translated.includes(label)) value = value.replace(escape(label), `<a href="${escape(href)}">${escape(label)}</a>`);
+          if (href && label && translated.includes(label)) value = value.replace(escape(label), `<a href="${escape(swedishHref(href, origin))}">${escape(label)}</a>`);
         }
         edits.push({ start: loc.startTag.endOffset, end: loc.endTag.startOffset, value }); return;
       }

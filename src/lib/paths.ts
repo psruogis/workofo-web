@@ -1,5 +1,6 @@
 import { DEFAULT_LOCALE, type Locale } from './locales';
 import { isIndustrySlug, type IndustrySlug } from './solutions';
+import { swedishPublicPath } from './swedish/paths';
 
 /** Path relative to locale root, always starting with `/` (e.g. `/home`, `/blog/foo`). */
 export function normalizePath(path = '/'): string {
@@ -9,10 +10,11 @@ export function normalizePath(path = '/'): string {
 
 /**
  * Build a locale-aware href. English (default) has no `/en` prefix.
- * Examples: localePath('en','/home') → '/home'; localePath('se','/home') → '/se/home'
+ * Examples: localePath('en','/home') → '/home'; localePath('se','/home') → '/se/startsida'
  */
 export function localePath(locale: Locale, path = '/'): string {
   const p = normalizePath(path);
+  if (locale === 'se') return `/se${swedishPublicPath(p)}`;
   if (locale === DEFAULT_LOCALE) {
     return p === '/' ? '/' : p;
   }

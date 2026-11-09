@@ -568,7 +568,9 @@ main.shell {
 .arlanda-case,
 .integrations-hub,
 .retail-page,
-.contact-demo {
+.contact-demo,
+.product-page,
+.blog-archive {
   width: 100%;
   max-width: none;
   align-self: stretch;
