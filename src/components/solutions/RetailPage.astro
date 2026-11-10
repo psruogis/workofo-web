@@ -260,11 +260,11 @@ const homeHref = localePath(locale, '/');
 <div class="in" style="gap:48px">
 <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
 <h2 class="h2" data-reveal data-split>What our customers say</h2>
-<div style="display:flex;align-items:center;gap:12px">
+{locale !== 'se' && (<div style="display:flex;align-items:center;gap:12px">
 <span class="retail-stories-label" aria-live="polite" style="font-size:0.9375rem;font-weight:600;color:#4A4F57;min-width:48px;text-align:right">1 / 2</span>
 <button type="button" class="navbtn" data-story-prev aria-label="Previous customer story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 <button type="button" class="navbtn" data-story-next aria-label="Next customer story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-</div>
+</div>)}
 </div>
 <div class="retail-stories" data-retail-stories data-reveal>
 <article class="retail-stories__card rowin" data-story="0">
@@ -281,7 +281,7 @@ const homeHref = localePath(locale, '/');
 </div>
 </div>
 </article>
-<article class="retail-stories__card rowin" data-story="1" hidden>
+{locale !== 'se' && (<article class="retail-stories__card rowin" data-story="1" hidden>
 <div class="retail-stories__aside">
 <span aria-hidden="true" class="retail-stories__quote-mark">“</span>
 <div class="stack" style="gap:6px"><span class="retail-stories__org">Tele2</span><span class="retail-stories__sector">Telecommunications</span></div>
@@ -294,11 +294,11 @@ const homeHref = localePath(locale, '/');
 <span class="retail-stories__role">Sales Channels Operations Manager, Tele2</span>
 </div>
 </div>
-</article>
-<div class="retail-stories__dots" role="tablist" aria-label="Customer stories">
+</article>)}
+{locale !== 'se' && (<div class="retail-stories__dots" role="tablist" aria-label="Customer stories">
 <button type="button" class="retail-stories__dot is-active" data-story-dot="0" role="tab" aria-selected="true" aria-label="Story 1"></button>
 <button type="button" class="retail-stories__dot" data-story-dot="1" role="tab" aria-selected="false" aria-label="Story 2"></button>
-</div>
+</div>)}
 </div>
 </div>
 </section>

@@ -51,7 +51,8 @@
       "See Workofo with your own demand data and scheduling rules.": "En demo är en bra start",
       "Bring your demand patterns, roles and labour rules. Let's explore where better scheduling could make a difference.": "Berätta vad du vill förändra och förbättra. Vi visar hur Workofo fungerar och diskuterar hur ni kan gå från dagens sätt att schemalägga och bemanna till mätbar effekt inom tolv veckor.",
       "We'll get back to you to arrange your demo.": "Vi svarar inom en arbetsdag.",
-      "Ask Nora...": "Ellen är sjuk i morgon"
+      "Ask Nora...": "Ellen är sjuk i morgon",
+      "~12%": "Cirka 12 %"
     },
     "description": "Workofos AI-baserade schemaläggningssystem matchar personal med efterfrågan. Se hur bättre bemanning kan ge fler affärer och mindre övertid."
   },
@@ -150,7 +151,8 @@
       "Big challenges looking for sharp minds.": "Stora utmaningar söker skarpa huvuden.",
       "We are looking for engineers and developers who enjoy working with numbers and complex needs, and want to solve the hardest problems in scheduling. Come build and create with us.": "Vi söker ingenjörer och utvecklare som trivs med många siffror och komplexa behov. Som vill lösa schemaläggningens svåraste problem. Välkommen att bygga och skapa med oss.",
       "Your staffing needs. Your rules. See what Workofo can do.": "Få mer ut av bemanningen?",
-      "We respond within one working day.": "Vi svarar inom en arbetsdag."
+      "We respond within one working day.": "Vi svarar inom en arbetsdag.",
+      "5–15%": "5–15 %"
     },
     "description": "Workofo använder AI och matematisk optimering för schemaläggning som följer efterfrågan. För bättre affärer och en arbetsdag som lättare går ihop."
   },
@@ -213,7 +215,10 @@
       "What could better staffing mean for your stores?": "Vad skulle bättre bemanning betyda för dina butiker?",
       "Bring your stores, roles and labour rules. Let's find the opportunities hidden in your schedules.": "Berätta vad du vill få mer utrymme för. Vi visar hur Workofo fungerar och diskuterar var ni kan börja för att nå mätbar effekt inom tolv veckor.",
       "Dovydas Braukyla, CEO": "Dovydas Braukyla, vd",
-      "Planas Chuliganas, telemarketing/ call center provider": "Planas Chuliganas, leverantör av telemarketing- och kontaktcentertjänster"
+      "Planas Chuliganas, telemarketing/ call center provider": "Planas Chuliganas, leverantör av telemarketing- och kontaktcentertjänster",
+      "09:12": "09.12",
+      "09:14": "09.14",
+      "Telemarketing / call center": "Telemarketing / kontaktcenter"
     },
     "description": "Schemaläggning för butiker som tar hänsyn till kundflödet och allt arbete runt omkring. Ge personalen bättre förutsättningar att möta kunderna med Workofo."
   },
@@ -292,7 +297,9 @@
       "employees, from one site to many": "På ett eller flera arbetsställen.",
       "200-20,000+": "200–20 000+ medarbetare",
       "200–20,000+": "200–20 000+ medarbetare",
-      "15 min": "15 minuter"
+      "15 min": "15 minuter",
+      "planned together in one schedule": "Samlad planering i ett schema.",
+      "Sales Channels Operations Manager, Tele2": "Sales Channels Operations Manager, Tele2"
     },
     "description": "Planera bemanningen för samtal, chatt och mejl med AI och matematisk optimering. Workofo hjälper er att möta servicemålen och använda arbetstimmarna bättre."
   },
@@ -378,7 +385,18 @@
       "employees, from one airport to a network": "På en eller flera flygplatser.",
       "200-20,000+": "200–20 000+ medarbetare",
       "200–20,000+": "200–20 000+ medarbetare",
-      "15 min": "15 minuter"
+      "15 min": "15 minuter",
+      "less time on scheduling and admin": "Mindre tid på schemaläggning och administration.",
+      "Request days off": "Ansök om ledighet.",
+      "Approve swaps and leave": "Godkänn passbyten och ledighet.",
+      "Request time off": "Ansök om ledighet.",
+      "Approve trades and leave": "Godkänn passbyten och ledighet.",
+      "Share availability": "Ange när du kan arbeta.",
+      "Approve swaps and time off": "Godkänn passbyten och ledighet.",
+      "Set availability": "Ange när du kan arbeta.",
+      "Ask for leave": "Ansök om ledighet.",
+      "Book time off": "Ansök om ledighet.",
+      "Apply for leave": "Ansök om ledighet."
     },
     "description": "Planera bemanningen efter flygtrafiken. Workofo skapar scheman med hänsyn till behörigheter och arbetstidsregler och föreslår ändringar när flygtiderna ändras."
   },
@@ -456,7 +474,10 @@
       "employees, from one venue to a group": "medarbetare, på en restaurang eller i en kedja",
       "200-20,000+": "200–20 000+",
       "200–20,000+": "200–20 000+",
-      "15 min": "15 minuter"
+      "15 min": "15 minuter",
+      "planned in one rota": "planeras i ett gemensamt schema",
+      "15:42": "15.42",
+      "15:44": "15.44"
     },
     "description": "Planera bemanningen efter gästflödet. Workofo skapar scheman för kök, bar och matsal med hänsyn till avtal och arbetstidsregler. Boka en demo."
   },
@@ -537,7 +558,15 @@
       "employees, from one warehouse to a network": "På ett eller flera lager.",
       "200-20,000+": "200–20 000+ medarbetare",
       "200–20,000+": "200–20 000+ medarbetare",
-      "15 min": "15 minuter"
+      "15 min": "15 minuter",
+      "employees in one shared pool": "I en gemensam personalpool.",
+      "50–300": "50–300 medarbetare",
+      "Request days off": "Ansök om ledighet.",
+      "Request time off": "Ansök om ledighet.",
+      "See this week's shifts": "Se veckans arbetspass.",
+      "Ask for leave": "Ansök om ledighet.",
+      "Book time off": "Ansök om ledighet.",
+      "Apply for leave": "Ansök om ledighet."
     },
     "description": "Planera bemanningen efter varuflödet. Workofo skapar scheman för lager och logistik med hänsyn till kompetens och arbetstidsregler. Boka en demo."
   },

@@ -287,7 +287,6 @@ function buildFaqs(locale: Locale): Faq[] {
   const sol = (slug: IndustrySlug, label: string) =>
     `<a href="${industryPath(locale, slug)}">${label}</a>`;
   return [
-    ...(locale === 'se' ? [{ q: 'Vad innebär effekt inom tolv veckor i praktiken?', a: "Efter tolv veckor ska nya scheman vara i bruk och förbättringen mätbar i en utvald del av företaget. Vi analyserar hur ni arbetar och tar fram scheman som granskas med era chefer. Därefter testas de i vardagen. Resultatet visar vad ni får ut av förändringen, i timmar och pengar, och ger underlag för nästa steg. Tidsplanen förutsätter att ni bidrar med de uppgifter och insatser vi kommer överens om vid starten." }] : []),
     {
       q: 'What is AI employee scheduling software?',
       a: 'AI employee scheduling software uses workload forecasts to build staff schedules around demand, skills and working-time rules. Workofo combines demand-based scheduling with schedule optimization software to find better combinations of shifts and skills. Managers review the options and decide how to use the capacity released.',
@@ -305,6 +304,7 @@ function buildFaqs(locale: Locale): Faq[] {
       a: 'The opportunity depends on your operation. Better shift lengths, start times and skill allocation can release hours for peak demand, other locations or less overtime. Explore your potential with the capacity calculator.',
       html: `The opportunity depends on your operation. Better shift lengths, start times and skill allocation can release hours for peak demand, other locations or less overtime. Explore your potential with the <a href="${localePath(locale, '/calculator')}">capacity calculator</a>.`,
     },
+    ...(locale === 'se' ? [{ q: 'Vad innebär effekt inom tolv veckor i praktiken?', a: "Efter tolv veckor ska nya scheman vara i bruk och förbättringen mätbar i en utvald del av företaget. Vi analyserar hur ni arbetar och tar fram scheman som granskas med era chefer. Därefter testas de i vardagen. Resultatet visar vad ni får ut av förändringen, i timmar och pengar, och ger underlag för nästa steg. Tidsplanen förutsätter att ni bidrar med de uppgifter och insatser vi kommer överens om vid starten." }] : []),
     {
       q: 'Which industries is Workofo built for?',
       a: 'Workofo is built for shift-based operations in retail, contact centres, aviation, logistics and restaurants.',
