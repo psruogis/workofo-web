@@ -55,5 +55,9 @@ export function translateSwedishHtml(html: string, page: string, origin?: string
     (n.childNodes ?? []).forEach(visit);
   }
   visit(doc);
+  if (swedishPageDescription(page) && !/<meta\b[^>]*name=["']description["']/i.test(html)) {
+    const headEnd = html.indexOf('</head>');
+    if (headEnd >= 0) edits.push({ start: headEnd, end: headEnd, value: `<meta name="description" content="${escape(swedishPageDescription(page)!)}">` });
+  }
   return edits.sort((a,b) => b.start - a.start).reduce((out,e) => out.slice(0,e.start)+e.value+out.slice(e.end),html);
 }

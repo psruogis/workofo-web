@@ -79,6 +79,7 @@ export function Hero({ section, locale = 'en' }: Props) {
             </h1>
           </div>
           <p className="hero-tl__lede">{MODERN_HOME_HERO.lede}</p>
+          {locale === 'se' && <p className="hero-tl__promise">Från första analys till mätbar effekt inom tolv veckor.</p>}
           <div className="hero__actions hero-tl__actions">
             <a className="btn btn--primary btn--cta" href={demoHref}>
               {primaryCta}

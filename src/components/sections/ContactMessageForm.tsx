@@ -151,7 +151,7 @@ export default function ContactMessageForm({
 
       <label className="contact-page__field">
         <span className="contact-page__label">
-          Company <i>(optional)</i>
+          {locale === 'se' ? 'Företag' : 'Company'} <i>(optional)</i>
         </span>
         <input
           name="company"

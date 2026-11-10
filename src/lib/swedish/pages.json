@@ -50,7 +50,8 @@
       "Yes. Workofo does the calculations and suggests workable options. Managers review, adjust and publish the schedule, deciding how to use any capacity released. When things change, they can replan without starting from scratch.": "Ja. Workofo räknar och föreslår. Du granskar schemat och godkänner eller ändrar förslaget. När någon blir sjuk eller behoven ändras hjälper Workofo dig att hitta en lösning. En intelligent följeslagare. Inte chefens chef.",
       "See Workofo with your own demand data and scheduling rules.": "En demo är en bra start",
       "Bring your demand patterns, roles and labour rules. Let's explore where better scheduling could make a difference.": "Berätta vad du vill förändra och förbättra. Vi visar hur Workofo fungerar och diskuterar hur ni kan gå från dagens sätt att schemalägga och bemanna till mätbar effekt inom tolv veckor.",
-      "We'll get back to you to arrange your demo.": "Vi svarar inom en arbetsdag."
+      "We'll get back to you to arrange your demo.": "Vi svarar inom en arbetsdag.",
+      "Ask Nora...": "Ellen är sjuk i morgon"
     },
     "description": "Workofos AI-baserade schemaläggningssystem matchar personal med efterfrågan. Se hur bättre bemanning kan ge fler affärer och mindre övertid."
   },
@@ -107,7 +108,9 @@
       "Used by multi-site teams across Europe": "Används av företag med flera arbetsställen i Europa",
       "Tell us about your operation": "Berätta lite om er",
       "We'll tailor the demo for you. Takes about a minute.": "Dina svar hjälper oss att förbereda demon. Formuläret tar ungefär en minut att fylla i.",
-      "We'll get back to you about your demo. No commitment.": "Vi svarar inom en arbetsdag. Du förbinder dig inte till något."
+      "We'll get back to you about your demo. No commitment.": "Vi svarar inom en arbetsdag. Du förbinder dig inte till något.",
+      "251–1,000": "251–1 000",
+      "1,001–5,000": "1 001–5 000"
     },
     "description": "Frigöra tid och pengar? Boka en demo av Workofo med era bemanningsfrågor i fokus. Vi visar en väg till mätbar effekt inom tolv veckor."
   },
@@ -208,7 +211,9 @@
       "Do managers stay in control of the schedule?": "Har butikschefen fortfarande kontroll över schemat?",
       "Yes. Workofo builds the plan; managers review, adjust and publish. Automation handles the heavy lifting, not the final call.": "Ja. Workofo tar fram förslaget. Chefen granskar, kan göra ändringar och godkänner schemat innan det börjar gälla. Systemet hjälper till att se alternativen. Besluten fattas av en människa.",
       "What could better staffing mean for your stores?": "Vad skulle bättre bemanning betyda för dina butiker?",
-      "Bring your stores, roles and labour rules. Let's find the opportunities hidden in your schedules.": "Berätta vad du vill få mer utrymme för. Vi visar hur Workofo fungerar och diskuterar var ni kan börja för att nå mätbar effekt inom tolv veckor."
+      "Bring your stores, roles and labour rules. Let's find the opportunities hidden in your schedules.": "Berätta vad du vill få mer utrymme för. Vi visar hur Workofo fungerar och diskuterar var ni kan börja för att nå mätbar effekt inom tolv veckor.",
+      "Dovydas Braukyla, CEO": "Dovydas Braukyla, vd",
+      "Planas Chuliganas, telemarketing/ call center provider": "Planas Chuliganas, leverantör av telemarketing- och kontaktcentertjänster"
     },
     "description": "Schemaläggning för butiker som tar hänsyn till kundflödet och allt arbete runt omkring. Ge personalen bättre förutsättningar att möta kunderna med Workofo."
   },
@@ -277,7 +282,17 @@
       "Is there an app for agents?": "Finns det en app för medarbetarna?",
       "Yes. Agents see their shifts, set availability and trade shifts in the Workofo mobile app, while team leads approve changes wherever they are.": "Ja. Medarbetarna ser sina pass, anger när de kan arbeta och byter pass i Workofos mobilapp. Chefen kan godkänna ändringar var som helst.",
       "Can Workofo run multi-site contact centres?": "Fungerar Workofo för kontaktcenter på flera orter?",
-      "Yes. Workofo scales from a single site to multi-site operations with thousands of agents, with forecasting, automated scheduling and HR and payroll integrations.": "Ja. Workofo fungerar från ett arbetsställe till verksamheter med tusentals medarbetare på flera orter, med prognoser, automatisk schemaläggning och kopplingar till HR och lön."
+      "Yes. Workofo scales from a single site to multi-site operations with thousands of agents, with forecasting, automated scheduling and HR and payroll integrations.": "Ja. Workofo fungerar från ett arbetsställe till verksamheter med tusentals medarbetare på flera orter, med prognoser, automatisk schemaläggning och kopplingar till HR och lön.",
+      "Set availability and preferences": "Ange när du kan arbeta och lämna schemaönskemål",
+      "Swap shifts with colleagues": "Byt pass med en kollega",
+      "Edit the plan from anywhere": "Ändra schemat direkt i mobilen",
+      "Access by role and team": "Styr åtkomsten efter roll och team",
+      "With Workofo we had an easy system implementation.": "Det var enkelt att införa Workofo.",
+      "forecast intervals per queue": "Prognosintervall för varje kö.",
+      "employees, from one site to many": "På ett eller flera arbetsställen.",
+      "200-20,000+": "200–20 000+ medarbetare",
+      "200–20,000+": "200–20 000+ medarbetare",
+      "15 min": "15 minuter"
     },
     "description": "Planera bemanningen för samtal, chatt och mejl med AI och matematisk optimering. Workofo hjälper er att möta servicemålen och använda arbetstimmarna bättre."
   },
@@ -347,7 +362,23 @@
       "Is there an app for ground staff?": "Finns det en app för markpersonalen?",
       "Yes. Staff check rosters, share availability and trade shifts in the Workofo mobile app.": "Ja. Medarbetarna ser sina scheman, anger när de kan arbeta och byter pass i Workofos mobilapp.",
       "Does Workofo connect to HR and payroll?": "Kan Workofo kopplas till HR och lön?",
-      "Yes. Workofo connects to your HR and payroll systems, so approved hours flow straight to payroll.": "Ja. Workofo kopplas till era HR- och lönesystem så att godkända timmar förs direkt till lönesystemet."
+      "Yes. Workofo connects to your HR and payroll systems, so approved hours flow straight to payroll.": "Ja. Workofo kopplas till era HR- och lönesystem så att godkända timmar förs direkt till lönesystemet.",
+      "Check the roster": "Håll koll på dina arbetspass.",
+      "View schedules": "Håll koll på dina arbetspass.",
+      "Swap shifts": "Byt pass med en kollega.",
+      "Trade shifts": "Byt pass med en kollega.",
+      "Swap a shift": "Byt pass med en kollega.",
+      "Adjust schedules on the go": "Ändra schemat direkt i mobilen.",
+      "Adjust rosters on the move": "Ändra schemat direkt i mobilen.",
+      "Change the rota on the go": "Ändra schemat direkt i mobilen.",
+      "Track hours per team": "Följ arbetstimmarna för varje team.",
+      "Access by role and station": "Styr åtkomsten efter roll och arbetsställe.",
+      "Access by role and site": "Styr åtkomsten efter roll och arbetsställe.",
+      "planning intervals per team": "Planeringsintervall för varje team.",
+      "employees, from one airport to a network": "På en eller flera flygplatser.",
+      "200-20,000+": "200–20 000+ medarbetare",
+      "200–20,000+": "200–20 000+ medarbetare",
+      "15 min": "15 minuter"
     },
     "description": "Planera bemanningen efter flygtrafiken. Workofo skapar scheman med hänsyn till behörigheter och arbetstidsregler och föreslår ändringar när flygtiderna ändras."
   },
@@ -414,7 +445,18 @@
       "Is there an app for restaurant staff?": "Finns det en app för restaurangpersonalen?",
       "Yes. Staff check their rota, set availability and swap shifts in the Workofo mobile app.": "Ja. Medarbetarna ser schemat, anger när de kan arbeta och byter pass i Workofos mobilapp.",
       "Does Workofo work for restaurant groups?": "Fungerar Workofo för restaurangkedjor?",
-      "Yes. Every location is planned in one system, from a single venue to groups with thousands of employees.": "Ja. Alla restauranger planeras i samma system, från en enskild restaurang till kedjor med tusentals medarbetare."
+      "Yes. Every location is planned in one system, from a single venue to groups with thousands of employees.": "Ja. Alla restauranger planeras i samma system, från en enskild restaurang till kedjor med tusentals medarbetare.",
+      "Open the rota": "Se dina arbetspass",
+      "Adjust schedules on the go": "Ändra schemat direkt i mobilen",
+      "Adjust rosters on the move": "Ändra schemat direkt i mobilen",
+      "Change the rota on the go": "Ändra schemat direkt i mobilen",
+      "Watch labor cost per day": "Följ personalkostnaden för varje dag",
+      "Access per role and venue": "Styr åtkomsten efter roll och restaurang",
+      "forecast intervals per location": "prognosintervall för varje restaurang",
+      "employees, from one venue to a group": "medarbetare, på en restaurang eller i en kedja",
+      "200-20,000+": "200–20 000+",
+      "200–20,000+": "200–20 000+",
+      "15 min": "15 minuter"
     },
     "description": "Planera bemanningen efter gästflödet. Workofo skapar scheman för kök, bar och matsal med hänsyn till avtal och arbetstidsregler. Boka en demo."
   },
@@ -481,7 +523,21 @@
       "Is there an app for warehouse staff?": "Finns det en app för lagerpersonalen?",
       "Yes. Staff see their shifts, update availability and swap shifts in the Workofo mobile app.": "Ja. Medarbetarna ser sina pass, uppdaterar sin tillgänglighet och byter pass i Workofos mobilapp.",
       "Is Workofo suitable for large logistics networks?": "Passar Workofo stora logistiknätverk?",
-      "Yes. Every site and zone is planned in one system, from a single warehouse to networks with thousands of employees.": "Ja. Alla arbetsställen och zoner planeras i samma system, från ett enskilt lager till nätverk med tusentals medarbetare."
+      "Yes. Every site and zone is planned in one system, from a single warehouse to networks with thousands of employees.": "Ja. Alla arbetsställen och zoner planeras i samma system, från ett enskilt lager till nätverk med tusentals medarbetare.",
+      "Update availability": "Ange när du kan arbeta.",
+      "Swap shifts": "Byt pass med en kollega.",
+      "Trade shifts": "Byt pass med en kollega.",
+      "Swap a shift": "Byt pass med en kollega.",
+      "Approve swaps and leave requests": "Godkänn passbyten och ledighet.",
+      "Move people between zones": "Flytta medarbetare mellan arbetsområden.",
+      "Follow hours per zone": "Följ arbetstimmarna per arbetsområde.",
+      "Access by role and station": "Få tillgång till rätt information utifrån din roll och ditt arbetsställe.",
+      "Access by role and site": "Få tillgång till rätt information utifrån din roll och ditt arbetsställe.",
+      "forecast intervals per zone": "Prognosintervall för varje arbetsområde.",
+      "employees, from one warehouse to a network": "På ett eller flera lager.",
+      "200-20,000+": "200–20 000+ medarbetare",
+      "200–20,000+": "200–20 000+ medarbetare",
+      "15 min": "15 minuter"
     },
     "description": "Planera bemanningen efter varuflödet. Workofo skapar scheman för lager och logistik med hänsyn till kompetens och arbetstidsregler. Boka en demo."
   },

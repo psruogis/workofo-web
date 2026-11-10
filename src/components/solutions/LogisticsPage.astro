@@ -325,7 +325,7 @@ const homeHref = localePath(locale, '/');
 <details><summary>Can Workofo assign people by skill and safety rules?</summary><p>Yes. Workers are assigned to activities based on competence and safety requirements, and differences in speed and experience are taken into account.</p></details>
 <details><summary>Can we share staff between warehouses?</summary><p>Yes. You can reallocate, borrow or lend employee hours between locations. It works especially well for shared pools of 50–300 employees.</p></details>
 <details><summary>How does Workofo handle absences and spikes?</summary><p>It suggests daily schedule adjustments so supervisors can cover unexpected absences and demand spikes quickly.</p></details>
-<div class="retail-faq__more" data-lg-faq-more hidden>
+{locale !== 'se' && (<><div class="retail-faq__more" data-lg-faq-more hidden>
 <details><summary>Does Workofo support task-based staffing?</summary><p>Yes. Staffing can be planned per task and activity, not just per shift.</p></details>
 <details><summary>Does Workofo follow local labor rules?</summary><p>Yes. Contracts, rest rules and local agreements are applied to every shift plan.</p></details>
 <details><summary>Do supervisors keep control?</summary><p>Yes. Workofo suggests the plan; supervisors and operations managers review, adjust and publish it, and can test business rules over time.</p></details>
@@ -336,7 +336,7 @@ const homeHref = localePath(locale, '/');
 <span class="retail-faq-more__more">Load more questions</span>
 <span class="retail-faq-more__less">Show less</span>
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-</button>
+</button></>)}
 </div>
 </div>
 </section>

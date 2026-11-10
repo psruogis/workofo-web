@@ -348,7 +348,7 @@ const homeHref = localePath(locale, '/');
 <details><summary>Can Workofo plan for service-level targets?</summary><p>Yes. Workofo estimates the headcount each interval needs to reach your service-level targets, taking handling times, skills and proficiency into account.</p></details>
 <details><summary>Does Workofo support skill-based and multi-channel planning?</summary><p>Yes. Skill-based scheduling and multi-channel contact centre planning bring voice, chat and email into one plan. Workofo allocates agents according to their skills and the staffing requirements of each queue.</p></details>
 <details><summary>How does Workofo handle intraday changes?</summary><p>When volume or attendance shifts during the day, Workofo suggests changes, rebalances over- and understaffed queues and supports shift swaps and short-term adjustments.</p></details>
-<div class="retail-faq__more" data-cc-faq-more hidden>
+{locale !== 'se' && (<><div class="retail-faq__more" data-cc-faq-more hidden>
 <details><summary>Will our planners keep the final say?</summary><p>Yes. Planners review the options, test business rules and make the final call. Workofo helps them see how staffing choices affect service coverage and agent preferences, including where priorities need to be weighed.</p></details>
 <details><summary>Does Workofo respect working-time rules and agreements?</summary><p>Yes. Working-time limits, breaks, rest periods and contract terms are checked in every plan, so team leads don't have to review compliance shift by shift.</p></details>
 <details><summary>Does Workofo integrate with our contact centre platform, HR and payroll?</summary><p>Workofo connects to your HR and payroll systems and uses contact volume data from your contact centre platform, so the forecast stays current and approved schedules flow to payroll.</p></details>
@@ -359,7 +359,7 @@ const homeHref = localePath(locale, '/');
 <span class="retail-faq-more__more">Load more questions</span>
 <span class="retail-faq-more__less">Show less</span>
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-</button>
+</button></>)}
 </div>
 </div>
 </section>

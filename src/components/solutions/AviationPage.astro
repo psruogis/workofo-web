@@ -359,7 +359,7 @@ const showAviationContact = false;
 <details><summary>How does Workofo handle delays and schedule changes?</summary><p>When the flight plan changes, Workofo re-plans the affected shifts and suggests changes, so supervisors don't rebuild the roster by hand.</p></details>
 <details><summary>Can Workofo plan around licences and certifications?</summary><p>Yes. Skills and qualification rules are part of every roster, so only staff with the right training are planned for each role.</p></details>
 <details><summary>How much time can we save?</summary><p>Clients save up to 80% of the time spent on scheduling and admin. Labor savings depend on your operation, so book a call and we'll calculate them with your own data.</p></details>
-<div class="retail-faq__more" data-av-faq-more hidden>
+{locale !== 'se' && (<><div class="retail-faq__more" data-av-faq-more hidden>
 <details><summary>Does Workofo cover more than the ramp?</summary><p>Yes. Check-in, security, baggage handling and airport retail can be planned in the same system.</p></details>
 <details><summary>Does Workofo follow working-time rules and union agreements?</summary><p>Yes. Rest periods, maximum hours and local agreements are applied to every roster.</p></details>
 <details><summary>Do supervisors keep the final say?</summary><p>Yes. Workofo proposes the roster; supervisors review, adjust and publish it.</p></details>
@@ -370,7 +370,7 @@ const showAviationContact = false;
 <span class="retail-faq-more__more">Load more questions</span>
 <span class="retail-faq-more__less">Show less</span>
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-</button>
+</button></>)}
 </div>
 </div>
 </section>

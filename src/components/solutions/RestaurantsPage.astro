@@ -325,7 +325,7 @@ const homeHref = localePath(locale, '/');
 <details><summary>Can Workofo plan kitchen, bar and floor separately?</summary><p>Yes. Staffing is planned by role, and differences in employee speed and experience are factored in.</p></details>
 <details><summary>How does Workofo help with labor cost?</summary><p>Revenue, labor hours and cost of labor % are shown per day next to the rota, so managers see the effect of every change before publishing.</p></details>
 <details><summary>What happens when someone calls in sick?</summary><p>Workofo recommends shift changes to cover absences and unexpected demand, so managers don't rebuild the rota by hand.</p></details>
-<div class="retail-faq__more" data-rs-faq-more hidden>
+{locale !== 'se' && (<><div class="retail-faq__more" data-rs-faq-more hidden>
 <details><summary>Can we share staff between restaurants?</summary><p>Yes. You can move, borrow or lend employee hours between locations when needed.</p></details>
 <details><summary>Does Workofo follow local labor rules?</summary><p>Yes. Contracts, rest rules and local agreements are applied to every rota.</p></details>
 <details><summary>Do managers stay in charge?</summary><p>Yes. Workofo supports managers, it doesn't replace them. They review, adjust and publish the rota, and can test business rules over time.</p></details>
@@ -336,7 +336,7 @@ const homeHref = localePath(locale, '/');
 <span class="retail-faq-more__more">Load more questions</span>
 <span class="retail-faq-more__less">Show less</span>
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-</button>
+</button></>)}
 </div>
 </div>
 </section>

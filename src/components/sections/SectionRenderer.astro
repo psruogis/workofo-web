@@ -76,10 +76,11 @@ const SUPPORTED =
   useModernHome && logoSection && (
     <>
       <HomeFeatures locale={locale} client:load />
+      {locale === 'se' && <section class="home-service"><div class="home-journey__inner"><h2>Service är en känsla.</h2><p class="lede">Kvinnan i butiken ser att kunden behöver hjälp. Hon har tid att lyssna och kunskap att svara. Precis som det är tänkt att fungera. Rätt bemanning ger fler kunder samma uppmärksamhet.</p></div></section>}
       <ArlandaCase locale={locale} client:load />
       <HomeFeatureAnnounce locale={locale} client:load demoHref={localePath(locale, '/get-in-touch')} />
       <HomeIndustries client:load locale={locale} />
-      <IntegrationsHub demoHref={localePath(locale, '/get-in-touch')} />
+      <IntegrationsHub locale={locale} demoHref={localePath(locale, '/get-in-touch')} />
       <HomeFaq locale={locale} />
       <HomeBottomCta
         demoHref={localePath(locale, '/get-in-touch')}

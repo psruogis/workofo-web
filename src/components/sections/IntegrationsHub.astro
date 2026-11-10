@@ -5,9 +5,10 @@
  */
 type Props = {
   demoHref: string;
+  locale?: string;
 };
 
-const { demoHref } = Astro.props as Props;
+const { demoHref, locale } = Astro.props as Props;
 
 const integrations = [
   { name: 'Google sign-in', image: 'google.svg', x: 312, y: 75, left: '50%', top: '13.39%', size: '54%' },
@@ -86,7 +87,7 @@ const integrations = [
     <div
       class="integrations-hub__visual"
       role="img"
-      aria-label="Workofo connected to Google sign-in, Microsoft Entra ID, OpenID Connect, HiBob, Fujitsu Persona, Microsoft Dynamics 365, Caspeco, Finavia, Apple WeatherKit and Elyra, plus 15 more integrations."
+      aria-label={locale === 'se' ? 'Workofo kopplat till Google-inloggning, Microsoft Entra ID, OpenID Connect, HiBob, Fujitsu Persona, Microsoft Dynamics 365, Caspeco, Finavia, Apple WeatherKit och Elyra.' : 'Workofo connected to Google sign-in, Microsoft Entra ID, OpenID Connect, HiBob, Fujitsu Persona, Microsoft Dynamics 365, Caspeco, Finavia, Apple WeatherKit and Elyra, plus 15 more integrations.'}
       data-reveal
     >
       <svg class="integrations-hub__visual-svg" viewBox="0 0 624 560" preserveAspectRatio="none" aria-hidden="true">
@@ -111,7 +112,7 @@ const integrations = [
         <div class="integrations-hub__visual-brand">
           <img src="/integrations/workofo.png" alt="" loading="lazy" />
         </div>
-        <span class="integrations-hub__visual-more">+ 15 more integrations</span>
+        {locale !== 'se' && <span class="integrations-hub__visual-more">+ 15 more integrations</span>}
       </div>
     </div>
   </div>

@@ -61,7 +61,7 @@ const facts = [
   { dt: 'Offices', dd: 'Copenhagen, London, Vilnius' },
   { dt: 'Built for', dd: '200 to 20,000+ employees' },
   { dt: 'Founded', dd: '2021' },
-  { dt: 'Company', dd: 'Workofo Europe ApS' },
+  { dt: locale === 'se' ? 'Bolag' : 'Company', dd: 'Workofo Europe ApS' },
 ] as const;
 
 const stats = [
@@ -167,18 +167,20 @@ const storyAfterPull = [
             <span class="about-story__ph">Photo: Remigijus Staniulis</span>
           </figure>
           <div class="about-story__path about-story__path--placeholder">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            {locale !== 'se' && 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
           </div>
         </aside>
         <div class="about-story">
           <p class="about-lead about-story__lead">{storyLead}</p>
           {storyBody.map((p) => <p class="about-lead">{p}</p>)}
           <p class="about-story__pull">Here was a problem worth solving.</p>
-          {storyAfterPull.map((p) => <p class="about-lead">{p}</p>)}
+          {storyAfterPull.map((p) => locale === 'se' && p.startsWith('What could you do') ? <><h3 class="about-h3">Vad vill du göra med tiden som frigörs?</h3><p class="about-lead">Timmar som frigörs på ett ställe kan göra större nytta på ett annat. Kanske finns ett nytt uppdrag att tacka ja till, eller en övertidskostnad att komma åt.</p></> : <p class="about-lead">{p}</p>)}
           <p class="about-story__close">Advanced technology that makes everyday work run more smoothly.</p>
           <div class="about-signoff">
             <div class="about-signoff__cta">
+
               <h3 class="about-signoff__invite">Tell us what you want to work better. We would like to know more.</h3>
+              {locale === 'se' && <p class="about-lead">Henrik Salwén</p>}
               <div>
                 <a class="btn btn--primary btn--cta" href={demoHref}>Get in touch</a>
               </div>
@@ -290,6 +292,7 @@ const storyAfterPull = [
             <h2 class="about-h2 h2 about-h2--light">
               Your staffing needs. Your rules. See what Workofo can do.
             </h2>
+            {locale === 'se' && <p class="about-lead">Vi visar en väg till mätbar effekt inom tolv veckor.</p>}
             <p class="about-card__note">We respond within one working day.</p>
           </div>
           <div class="about-card__actions">

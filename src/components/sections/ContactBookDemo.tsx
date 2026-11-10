@@ -110,6 +110,13 @@ function fieldError(field: FieldModel | undefined, raw: string, locale: Locale):
  * Contact / Book a demo page form. Same /api/demo-form submit as homepage DemoForm.
  * Layout follows the Book a demo HTML mock; type/buttons use Workofo tokens.
  */
+function employeeRangeLabel(chip: string, locale: string) {
+  const range = chip.replace(/,/g, '').match(/^(\d+)\s*[-–]\s*(\d+)$/);
+  if (locale !== 'se' || !range) return chip;
+  const format = new Intl.NumberFormat('sv-SE');
+  return `${format.format(Number(range[1]))}–${format.format(Number(range[2]))}`;
+}
+
 export default function ContactBookDemo({
   fields = [],
   formId,
@@ -406,13 +413,13 @@ export default function ContactBookDemo({
                   >
                     {map.employeeChips.map((chip) => (
                       <button
-                        key={chip}
+                        key={employeeRangeLabel(chip, locale)}
                         type="button"
                         className={`contact-demo__chip${employeeChip === chip ? ' is-on' : ''}`}
                         aria-pressed={employeeChip === chip}
                         onClick={() => setEmployeeChip(chip)}
                       >
-                        {chip}
+                        {employeeRangeLabel(chip, locale)}
                       </button>
                     ))}
                   </div>
@@ -432,13 +439,13 @@ export default function ContactBookDemo({
                   >
                     {map.industryChips.map((chip) => (
                       <button
-                        key={chip}
+                        key={employeeRangeLabel(chip, locale)}
                         type="button"
                         className={`contact-demo__chip${industryChip === chip ? ' is-on' : ''}`}
                         aria-pressed={industryChip === chip}
                         onClick={() => setIndustryChip(chip)}
                       >
-                        {chip}
+                        {employeeRangeLabel(chip, locale)}
                       </button>
                     ))}
                   </div>
