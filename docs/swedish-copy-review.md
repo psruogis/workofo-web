@@ -56,3 +56,7 @@ Den nya filen `Workofo_Svensk_webb_avvikelser_till_Max_261110 (1).docx` innehål
 Efterkontrollen av rå publicerad HTML på alla tio sidor hittade inga ogiltiga styrtecken. Samtliga footertexter stämmer ordagrant. Ett separat regressionstest verifierade att NUL-rensningen behåller formuleringar, länkar och SVG-kod.
 
 Övriga punkter överst i den nya statusen kvarstår avsiktligt: ersättningsblocket inväntar bekräftelse enligt användarens beslut, flygplatskontaktblocket är uttryckligen dolt, och Henrik Salwéns porträtt, namnteckning och befattning kräver bekräftat material. Diagrammen har kontrollerats efter klientladdning; bokningsillustrationen och den extra CTA-knappen följer den senare beställda designen.
+
+## Bekräftade rekryteringsuppgifter
+
+Användaren har den 10 november 2026 bekräftat att timlön är korrekt och att möjligheten till optioner gäller båda rollerna. Det tidigare undantaget för ersättningsblocket upphävs. Svenska rekryteringssidan använder nu underlagets ”Lön och optioner” och ”Du får timlön och möjlighet till optioner i företaget.”
