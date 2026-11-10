@@ -4829,9 +4829,17 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 }
 .nav-dropdown__option-label {
   color: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-dropdown__menu--company {
+  width: 280px;
+  min-width: 280px;
+  max-width: min(280px, calc(100vw - 2rem));
 }
 .nav-dropdown__badge {
   flex-shrink: 0;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4843,58 +4851,6 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   font-weight: 600;
   line-height: 1;
   color: #4a4f57;
-}
-
-/* Calculator promo */
-.nav-dropdown__promo {
-  display: block;
-  margin-top: 6px;
-  padding: 16px;
-  border-radius: 14px;
-  text-decoration: none;
-  background: #111111;
-  color: #ffffff;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.nav-dropdown__promo-title {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: inherit;
-}
-.nav-dropdown__promo-desc {
-  display: block;
-  margin-top: 3px;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 400;
-  line-height: 1.45;
-  color: #b9bbc0;
-  transition: color 0.15s ease;
-}
-.nav-dropdown__promo-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem; /* sketch 13px */
-  font-weight: 600;
-  line-height: 1;
-  color: inherit;
-}
-.nav-dropdown__promo:hover,
-.nav-dropdown__promo:focus-visible,
-.nav-dropdown__promo:active {
-  background: #111111;
-  color: #fff;
-}
-.nav-dropdown__promo:hover .nav-dropdown__promo-desc,
-.nav-dropdown__promo:focus-visible .nav-dropdown__promo-desc,
-.nav-dropdown__promo:active .nav-dropdown__promo-desc {
-  color: #b9bbc0;
 }
 
 /* Industries — sketch .dd (340px) + .ix rows */
@@ -5601,9 +5557,6 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   .mobile-acc__b .nav-dropdown__all {
     margin: 0.35rem 0.5rem 0;
     padding: 12px 14px;
-  }
-  .mobile-acc__b .nav-dropdown__promo {
-    margin: 6px 0.35rem 0;
   }
   .mobile-nav__cta {
     display: flex;
@@ -9677,3 +9630,11 @@ body:not(.retail-page) .wf-cta-sec {
 .calc-method summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .calc-method p { margin: 12px 0 0; max-width: 38ch; }
 @media (min-width: 901px) { .capacity-calc__results { position: sticky; top: 110px; align-self: start; } }
+
+@media (max-width: 380px) {
+  .site-header__inner { column-gap: 8px; grid-template-columns: minmax(0, 1fr) auto; }
+  .brand { min-width: 0; }
+  .brand img { width: 128px; height: auto; }
+  .header-actions { gap: 6px; }
+  .lang-dropdown__trigger { padding-inline: 6px; }
+}

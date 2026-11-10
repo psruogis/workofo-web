@@ -92,12 +92,15 @@ const linkedInHref = 'https://www.linkedin.com/company/workofo';
 /** Company — name-only (no descriptions). Contact is /contact, not get-in-touch. */
 const companyLinks = [
   { label: 'About', href: aboutHref, path: '/about', badge: null as string | null },
-  { label: 'Jobs', href: jobsHref, path: '/jobs', badge: 'Hiring' },
+  { label: 'Jobs', href: jobsHref, path: '/jobs', badge: locale === 'se' ? 'Lediga jobb' : 'Hiring' },
   { label: 'Contact', href: contactHref, path: '/contact', badge: null as string | null },
 ] as const;
 
-/** Resources — Blog name row + calculator promo (black fill on hover only). */
-const resourceLinks = [{ label: ui('blog', locale), href: blogHref, path: '/blog' }] as const;
+/** Resources use the same neutral rows. */
+const resourceLinks = [
+  { label: ui('blog', locale), href: blogHref, path: '/blog' },
+  { label: locale === 'se' ? 'Kalkylator' : locale === 'lt' ? 'Skaičiuoklė' : 'Calculator', href: calculatorHref, path: '/calculator' },
+] as const;
 
 const footerOffices = [
   {
@@ -251,16 +254,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <a class="nav-dropdown__promo" href={calculatorHref} role="listitem">
-                <span class="nav-dropdown__promo-title">{ui('calculatePotential', locale)}</span>
-                <span class="nav-dropdown__promo-desc">
-                  See what better scheduling could free up in your operation.
-                </span>
-                <span class="nav-dropdown__promo-cta">
-                  Open calculator
-                  <span aria-hidden="true">→</span>
-                </span>
-              </a>
             </div>
           </details>
           <details class:list={['nav-dropdown', 'nav-dropdown--company', { 'is-active': isCompanyActive }]}>
@@ -408,16 +401,6 @@ function alternateHref(targetLocale: Locale): string {
                   </a>
                 ))
               }
-              <a class="nav-dropdown__promo" href={calculatorHref}>
-                <span class="nav-dropdown__promo-title">{ui('calculatePotential', locale)}</span>
-                <span class="nav-dropdown__promo-desc">
-                  See what better scheduling could free up in your operation.
-                </span>
-                <span class="nav-dropdown__promo-cta">
-                  Open calculator
-                  <span aria-hidden="true">→</span>
-                </span>
-              </a>
             </div>
           </details>
 
@@ -432,7 +415,7 @@ function alternateHref(targetLocale: Locale): string {
               {
                 companyLinks.map((item) => (
                   <a class="mobile-acc__link mobile-acc__link--row" href={item.href}>
-                    <span>{item.label}</span>
+                    <span class="nav-dropdown__option-label">{item.label}</span>
                     {item.badge && <span class="nav-dropdown__badge">{item.badge}</span>}
                   </a>
                 ))
