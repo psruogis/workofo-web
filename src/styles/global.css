@@ -9361,6 +9361,7 @@ body:not(.retail-page) .wf-cta-sec {
 }
 .contact-route__title {
   margin: 0;
+  color: inherit;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--text-h3);
