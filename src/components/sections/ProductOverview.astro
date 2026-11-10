@@ -8,10 +8,10 @@ const { locale } = Astro.props as Props;
 const demoHref = localePath(locale, '/book-a-demo');
 const industries = [
   { slug: 'retail', title: 'Retail', description: 'Staff every store around footfall' },
-  { slug: 'contact-centre', title: 'Contact centres', description: 'Meet service levels on every channel' },
   { slug: 'aviation', title: 'Aviation', description: 'Ground handling around every flight' },
   { slug: 'restaurants', title: 'Restaurants', description: 'Staff every rush, kitchen to floor' },
   { slug: 'logistics', title: 'Logistics', description: 'Plan zones around your volumes' },
+  { slug: 'contact-centre', title: 'Contact centres', description: 'Meet service levels on every channel' },
 ] as const;
 const faqs = [
   { question: 'What is workforce management software?', answer: 'Workforce management software helps shift-based businesses forecast demand, build schedules and manage changes. Workofo does this from demand: it forecasts workload, builds optimized schedules within your rules and recommends improvements.' },
@@ -145,6 +145,15 @@ const dayHighlights = [
 
 <style>
   .product-page { color: #111; background: #fff; font-family: var(--font-sans); }
+  .product-page :is(h1, h2, h3),
+  .product-hero__copy > p,
+  .product-section__head > p { text-wrap: balance; }
+  .product-feature__copy :is(p, li),
+  .product-multisite :is(p, dd),
+  .product-industries__grid span,
+  .product-faq p { text-wrap: pretty; }
+  .product-feature__copy h3,
+  .product-multisite h2 { color: inherit; }
   .product-wrap { box-sizing: border-box; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 56px; }
   .product-top { background: #ececea; }
   .product-hero { padding: 72px 0 40px; background: radial-gradient(ellipse 55% 38% at 52% 75%, rgba(223,92,70,.11), transparent 80%), #ececea; }
@@ -294,6 +303,8 @@ const dayHighlights = [
     .product-section__head p { justify-self: start; }
     .product-feature { grid-column: 1 / -1; }
     .product-feature__visual { flex-basis: 230px; min-height: 230px; }
+    .product-feature__visual--nora { flex-basis: auto; padding: 24px; }
+    .product-feature__visual--nora > span { flex-shrink: 0; }
     .product-week { padding: 40px 0 80px; }
     .product-week__day { display: none; }
     .product-multisite { padding: 88px 0; }
@@ -306,6 +317,7 @@ const dayHighlights = [
     .product-faq { padding: 72px 0 0; }
   }
   @media (max-width: 640px) {
+    .product-hero h1 { font-size: clamp(28px, 8vw, 36px); }
     .product-hero__actions { width: 100%; }
     .product-button { width: 100%; }
     .product-process { grid-template-columns: 1fr; }
