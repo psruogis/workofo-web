@@ -12,7 +12,6 @@ type Props = {
 
 const { locale } = Astro.props as Props;
 const demoHref = localePath(locale, '/get-in-touch');
-const contactHref = localePath(locale, '/contact');
 const jobsHref = localePath(locale, '/jobs');
 
 const principles = [
@@ -178,7 +177,7 @@ const storyAfterPull = [
           {storyAfterPull.map((p) => locale === 'se' && p.startsWith('What could you do') ? <><h3 class="about-h3">Vad vill du göra med tiden som frigörs?</h3><p class="about-lead">Timmar som frigörs på ett ställe kan göra större nytta på ett annat. Kanske finns ett nytt uppdrag att tacka ja till, eller en övertidskostnad att komma åt.</p></> : <p class="about-lead">{p}</p>)}
           <p class="about-story__close">Advanced technology that makes everyday work run more smoothly.</p>
           <div class="about-signoff">
-            <div class="about-signoff__cta">
+            <div class:list={['about-signoff__cta', { 'about-signoff__cta--person': locale === 'se' }]}>
 
               <h3 class="about-signoff__invite">Tell us what you want to work better. We would like to know more.</h3>
               {locale === 'se' && <div class="about-signoff__person">
@@ -188,9 +187,9 @@ const storyAfterPull = [
                   <p class="about-signoff__role">Country manager</p>
                 </div>
               </div>}
-              <div>
-                <a class="btn btn--primary btn--cta" href={locale === 'se' ? contactHref : demoHref}>Get in touch</a>
-              </div>
+              {locale === 'se' ? <a class="about-signoff__email" href="mailto:henrik.salwen@workofo.com">henrik.salwen@workofo.com</a> : <div>
+                <a class="btn btn--primary btn--cta" href={demoHref}>Get in touch</a>
+              </div>}
             </div>
           </div>
         </div>

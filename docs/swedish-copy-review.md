@@ -64,3 +64,7 @@ Användaren har den 10 november 2026 bekräftat att timlön är korrekt och att 
 ## Henrik Salwéns porträtt och befattning
 
 Användaren har tillhandahållit Henriks porträtt och bekräftat befattningen ”Country manager”. Porträtt, namn och befattning är infogade tillsammans i signaturblocket på svenska Om Workofo. En eventuell namnteckningsbild har ännu inte tillhandahållits.
+
+## Uppdaterad kontaktpresentation för Henrik
+
+Enligt användarens senare instruktion är Henriks porträtt runt och centrerat ovanför namn och befattning. Knappen ”Skriv till oss” har ersatts av den klickbara adressen `henrik.salwen@workofo.com` med en mailto-länk.
