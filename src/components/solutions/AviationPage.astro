@@ -16,6 +16,8 @@ type Props = {
 const { locale } = Astro.props as Props;
 const demoHref = localePath(locale, '/get-in-touch');
 const homeHref = localePath(locale, '/');
+// Temporarily disabled until the aviation contact section is ready to return.
+const showAviationContact = false;
 ---
 <article class="retail-page aviation-page">
 <!-- Industry split-hero (homepage vertical center; 55/45 copy | photo) -->
@@ -312,6 +314,7 @@ const homeHref = localePath(locale, '/');
 </section>
 
 <!-- Simona contact band -->
+{showAviationContact && (
 <section class="sec" style="background:#ECECE8">
 <div class="in" style="gap:48px">
 <div class="stack" style="gap:20px;max-width:640px" data-reveal>
@@ -342,6 +345,7 @@ const homeHref = localePath(locale, '/');
 </section>
 
 <!-- FAQ -->
+)}
 <section class="sec industry-faq-section" style="background:#FFFFFF">
 <div class="in">
 <div class="industry-faq-layout">

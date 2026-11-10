@@ -4,6 +4,7 @@ import { LOGIN_URL, SITE_NAME } from '../lib/config';
 import { isIndustrySlug, listIndustrySolutions, type IndustrySlug } from '../lib/solutions';
 import { localePath, industryPath, normalizePath } from '../lib/paths';
 import FlagIcon from '../components/FlagIcon.astro';
+import { swedishCopy, translateCopy } from '../lib/swedish/copy';
 import '../styles/global.css';
 
 type NavPage = { slug?: string; title?: string; navLabel?: string; navOrder?: number };
@@ -101,6 +102,36 @@ const resourceLinks = [
   { label: ui('blog', locale), href: blogHref, path: '/blog' },
   { label: locale === 'se' ? 'Kalkylator' : locale === 'lt' ? 'Skaičiuoklė' : 'Calculator', href: calculatorHref, path: '/calculator' },
 ] as const;
+
+const footerCopy = swedishCopy('');
+const footerLabel = (label: string) => locale === 'se' ? translateCopy(label, footerCopy) : label;
+const sortFooterLinks = <T extends { label: string }>(links: T[]) => links.sort((a, b) =>
+  footerLabel(a.label).localeCompare(footerLabel(b.label), locale === 'se' ? 'sv' : locale));
+const footerIndustries = sortFooterLinks(solutions);
+const footerProduct = sortFooterLinks([
+  { label: 'Product overview', href: productHref },
+  { label: 'Demand forecasting', href: `${productHref}#forecasting` },
+  { label: 'Automatic scheduling', href: `${productHref}#scheduling` },
+  { label: 'Nora AI assistant', href: `${productHref}#nora` },
+  { label: 'Employee app', href: `${productHref}#app` },
+]);
+const footerCompany = sortFooterLinks([
+  { label: 'Home', href: homeHref },
+  { label: 'About', href: aboutHref },
+  { label: 'Jobs', href: jobsHref },
+  { label: 'Blog', href: blogHref },
+  { label: 'Contact', href: contactHref },
+]);
+const footerStart = sortFooterLinks([
+  { label: 'Book a demo', href: demoHref, external: false },
+  { label: locale === 'se' ? 'Kalkylator' : locale === 'lt' ? 'Skaičiuoklė' : 'Calculator', href: calculatorHref, external: false },
+  { label: 'Log in', href: LOGIN_URL, external: true },
+]);
+const footerLegal = sortFooterLinks([
+  { label: 'Privacy policy', href: privacyHref, external: false },
+  { label: 'Cookie policy', href: cookieHref, external: false },
+  { label: 'LinkedIn', href: linkedInHref, external: true },
+]);
 
 const footerOffices = [
   {
@@ -455,7 +486,7 @@ function alternateHref(targetLocale: Locale): string {
             <h2 class="site-footer__heading">Industries</h2>
             <ul class="site-footer__list">
               {
-                solutions.map((item) => (
+                footerIndustries.map((item) => (
                   <li>
                     <a href={item.href}>{item.label}</a>
                   </li>
@@ -467,32 +498,21 @@ function alternateHref(targetLocale: Locale): string {
           <nav class="site-footer__col" aria-label="Product">
             <h2 class="site-footer__heading">Product</h2>
             <ul class="site-footer__list">
-              <li><a href={productHref}>Product overview</a></li>
-              <li><a href={`${productHref}#forecasting`}>Demand forecasting</a></li>
-              <li><a href={`${productHref}#scheduling`}>Automatic scheduling</a></li>
-              <li><a href={`${productHref}#nora`}>Nora AI assistant</a></li>
-              <li><a href={`${productHref}#app`}>Employee app</a></li>
+              {footerProduct.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
             </ul>
           </nav>
 
           <nav class="site-footer__col" aria-label="Company">
             <h2 class="site-footer__heading">Company</h2>
             <ul class="site-footer__list">
-              <li><a href={homeHref}>Home</a></li>
-              <li><a href={aboutHref}>About</a></li>
-              <li><a href={jobsHref}>Jobs</a></li>
-              <li><a href={blogHref}>Blog</a></li>
-              <li><a href={contactHref}>Contact</a></li>
+              {footerCompany.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
             </ul>
           </nav>
 
           <nav class="site-footer__col" aria-label="Get started">
             <h2 class="site-footer__heading">Get started</h2>
             <ul class="site-footer__list">
-              <li><a href={demoHref}>Book a demo</a></li>
-              <li>
-                <a href={LOGIN_URL} target="_blank" rel="noreferrer noopener">Log in</a>
-              </li>
+              {footerStart.map((item) => <li><a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer noopener' : undefined}>{item.label}</a></li>)}
             </ul>
           </nav>
         </div>
@@ -517,9 +537,7 @@ function alternateHref(targetLocale: Locale): string {
         <div class="site-footer__legal">
           <p class="site-footer__copy">© 2026 Workofo Europe ApS, 42015784</p>
           <nav class="site-footer__legal-nav" aria-label="Legal">
-            <a href={privacyHref}>Privacy policy</a>
-            <a href={cookieHref}>Cookie policy</a>
-            <a href={linkedInHref} target="_blank" rel="noreferrer noopener">LinkedIn</a>
+            {footerLegal.map((item) => <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer noopener' : undefined}>{item.label}</a>)}
           </nav>
         </div>
       </div>
