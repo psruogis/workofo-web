@@ -2,6 +2,7 @@ import { items } from '@wix/data';
 import type { Locale } from './locales';
 import { DEFAULT_LOCALE } from './locales';
 import { richToHtml } from './rich';
+import { localePath } from './paths';
 
 export const JOBS = 'Jobs';
 
@@ -38,13 +39,9 @@ function isPublished(job: CmsJob): boolean {
   return job.published === true || job.published === ('true' as unknown as boolean);
 }
 
-/** Resolve apply href: applyUrl wins; else mailto from applyEmail. */
-export function jobApplyHref(job: CmsJob): string | null {
-  const url = (job.applyUrl || '').trim();
-  if (url) return url;
-  const email = (job.applyEmail || '').trim();
-  if (email) return `mailto:${email}`;
-  return null;
+/** Recruitment enquiries go to Contact in the visitor's language. */
+export function jobApplyHref(locale: Locale = DEFAULT_LOCALE): string {
+  return localePath(locale, '/contact');
 }
 
 export function jobDescriptionHtml(job: CmsJob): string {

@@ -34,7 +34,7 @@ if (!job) {
   return Astro.redirect(localePath(locale, '/jobs'), 302);
 }
 
-const apply = jobApplyHref(job);
+const apply = jobApplyHref(locale);
 const html = jobDescriptionHtml(job);
 const tags = jobTags(job);
 const title = `${job.title || 'Open role'} | Jobs | Workofo`;

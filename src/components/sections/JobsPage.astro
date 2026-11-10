@@ -91,7 +91,7 @@ const why = [
         result.status === 'ok' && jobs.length === 0 && (
           <div class="jobs-board__empty" data-reveal>
             <p class="jobs-txt">No open roles right now. Check back soon, or tell us what you'd like to build.</p>
-            <a class="btn btn--ghost btn--cta" href="mailto:contact@workofo.com">Get in touch</a>
+            <a class="btn btn--ghost btn--cta" href={localePath(locale, '/contact')}>Get in touch</a>
           </div>
         )
       }
@@ -136,7 +136,7 @@ const why = [
           <span class="jobs-board__cta-title">Don't see the right role?</span>
           <span class="jobs-txt">Tell us what you'd like to build. We read every message.</span>
         </div>
-        <a class="btn btn--ghost btn--cta" href="mailto:contact@workofo.com">Get in touch</a>
+        <a class="btn btn--ghost btn--cta" href={localePath(locale, '/contact')}>Get in touch</a>
       </div>
     </div>
   </section>
