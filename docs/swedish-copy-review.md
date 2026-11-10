@@ -60,3 +60,7 @@ Efterkontrollen av rå publicerad HTML på alla tio sidor hittade inga ogiltiga 
 ## Bekräftade rekryteringsuppgifter
 
 Användaren har den 10 november 2026 bekräftat att timlön är korrekt och att möjligheten till optioner gäller båda rollerna. Det tidigare undantaget för ersättningsblocket upphävs. Svenska rekryteringssidan använder nu underlagets ”Lön och optioner” och ”Du får timlön och möjlighet till optioner i företaget.”
+
+## Henrik Salwéns porträtt och befattning
+
+Användaren har tillhandahållit Henriks porträtt och bekräftat befattningen ”Country manager”. Porträtt, namn och befattning är infogade tillsammans i signaturblocket på svenska Om Workofo. En eventuell namnteckningsbild har ännu inte tillhandahållits.

@@ -8048,6 +8048,33 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   color: #111111;
   text-wrap: balance;
 }
+.about-signoff__person {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+.about-signoff__person img {
+  flex: none;
+  width: 104px;
+  height: 104px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+.about-signoff__name {
+  margin: 0;
+  color: #111111;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.about-signoff__role {
+  margin: 4px 0 0;
+  color: #4A4F57;
+  font-size: 15px;
+  line-height: 1.5;
+}
 @media (max-width: 900px) {
   .about-story__grid {
     grid-template-columns: 1fr;

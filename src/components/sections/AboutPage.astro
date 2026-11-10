@@ -181,7 +181,13 @@ const storyAfterPull = [
             <div class="about-signoff__cta">
 
               <h3 class="about-signoff__invite">Tell us what you want to work better. We would like to know more.</h3>
-              {locale === 'se' && <p class="about-lead">Henrik Salwén</p>}
+              {locale === 'se' && <div class="about-signoff__person">
+                <img src="/people/henrik-salwen.png" alt="Porträtt av Henrik Salwén" width="104" height="104" loading="lazy" />
+                <div>
+                  <p class="about-signoff__name">Henrik Salwén</p>
+                  <p class="about-signoff__role">Country manager</p>
+                </div>
+              </div>}
               <div>
                 <a class="btn btn--primary btn--cta" href={locale === 'se' ? contactHref : demoHref}>Get in touch</a>
               </div>
