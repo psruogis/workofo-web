@@ -3,8 +3,6 @@ import HomeBottomCta from './HomeBottomCta.astro';
 
 type Props = {
   demoHref: string;
-  secondaryHref?: string;
-  secondaryLabel?: string;
   headingId?: string;
   title?: string;
   sub?: string;
@@ -16,8 +14,6 @@ type Props = {
 
 const {
   demoHref,
-  secondaryHref,
-  secondaryLabel,
   headingId,
   title = 'Book a demo built around your stores.',
   sub = "Bring your stores, roles and labor rules. We'll show you what Workofo would do with them.",
@@ -27,8 +23,6 @@ const {
 
 <HomeBottomCta
   demoHref={demoHref}
-  secondaryHref={secondaryHref}
-  secondaryLabel={secondaryLabel}
   headingId={headingId}
   title={title}
   sub={sub}

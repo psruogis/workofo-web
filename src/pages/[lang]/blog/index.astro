@@ -23,5 +23,5 @@ const navPages = await listNavPages(locale);
 
 <SiteLayout locale={locale} title={ui('blog', locale)} pathWithoutLang="/blog" navPages={navPages}>
   <BlogArchive posts={blogPosts} error={error} locale={locale} />
-  <HomeBottomCta demoHref={localePath(locale, '/get-in-touch')} secondaryHref={`${localePath(locale, '/')}#home-features`} />
+  <HomeBottomCta demoHref={localePath(locale, '/get-in-touch')} />
 </SiteLayout>
