@@ -404,7 +404,7 @@ export default function ContactBookDemo({
                 <legend className="contact-demo__group-label">Your operation</legend>
                 <div className="contact-demo__fieldset">
                   <span className="contact-demo__chip-label" id="contact-demo-employees">
-                    Employees working shifts
+                    {locale === 'se' ? 'Hur många medarbetare ska schemaläggas?' : 'Employees working shifts'}
                   </span>
                   <div
                     className="contact-demo__chips"

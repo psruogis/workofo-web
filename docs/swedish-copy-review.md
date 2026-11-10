@@ -44,3 +44,15 @@ Tidigare rättningar har också verifierats: startsidans saknade stycken och FAQ
 Produkt, blogg, kalkylator, enskilda platsannonser och policys ingår inte i HTML-filens tio sidor och ingår därför inte i denna textjämförelse. Inga formulär har skickats.
 
 Publiceringen är gjord på Wix. Denna rapport är inte ett påstående om att ändringarna har pushats till GitHub.
+
+## Uppföljning av den nya kontrollen överst i dokumentet
+
+Den nya filen `Workofo_Svensk_webb_avvikelser_till_Max_261110 (1).docx` innehåller en ny status ovanför den äldre historiken. Den identifierade tre kvarvarande fel som nu har rättats och publicerats:
+
+- Startsidan hade en annan footertext eftersom sidans H1-översättning slog igenom även där. Footern använder nu uttryckligen den godkända formuleringen på samtliga tio sidor.
+- Demoetiketten innehöll U+0000 i rå HTML. Webbläsarens parsning dolde tecknet, vilket gjorde att den tidigare DOM-kontrollen inte upptäckte det. Ogiltiga NUL-tecken rensas nu före beräkning av översättningens källpositioner. Den exakta etiketten och rå HTML har verifierats efter publicering.
+- ”Skriv till oss” på Om Workofo leder nu till `/se/kontakt`. Länken har klickats och rätt målsida verifierats.
+
+Efterkontrollen av rå publicerad HTML på alla tio sidor hittade inga ogiltiga styrtecken. Samtliga footertexter stämmer ordagrant. Ett separat regressionstest verifierade att NUL-rensningen behåller formuleringar, länkar och SVG-kod.
+
+Övriga punkter överst i den nya statusen kvarstår avsiktligt: ersättningsblocket inväntar bekräftelse enligt användarens beslut, flygplatskontaktblocket är uttryckligen dolt, och Henrik Salwéns porträtt, namnteckning och befattning kräver bekräftat material. Diagrammen har kontrollerats efter klientladdning; bokningsillustrationen och den extra CTA-knappen följer den senare beställda designen.

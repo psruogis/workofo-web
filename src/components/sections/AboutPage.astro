@@ -12,6 +12,7 @@ type Props = {
 
 const { locale } = Astro.props as Props;
 const demoHref = localePath(locale, '/get-in-touch');
+const contactHref = localePath(locale, '/contact');
 const jobsHref = localePath(locale, '/jobs');
 
 const principles = [
@@ -182,7 +183,7 @@ const storyAfterPull = [
               <h3 class="about-signoff__invite">Tell us what you want to work better. We would like to know more.</h3>
               {locale === 'se' && <p class="about-lead">Henrik Salwén</p>}
               <div>
-                <a class="btn btn--primary btn--cta" href={demoHref}>Get in touch</a>
+                <a class="btn btn--primary btn--cta" href={locale === 'se' ? contactHref : demoHref}>Get in touch</a>
               </div>
             </div>
           </div>

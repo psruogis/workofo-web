@@ -4,6 +4,9 @@ import { swedishHref } from './paths';
 
 /** Source-location edits keep scripts, CSS, assets and markup byte-for-byte intact. */
 export function translateSwedishHtml(html: string, page: string, origin?: string): string {
+  // Invalid NULs can be hidden by browser parsing while remaining in raw HTML.
+  // Remove them before calculating source offsets so subsequent edits stay aligned.
+  html = html.replace(/\u0000/g, '');
   const copy = swedishCopy(page);
   const doc: any = parse5.parse(html, { sourceCodeLocationInfo: true });
   const edits: { start: number; end: number; value: string }[] = [];
