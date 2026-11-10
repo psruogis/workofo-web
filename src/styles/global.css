@@ -3545,6 +3545,9 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   letter-spacing: -0.03em;
   color: #0a0a0a;
 }
+.home-announce__line {
+  display: block;
+}
 .home-announce__lede {
   margin: 0 0 28px;
   max-width: 34rem;

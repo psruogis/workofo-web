@@ -1,11 +1,13 @@
 import { withSwedish } from '../../lib/swedish/react';
 import NoraChat from './NoraChat';
+import type { Locale } from '../../lib/locales';
 
 type Props = {
   demoHref?: string;
+  locale?: Locale;
 };
 
-export default function HomeFeatureAnnounce({ demoHref = '/get-in-touch' }: Props) {
+export default function HomeFeatureAnnounce({ demoHref = '/get-in-touch', locale = 'en' }: Props) {
   return (
     <section
       id="ai-scheduling-assistant"
@@ -18,8 +20,8 @@ export default function HomeFeatureAnnounce({ demoHref = '/get-in-touch' }: Prop
             <p className="t-overline home-announce__eyebrow">AI scheduling assistant</p>
             <span className="home-announce__badge">New</span>
           </div>
-          <h2 id="home-announce-heading" data-split>
-            Meet Nora. Talk through your next scheduling change.
+          <h2 id="home-announce-heading" data-split={locale === 'se' ? undefined : true}>
+            {locale === 'se' ? <><span className="home-announce__line" data-split>Hej Nora.</span>{' '}<span className="home-announce__line" data-split>Vi måste fixa några grejer.</span></> : 'Meet Nora. Talk through your next scheduling change.'}
           </h2>
           <p className="lede home-announce__lede">
             Someone calls in sick. Demand changes. Tell Nora, Workofo&apos;s AI scheduling assistant, to add a
