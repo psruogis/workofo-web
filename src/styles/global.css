@@ -9639,3 +9639,9 @@ body:not(.retail-page) .wf-cta-sec {
   .header-actions { gap: 6px; }
   .lang-dropdown__trigger { padding-inline: 6px; }
 }
+
+/* Bottom CTA owns the full gap after FAQ, matching its gap to the footer. */
+.home-faq .home-journey__inner,
+.retail-page .industry-faq-section {
+  padding-bottom: 0;
+}
