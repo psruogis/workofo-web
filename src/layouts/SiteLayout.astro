@@ -126,10 +126,13 @@ const footerStart = sortFooterLinks([
   { label: 'Book a demo', href: demoHref, external: false },
   { label: locale === 'se' ? 'Kalkylator' : locale === 'lt' ? 'Skaičiuoklė' : 'Calculator', href: calculatorHref, external: false },
   { label: 'Log in', href: LOGIN_URL, external: true },
+  { label: locale === 'se' ? 'Systemkrav' : 'System requirements', href: localePath(locale, '/system-requirements'), external: false },
 ]);
 const footerLegal = sortFooterLinks([
-  { label: 'Privacy policy', href: privacyHref, external: false },
+  { label: locale === 'se' ? 'Integritets- och cookiepolicy' : 'Privacy and cookie policy', href: privacyHref, external: false },
   { label: 'Cookie policy', href: cookieHref, external: false },
+  { label: locale === 'se' ? 'AI-transparens' : 'AI transparency', href: localePath(locale, '/ai-transparency'), external: false },
+  { label: locale === 'se' ? 'Allmänna villkor' : 'General terms', href: localePath(locale, '/terms'), external: false },
   { label: 'LinkedIn', href: linkedInHref, external: true },
 ]);
 

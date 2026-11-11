@@ -1,11 +1,3 @@
 ---
-import SiteLayout from '../../layouts/SiteLayout.astro';
-const locale = 'se' as const;
+return Astro.redirect('/se/integritetspolicy#cookies', 301);
 ---
-<SiteLayout locale={locale} title="Cookiepolicy | Workofo" pathWithoutLang="/cookie-policy">
-  <section class="shell__inner section-pad">
-    <h1>Cookiepolicy</h1>
-    <p>Platshållartext. Den fullständiga cookiepolicyn kommer snart.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  </section>
-</SiteLayout>

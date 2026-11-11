@@ -5,6 +5,8 @@
 import CmsPage from '../../components/CmsPage.astro';
 import { isLocale, type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
+import PolicyPage from '../../components/sections/PolicyPage.astro';
+import { isPolicyPage } from '../../lib/policies';
 
 const rawLang = Astro.params.lang;
 const slug = Astro.params.slug;
@@ -25,5 +27,9 @@ if (slug === 'blog') {
   return Astro.redirect(localePath(locale, '/blog'), 302);
 }
 
+if (slug === 'cookie-policy') {
+  return Astro.redirect(localePath(locale, '/privacy#cookies'), 301);
+}
+const policy = isPolicyPage(slug) ? slug : undefined;
 ---
-<CmsPage locale={locale} slug={slug} />
+{policy ? <PolicyPage locale={locale} page={policy} /> : <CmsPage locale={locale} slug={slug} />}
