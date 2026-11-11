@@ -250,6 +250,7 @@ export default function CapacityCalculator({
                 id="calc-employees"
                 locale={locale}
                 label="Total employee hours per month"
+                hint={locale === 'se' ? 'Ange det sammanlagda antalet arbetstimmar för den personal du vill räkna på.' : undefined}
                 value={employees}
                 onChange={setEmployees}
                 min={0}
@@ -341,15 +342,15 @@ export default function CapacityCalculator({
               </div>
 
               <p className="capacity-calc__basis">
-                An indicative estimate based on similar Workofo projects. Typical results are 5–15%; your inputs may produce a result outside that range. Final results depend on your operation.
+                {locale === 'se' ? 'Resultatet är en uppskattning baserad på liknande Workofo-projekt. Timmarna kan användas där de gör större nytta. Beloppet visar vad tiden motsvarar i personalkostnad, inte hur mycket lönekostnaderna automatiskt minskar.' : 'An indicative estimate based on similar Workofo projects. Typical results are 5–15%; your inputs may produce a result outside that range. Final results depend on your operation.'}
               </p>
 
-              <p className="capacity-calc__basis">Capacity value represents time that could be redistributed or optimised, not guaranteed payroll savings.</p>
+              {locale !== 'se' && <p className="capacity-calc__basis">Capacity value represents time that could be redistributed or optimised, not guaranteed payroll savings.</p>}
               <div className="capacity-calc__actions">
                 <a className="btn btn--primary capacity-calc__cta" href={demoHref}>
                   Book a demo
                 </a>
-                <details className="calc-method"><summary>How we estimate</summary><p>Working rules determine a base potential of 9–17%. Multiply by the share of time above minimum staffing and round to a whole percentage. Monthly hours × this percentage gives rounded hours; those hours × hourly rate gives the rounded monthly value in euros.</p></details>
+                <details className="calc-method"><summary>How we estimate</summary>{locale === 'se' ? <><p>Dina svar om passlängder, arbetsdagar i rad och möjligheten att arbeta på andra håll ger en uppskattad förbättring på 9–17 procent. Den justeras efter hur stor del av tiden ni är fler på plats än det lägsta antal som krävs.</p><p>Procentsatsen multipliceras sedan med månadens arbetstimmar. Det ger antalet timmar som kan frigöras. Timmarna multipliceras med timkostnaden för att visa värdet per månad. Resultaten avrundas till heltal.</p></> : <p>Working rules determine a base potential of 9–17%. Multiply by the share of time above minimum staffing and round to a whole percentage. Monthly hours × this percentage gives rounded hours; those hours × hourly rate gives the rounded monthly value in euros.</p>}</details>
               </div>
             </div>
           </div>

@@ -37,7 +37,7 @@ const dayHighlights = [
 ];
 ---
 
-<div class="product-page">
+<div class:list={['product-page', { 'product-page--se': locale === 'se' }]}>
   <script type="application/ld+json" set:html={faqJsonLd} />
   <div class="product-top">
     <section class="product-hero" aria-labelledby="product-heading">
@@ -187,6 +187,7 @@ const dayHighlights = [
   .product-process__lanes span { position: relative; height: 13px; border-radius: 4px; background: #f2f2ef; }
   .product-process__lanes i { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: #111; }
   .product-process__ok { align-self: flex-start; margin-top: 12px; padding: 6px 10px; border-radius: 999px; background: #eef6ef; color: #1e6b3a; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .product-page--se .product-process__ok { box-sizing: border-box; max-width: 100%; white-space: normal; line-height: 1.4; }
   .product-process__recs { display: grid; gap: 9px; margin-top: auto; padding-top: 18px; }
   .product-process__recs span { font-size: 11px; line-height: 1.25; }
   .product-process__recs i { display: block; height: 6px; margin-top: 5px; border-radius: 3px; background: linear-gradient(90deg,#df5c46,#ec8b78); }
