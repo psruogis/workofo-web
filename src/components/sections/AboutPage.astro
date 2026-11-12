@@ -154,6 +154,18 @@ const storyAfterPull = [
   </section>
 
   <!-- REMI'S STORY -->
+  <script>
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const story = document.querySelector<HTMLElement>('[aria-labelledby="about-story-heading"]');
+
+    if (header && story) {
+      const updateHeaderHeight = () => {
+        story.style.setProperty('--about-header-height', `${header.offsetHeight}px`);
+      };
+      updateHeaderHeight();
+      new ResizeObserver(updateHeaderHeight).observe(header);
+    }
+  </script>
   <section class="about-sec about-sec--cream" aria-labelledby="about-story-heading">
     <div class="about-in about-in--story" data-reveal>
       <div class="about-story__top">

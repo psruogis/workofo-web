@@ -7909,10 +7909,13 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 }
 .about-story__side {
   position: sticky;
-  top: 2.5rem;
+  top: calc(var(--about-header-height, 96px) + 1rem);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+#about-story-heading {
+  scroll-margin-top: calc(var(--about-header-height, 96px) + 1rem);
 }
 .about-story__photo {
   position: relative;
