@@ -1,4 +1,5 @@
 import { withSwedish } from '../../lib/swedish/react';
+import { lithuanianArtboard } from '../../lib/lithuanian/copy';
 /**
  * Retail One platform graphic - faithful extract of workofo-retail-teams-v4.html.
  * Markup/CSS/motion pasted from the artboard; manual tabs only (no auto-advance); US spelling fulfillment only.
@@ -131,7 +132,7 @@ export default function RetailPanel({ locale = 'en' }: { locale?: string }) {
     const host = hostRef.current;
     if (!host) return;
 
-    host.innerHTML = locale === 'se' ? SWEDISH_ARTBOARD_HTML : ARTBOARD_HTML;
+    host.innerHTML = locale === 'se' ? SWEDISH_ARTBOARD_HTML : locale === 'lt' ? lithuanianArtboard(ARTBOARD_HTML) : ARTBOARD_HTML;
     const root = host.querySelector('#uc') as HTMLElement | null;
     if (!root) return;
 

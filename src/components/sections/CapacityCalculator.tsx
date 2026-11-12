@@ -1,4 +1,5 @@
 import { withSwedish } from '../../lib/swedish/react';
+import { lithuanianText } from '../../lib/lithuanian/copy';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { capacityEstimate, type RuleOption } from '../../lib/capacity-estimate';
 import type { Locale } from '../../lib/locales';
@@ -22,13 +23,13 @@ function clampNumber(value: string, fallback: number, min = 0, max = 1_000_000) 
 }
 
 function formatHours(n: number, locale: Locale): string {
-  return n.toLocaleString(locale === 'se' ? 'sv-SE' : 'en-GB');
+  return n.toLocaleString(locale === 'se' ? 'sv-SE' : locale === 'lt' ? 'lt-LT' : 'en-GB');
 }
 function formatMoney(n: number, locale: Locale): string {
-  return new Intl.NumberFormat(locale === 'se' ? 'sv-SE' : 'en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+  return new Intl.NumberFormat(locale === 'se' ? 'sv-SE' : locale === 'lt' ? 'lt-LT' : 'en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
 }
 function formatDisplay(n: number, prefix?: string, suffix?: string, locale: Locale = 'en') {
-  return `${prefix ?? ''}${n.toLocaleString(locale === 'se' ? 'sv-SE' : 'en-GB', {maximumFractionDigits: 2})}${suffix ?? ''}`;
+  return `${prefix ?? ''}${n.toLocaleString(locale === 'se' ? 'sv-SE' : locale === 'lt' ? 'lt-LT' : 'en-GB', {maximumFractionDigits: 2})}${suffix ?? ''}`;
 }
 
 type SliderFieldProps = {
@@ -136,7 +137,7 @@ function SliderField({
                 setEditing(true);
               }
             }}
-            aria-label={locale === 'se' ? `Ändra ${accessibleLabel.toLowerCase()}, nuvarande värde ${formatDisplay(numeric, prefix, suffix, locale)}` : `Edit ${label}, currently ${formatDisplay(numeric, prefix, suffix, locale)}`}
+            aria-label={locale === 'se' ? `Ändra ${accessibleLabel.toLowerCase()}, nuvarande värde ${formatDisplay(numeric, prefix, suffix, locale)}` : locale === 'lt' ? `${lithuanianText(label)}. Keisti reikšmę. Dabar: ${formatDisplay(numeric, prefix, suffix, locale)}` : `Edit ${label}, currently ${formatDisplay(numeric, prefix, suffix, locale)}`}
           >
             <span className="calc-slider__value-text">
               {formatDisplay(numeric, prefix, suffix, locale)}

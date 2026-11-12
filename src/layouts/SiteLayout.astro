@@ -5,6 +5,7 @@ import { isIndustrySlug, listIndustrySolutions, type IndustrySlug } from '../lib
 import { localePath, industryPath, normalizePath } from '../lib/paths';
 import FlagIcon from '../components/FlagIcon.astro';
 import { swedishCopy, translateCopy } from '../lib/swedish/copy';
+import { lithuanianText } from '../lib/lithuanian/copy';
 import '../styles/global.css';
 
 type NavPage = { slug?: string; title?: string; navLabel?: string; navOrder?: number };
@@ -74,7 +75,7 @@ const industryNav = [
   ...item,
   href: industryPath(locale, item.slug),
 })).sort((a, b) => {
-  const label = (item: typeof a) => locale === 'se' ? swedishIndustryNames[item.slug] : item.title;
+  const label = (item: typeof a) => locale === 'se' ? swedishIndustryNames[item.slug] : locale === 'lt' ? lithuanianText(item.title) : item.title;
   return label(a).localeCompare(label(b), locale === 'se' ? 'sv' : locale);
 });
 
@@ -104,7 +105,7 @@ const resourceLinks = [
 ] as const;
 
 const footerCopy = swedishCopy('');
-const footerLabel = (label: string) => locale === 'se' ? translateCopy(label, footerCopy) : label;
+const footerLabel = (label: string) => locale === 'se' ? translateCopy(label, footerCopy) : locale === 'lt' ? lithuanianText(label) : label;
 const sortFooterLinks = <T extends { label: string }>(links: T[]) => links.sort((a, b) =>
   footerLabel(a.label).localeCompare(footerLabel(b.label), locale === 'se' ? 'sv' : locale));
 const footerIndustries = sortFooterLinks(solutions);

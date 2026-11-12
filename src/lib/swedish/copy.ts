@@ -1,5 +1,6 @@
 import pages from './pages.json';
 import common from './common.json';
+import { lithuanianCopy } from '../lithuanian/copy';
 export const normalizeCopy = (value: string) => value.replace(/\s+/g, ' ').trim();
 export function swedishCopy(page: string): Record<string, string> {
   const entry = (pages as Record<string, { copy: Record<string, string> }>)[page.startsWith('jobs/') ? 'jobs' : page];
@@ -24,8 +25,8 @@ export function swedishPageDescription(page: string): string | undefined {
 }
 
 /** Preserve Wix rich-content node IDs, decorations, links and image data. */
-export function translateSwedishRichContent(content: unknown): unknown {
-  const copy = swedishCopy('blog');
+export function translateSwedishRichContent(content: unknown, locale: 'se' | 'lt' = 'se'): unknown {
+  const copy = locale === 'lt' ? lithuanianCopy : swedishCopy('blog');
   function visit(value: any): any {
     if (Array.isArray(value)) return value.map(visit);
     if (value && typeof value === 'object') {

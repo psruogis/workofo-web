@@ -1,6 +1,7 @@
 import { DEFAULT_LOCALE, type Locale } from './locales';
 import { isIndustrySlug, type IndustrySlug } from './solutions';
 import { swedishPublicPath } from './swedish/paths';
+import { lithuanianPublicPath } from './lithuanian/paths';
 
 /** Path relative to locale root, always starting with `/` (e.g. `/home`, `/blog/foo`). */
 export function normalizePath(path = '/'): string {
@@ -15,6 +16,7 @@ export function normalizePath(path = '/'): string {
 export function localePath(locale: Locale, path = '/'): string {
   const p = normalizePath(path);
   if (locale === 'se') return `/se${swedishPublicPath(p)}`;
+  if (locale === 'lt') return `/lt${lithuanianPublicPath(p)}`;
   if (locale === DEFAULT_LOCALE) {
     return p === '/' ? '/' : p;
   }

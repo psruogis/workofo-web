@@ -2,6 +2,7 @@
 import type { BlogPostSummary } from '../../lib/blog';
 import { ui, type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
+import { lithuanianText } from '../../lib/lithuanian/copy';
 
 type Props = { posts: BlogPostSummary[]; error?: string; locale: Locale };
 const { posts, error, locale } = Astro.props as Props;
@@ -20,19 +21,21 @@ const classify = (post: BlogPostSummary): Exclude<Topic, 'all'> => {
 };
 const viewPosts = posts.filter((post) => post.slug && post.title).map((post) => {
   const author = 'Workofo';
-  return { ...post, topic: classify(post), author, initials: author.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase(), search: `${post.title} ${post.excerpt ?? ''}`.toLowerCase() };
+  const title = locale === 'lt' ? lithuanianText(post.title ?? '') : post.title;
+  const excerpt = locale === 'lt' ? lithuanianText(post.excerpt ?? '') : post.excerpt;
+  return { ...post, title, excerpt, topic: classify(post), author, initials: author.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase(), search: `${title} ${excerpt ?? ''}`.toLowerCase() };
 });
 const featured = viewPosts.find((post) => post.slug?.includes('industry-trends')) ?? viewPosts[0];
 const counts = Object.fromEntries(topics.map((topic) => [topic, topic === 'all' ? viewPosts.length : viewPosts.filter((post) => post.topic === topic).length]));
 const topicLabel = (topic: Exclude<Topic, 'all'>) => labels[topic];
 ---
 
-<div class="blog-archive" data-blog-archive data-blog-error={error ? 'true' : 'false'} lang={swedish ? 'sv' : 'en'}>
+<div class="blog-archive" data-blog-archive data-blog-error={error ? 'true' : 'false'} lang={swedish ? 'sv' : locale}>
   <section class="blog-archive__hero" aria-labelledby="blog-archive-heading">
     <div class="blog-archive__wrap">
       <div class="blog-archive__hero-row">
         <div>
-          <h1 id="blog-archive-heading">{ui('blog', locale)}</h1>
+          <h1 id="blog-archive-heading">{locale === 'lt' ? 'Tinklaraštis' : ui('blog', locale)}</h1>
           <p>{labels.intro}</p>
         </div>
         <form class="blog-archive__search" role="search" data-blog-search-form>
@@ -112,8 +115,9 @@ const topicLabel = (topic: Exclude<Topic, 'all'>) => labels[topic];
     const more = archive.querySelector<HTMLButtonElement>('[data-blog-more]');
     if (!search || !listTitle || !listCount || !empty || !moreWrap || !more) return;
     const latestTitle = listTitle.textContent ?? '';
-    const singular = archive.lang === 'sv' ? 'artikel' : 'article';
-    const plural = archive.lang === 'sv' ? 'artiklar' : 'articles';
+    const singular = archive.lang === 'sv' ? 'artikel' : archive.lang === 'lt' ? 'straipsnis' : 'article';
+    const plural = archive.lang === 'sv' ? 'artiklar' : archive.lang === 'lt' ? 'straipsniai' : 'articles';
+    const pluralRules = new Intl.PluralRules(archive.lang);
     let active = 'all';
     let limit = 3;
     const update = () => {
@@ -125,7 +129,9 @@ const topicLabel = (topic: Exclude<Topic, 'all'>) => labels[topic];
       cards.forEach((card) => { card.hidden = !gridMatches.includes(card) || gridMatches.indexOf(card) >= limit; });
       const selected = filters.find((button) => button.dataset.blogTopic === active);
       listTitle.textContent = active === 'all' ? latestTitle : (selected?.firstChild?.textContent?.trim() ?? latestTitle);
-      listCount.textContent = `${matches.length} ${matches.length === 1 ? singular : plural}`;
+      const count = matches.length;
+      const form = pluralRules.select(count);
+      listCount.textContent = `${count} ${form === 'one' ? singular : archive.lang === 'lt' && form !== 'few' ? 'straipsnių' : plural}`;
       empty.hidden = matches.length > 0 || archive.dataset.blogError === 'true';
       moreWrap.hidden = gridMatches.length <= limit;
       filters.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.blogTopic === active)));

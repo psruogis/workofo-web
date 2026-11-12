@@ -19,7 +19,7 @@ const { locale, slug } = Astro.props as Props;
 
 let result;
 try {
-  result = await loadPageBySlug(locale, slug);
+  result = await loadPageBySlug(locale === 'lt' && slug === 'home' ? 'en' : locale, slug);
 } catch (err) {
   result = {
     status: 'cms_error' as const,
@@ -78,11 +78,11 @@ const pageTitle =
         ? ui('pageNotFound', locale)
         : 'CMS setup needed';
 
-const isEnHome = locale === 'en' && slug === 'home';
-const seoTitle = isEnHome
+const usesEnglishHomeContent = (locale === 'en' || locale === 'lt') && slug === 'home';
+const seoTitle = usesEnglishHomeContent
   ? 'Employee Scheduling Software Built Around Real Demand | Workofo'
   : pageTitle;
-const seoDescription = isEnHome
+const seoDescription = usesEnglishHomeContent
   ? 'Employee scheduling software built around real demand. Make better use of time and skills, support your people and create room for better service.'
   : undefined;
 

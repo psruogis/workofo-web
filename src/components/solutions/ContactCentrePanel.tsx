@@ -1,4 +1,5 @@
 import { withSwedish } from '../../lib/swedish/react';
+import { lithuanianArtboard } from '../../lib/lithuanian/copy';
 /**
  * Contact Centre queue graphic - adapted from ContactCentre.dc.html.
  * Markup/CSS/motion from the artboard; manual tabs only (no auto-advance); US spelling labor.
@@ -122,7 +123,7 @@ export default function ContactCentrePanel({ locale = 'en' }: { locale?: string 
     const host = hostRef.current;
     if (!host) return;
 
-    host.innerHTML = locale === 'se' ? SWEDISH_ARTBOARD_HTML : ARTBOARD_HTML;
+    host.innerHTML = locale === 'se' ? SWEDISH_ARTBOARD_HTML : locale === 'lt' ? lithuanianArtboard(ARTBOARD_HTML) : ARTBOARD_HTML;
     const root = host.querySelector('#uc') as HTMLElement | null;
     if (!root) return;
 

@@ -21,7 +21,7 @@ export function isLocale(value: string | undefined): value is Locale {
 
 /** Locales that use the redesigned homepage stack (custom React sections, not CMS problem/benefits/testimonial). */
 export function isModernHomeLocale(locale: Locale): boolean {
-  return locale === 'en' || locale === 'se';
+  return locale === 'en' || locale === 'se' || locale === 'lt';
 }
 
 export function htmlLang(locale: Locale): string {
