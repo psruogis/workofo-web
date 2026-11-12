@@ -7917,30 +7917,14 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 .about-story__photo {
   position: relative;
   margin: 0;
-  /* Slightly shorter than 4/5 portrait placeholder */
-  aspect-ratio: 4 / 4.5;
   border-radius: 1.75rem;
   overflow: hidden;
   background: linear-gradient(160deg, #DCDBD5, #C9C8C1);
 }
 .about-story__photo img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
-  filter: grayscale(1) contrast(1.05);
-}
-.about-story__ph {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: #4A4F57;
 }
 .about-story__path {
   margin: 0;
