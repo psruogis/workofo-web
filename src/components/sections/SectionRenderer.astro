@@ -16,6 +16,7 @@ import {
 } from './Blocks';
 import { SwedishArlandaCase as ArlandaCase } from './ArlandaCase';
 import { SwedishHomeFeatures as HomeFeatures } from './HomeFeatures';
+import HomeService from './HomeService.astro';
 import { SwedishHomeFeatureAnnounce as HomeFeatureAnnounce } from './HomeFeatureAnnounce';
 import { HomeFaq, SwedishHomeIndustries as HomeIndustries } from './HomeJourney';
 import IntegrationsHub from './IntegrationsHub.astro';
@@ -76,7 +77,7 @@ const SUPPORTED =
   useModernHome && logoSection && (
     <>
       <HomeFeatures locale={locale} client:load />
-      {locale === 'se' && <section class="home-service"><div class="home-journey__inner"><h2>Service är en känsla.</h2><p class="lede">Kvinnan i butiken ser att kunden behöver hjälp. Hon har tid att lyssna och kunskap att svara. Precis som det är tänkt att fungera. Rätt bemanning ger fler kunder samma uppmärksamhet.</p></div></section>}
+      <HomeService locale={locale} />
       <ArlandaCase locale={locale} client:load />
       <HomeFeatureAnnounce locale={locale} client:load demoHref={localePath(locale, '/get-in-touch')} />
       <HomeIndustries client:load locale={locale} />

@@ -9684,7 +9684,3 @@ body:not(.retail-page) .wf-cta-sec {
 
 /* Approved Swedish copy additions use the existing section gutters and type scale. */
 .hero-tl__promise { max-width: 38rem; margin: 18px 0 0; font-size: 1rem; line-height: 1.5; text-align: center; text-wrap: balance; }
-.home-service .home-journey__inner { padding-block: 80px; }
-.home-service h2 { margin: 0 0 24px; text-wrap: balance; }
-.home-service .lede { max-width: 48rem; margin: 0; text-wrap: pretty; }
-@media(max-width:640px) { .home-service .home-journey__inner { padding-block: 56px; } }
