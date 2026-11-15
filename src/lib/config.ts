@@ -10,6 +10,9 @@ export const DEMO_FORM_ID =
 
 export const SITE_NAME = 'Workofo';
 
+export const APP_STORE_URL = 'https://apps.apple.com/se/app/workofo-employee-schedules/id1567197620';
+export const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.workofo.mobile&hl=sv';
+
 /** Product app login (opens in a new tab). */
 export const LOGIN_URL = 'https://app.workofo.com/login';
 

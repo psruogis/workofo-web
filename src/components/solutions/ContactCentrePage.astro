@@ -6,6 +6,7 @@
  */
 import { type Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
+import { APP_STORE_URL, GOOGLE_PLAY_URL } from '../../lib/config';
 import { SwedishContactCentrePanel as ContactCentrePanel } from './ContactCentrePanel';
 import BottomDemoCta from '../sections/BottomDemoCta.astro';
 
@@ -287,8 +288,8 @@ const homeHref = localePath(locale, '/');
 <h2 class="h2" data-split>Contact centre scheduling app for team leads and agents</h2>
 <p class="lead">The Workofo app for iOS and Android helps agents fit work into everyday life. Agents view schedules, share availability, request time off and arrange shift swaps. Team leads review requests and make changes from their phone.</p>
 <div class="hero__actions">
-<a class="btn btn--ghost btn--cta" href="https://apps.apple.com/app/workofo-employee-schedules/id1567197620"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>App Store</a>
-<a class="btn btn--ghost btn--cta" href="https://play.google.com/store/apps/details?id=com.workofo.mobile"><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>Google Play</a>
+<a class="btn btn--ghost btn--cta" href={APP_STORE_URL}><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>App Store</a>
+<a class="btn btn--ghost btn--cta" href={GOOGLE_PLAY_URL}><svg class="btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path></svg>Google Play</a>
 </div>
 </div>
 <div style="flex:1.15 1 460px;min-width:0;display:flex;flex-wrap:wrap;gap:16px" data-reveal>

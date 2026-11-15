@@ -2,9 +2,8 @@ import { withSwedish } from '../../lib/swedish/react';
 import { useEffect, useRef } from 'react';
 
 /**
- * Arlanda video case — empty player until VIDEO_SRC is set.
+ * Arlanda case with a still image until VIDEO_SRC is set.
  * Contained card that expands to full-bleed on scroll (Zendesk-style).
- * Dark shell; neutral player chrome (no accent orange).
  */
 const VIDEO_SRC: string | null = null;
 
@@ -71,23 +70,7 @@ export default function ArlandaCase() {
                 <source src={VIDEO_SRC} type="video/mp4" />
               </video>
             ) : (
-              <button
-                type="button"
-                className="arlanda-case__player"
-                aria-label="Case film coming soon"
-                disabled
-              >
-                <span className="arlanda-case__play" aria-hidden="true">
-                  {/* White circular button + rounded play triangle (same mark as before; sized for circle padding). */}
-                  <svg width="24" height="24" viewBox="0 0 24 24" focusable="false">
-                    <path
-                      fill="currentColor"
-                      d="M9.2 7.05c0-.62.66-1.02 1.2-.7l7.55 4.45c.58.34.58 1.16 0 1.5l-7.55 4.45c-.54.32-1.2-.08-1.2-.7V7.05z"
-                    />
-                  </svg>
-                </span>
-                <span className="arlanda-case__player-label">Case film coming soon</span>
-              </button>
+              <img className="arlanda-case__photo" src="/aviator-arlanda.png" alt="" width="600" height="403" loading="lazy" decoding="async" />
             )}
           </div>
 

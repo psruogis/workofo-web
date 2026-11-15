@@ -270,9 +270,9 @@ export default function CapacityCalculator({
                 min={0}
                 max={100}
                 step={1}
-                suffix="%"
-                minLabel="0%"
-                maxLabel="100%"
+                suffix={'\u00a0%'}
+                minLabel={'0\u00a0%'}
+                maxLabel={'100\u00a0%'}
                 hint="Share of time with more than one employee, or more than the absolute minimum required."
               />
 
@@ -320,7 +320,7 @@ export default function CapacityCalculator({
                 aria-live="polite"
                 aria-busy={thinking}
               >
-                <div className="capacity-calc__metric"><p className="capacity-calc__metric-label">Potential for redistribution or optimisation</p><p className="capacity-calc__value">{shown.percent}%</p></div>
+                <div className="capacity-calc__metric"><p className="capacity-calc__metric-label">Potential for redistribution or optimisation</p><p className="capacity-calc__value">{`${shown.percent}\u00a0%`}</p></div>
                 <div className="capacity-calc__metric">
                   <p className="capacity-calc__metric-label">Hours unlocked per month</p>
                   <p className="capacity-calc__value">
@@ -343,7 +343,7 @@ export default function CapacityCalculator({
               </div>
 
               <p className="capacity-calc__basis">
-                {locale === 'se' ? 'Resultatet är en uppskattning baserad på liknande Workofo-projekt. Timmarna kan användas där de gör större nytta. Beloppet visar vad tiden motsvarar i personalkostnad, inte hur mycket lönekostnaderna automatiskt minskar.' : 'An indicative estimate based on similar Workofo projects. Typical results are 5–15%; your inputs may produce a result outside that range. Final results depend on your operation.'}
+                {locale === 'se' ? 'Resultatet är en uppskattning baserad på liknande Workofo-projekt. Timmarna kan användas där de gör större nytta. Beloppet visar vad tiden motsvarar i personalkostnad, inte hur mycket lönekostnaderna automatiskt minskar.' : 'An indicative estimate based on similar Workofo projects. Typical results are 5–15 %; your inputs may produce a result outside that range. Final results depend on your operation.'}
               </p>
 
               {locale !== 'se' && <p className="capacity-calc__basis">Capacity value represents time that could be redistributed or optimised, not guaranteed payroll savings.</p>}
@@ -351,7 +351,7 @@ export default function CapacityCalculator({
                 <a className="btn btn--primary capacity-calc__cta" href={demoHref}>
                   Book a demo
                 </a>
-                <details className="calc-method"><summary>How we estimate</summary>{locale === 'se' ? <><p>Dina svar om passlängder, arbetsdagar i rad och möjligheten att arbeta på andra håll ger en uppskattad förbättring på 9–17 procent. Den justeras efter hur stor del av tiden ni är fler på plats än det lägsta antal som krävs.</p><p>Procentsatsen multipliceras sedan med månadens arbetstimmar. Det ger antalet timmar som kan frigöras. Timmarna multipliceras med timkostnaden för att visa värdet per månad. Resultaten avrundas till heltal.</p></> : <p>Working rules determine a base potential of 9–17%. Multiply by the share of time above minimum staffing and round to a whole percentage. Monthly hours × this percentage gives rounded hours; those hours × hourly rate gives the rounded monthly value in euros.</p>}</details>
+                <details className="calc-method"><summary>How we estimate</summary>{locale === 'se' ? <><p>Dina svar om passlängder, arbetsdagar i rad och möjligheten att arbeta på andra håll ger en uppskattad förbättring på 9–17 procent. Den justeras efter hur stor del av tiden ni är fler på plats än det lägsta antal som krävs.</p><p>Procentsatsen multipliceras sedan med månadens arbetstimmar. Det ger antalet timmar som kan frigöras. Timmarna multipliceras med timkostnaden för att visa värdet per månad. Resultaten avrundas till heltal.</p></> : <p>Working rules determine a base potential of 9–17 %. Multiply by the share of time above minimum staffing and round to a whole percentage. Monthly hours × this percentage gives rounded hours; those hours × hourly rate gives the rounded monthly value in euros.</p>}</details>
               </div>
             </div>
           </div>

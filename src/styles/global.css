@@ -2767,7 +2767,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   align-items: stretch;
 }
-.arlanda-case__player,
+.arlanda-case__photo,
 .arlanda-case__video {
   position: relative;
   display: block;
@@ -2786,57 +2786,13 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   cursor: default;
   transition: border-color 200ms var(--ease);
 }
+.arlanda-case__photo {
+  aspect-ratio: auto;
+  object-fit: contain;
+}
 .arlanda-case__video {
   background: var(--surface);
   object-fit: cover;
-}
-.arlanda-case__player:hover,
-.arlanda-case__player:focus-visible {
-  border-color: rgba(255, 255, 255, 0.22);
-}
-.arlanda-case__player:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.45);
-  outline-offset: 3px;
-}
-.arlanda-case__player:disabled {
-  cursor: default;
-  opacity: 1;
-}
-.arlanda-case__play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  margin: 0;
-  /* Optical center for a right-pointing triangle inside the circle */
-  padding: 0 0 0 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  line-height: 0;
-  background: rgba(255, 255, 255, 0.94);
-  color: #0a0a0a;
-  transform: translate(-50%, -50%);
-}
-.arlanda-case__play svg {
-  display: block;
-  width: 24px;
-  height: 24px;
-}
-.arlanda-case__player-label {
-  position: absolute;
-  left: 50%;
-  top: calc(50% + 40px);
-  margin: 0;
-  transform: translateX(-50%);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  white-space: nowrap;
-  color: color-mix(in srgb, #fff 58%, transparent);
 }
 .arlanda-case__copy {
   min-width: 0;
@@ -2912,7 +2868,6 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
     grid-template-columns: 1fr;
     padding: clamp(36px, 6vw, 56px) var(--gutter);
   }
-  .arlanda-case__player,
   .arlanda-case__video {
     aspect-ratio: 4 / 3;
     height: auto;

@@ -11,6 +11,7 @@ const SparkIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color
 
 export default function NoraChat({ locale = 'en' }: { locale?: string } = {}) {
   const message = locale === 'se' ? 'Ellen är sjuk i morgon. Registrera frånvaron och hitta någon som kan ta hennes pass.' : MSG;
+  const availableColleagues = ['Linnea Berg', 'Mattias Lund', 'Ellen Karlsson', locale === 'se' ? 'Stina' : 'Sara Holm'].join(', ');
   const [step, setStep] = useState(0);
   const [typed, setTyped] = useState('');
   const [sendPressed, setSendPressed] = useState(false);
@@ -228,7 +229,7 @@ export default function NoraChat({ locale = 'en' }: { locale?: string } = {}) {
                 <b>Sick page A will be registered for Ellen Ek, full day.</b>
               </div>
               <div className="nora-chat__suggest">
-                <span className="nora-chat__suggest-names">Linnea Berg, Mattias Lund, Ellen Karlsson, Sara Holm</span>
+                <span className="nora-chat__suggest-names">{availableColleagues}</span>
                 <span className="nora-chat__pillg">4 can take it</span>
               </div>
               <div className="nora-chat__act">
@@ -266,7 +267,7 @@ export default function NoraChat({ locale = 'en' }: { locale?: string } = {}) {
               </div>
               <div className="nora-chat__row">
                 <span>Suggested</span>
-                <b>Linnea Berg, Mattias Lund, Ellen Karlsson</b>
+                <b>{availableColleagues}</b>
               </div>
               <div className="nora-chat__chips nora-chat__chips--actions">
                 <span className="nora-chat__wbtn">Choose who gets the offer</span>
