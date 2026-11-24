@@ -716,18 +716,19 @@ main.shell {
   line-height: 1.4;
   color: #9A9FA8;
 }
+.site-footer__meta-links,
 .site-footer__legal-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 1.5rem;
 }
-.site-footer__legal-nav a {
+.site-footer__meta-links a {
   color: #9A9FA8;
   text-decoration: none;
   font-size: 0.8125rem;
   line-height: 1.4;
 }
-.site-footer__legal-nav a:hover {
+.site-footer__meta-links a:hover {
   color: #FFFFFF;
 }
 @media (max-width: 960px) {
@@ -2213,7 +2214,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 .how-it-works__intro {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  align-items: end;
+  align-items: start;
   gap: clamp(20px, 5vw, 72px);
   margin-bottom: clamp(36px, 5vw, 56px);
   text-align: left;
@@ -2486,7 +2487,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 .home-journey__intro {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  align-items: end;
+  align-items: start;
   gap: clamp(20px, 5vw, 72px);
   margin-bottom: clamp(36px, 5vw, 56px);
   text-align: left;
@@ -2767,6 +2768,29 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   align-items: stretch;
 }
+.arlanda-case__still {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+}
+.arlanda-case__brand {
+  position: absolute;
+  inset-inline-end: clamp(10px, 2.5%, 18px);
+  inset-block-end: clamp(10px, 4%, 18px);
+  display: grid;
+  place-items: center;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 14%);
+  pointer-events: none;
+}
+.arlanda-case__brand img {
+  display: block;
+  width: clamp(60px, 7vw, 88px);
+  height: auto;
+}
 .arlanda-case__photo,
 .arlanda-case__video {
   position: relative;
@@ -2824,6 +2848,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
 }
 .arlanda-case__quote p {
   margin: 0;
+  text-wrap: balance;
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
   font-weight: 500;
@@ -5911,7 +5936,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 4rem;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .retail-page .sh .h2 {
@@ -6085,7 +6110,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   /* ~60/40: left H2 wraps to 2 lines on desktop at this width */
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 2.5rem 4rem;
-  align-items: end;
+  align-items: start;
 }
 .retail-s2__top .h2 {
   max-width: none;
@@ -6193,7 +6218,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 2.5rem 4rem;
-  align-items: end;
+  align-items: start;
 }
 .cc-intraday__top .h2 {
   margin: 0;
@@ -7312,10 +7337,6 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   min-width: 0;
   padding-top: 0;
 }
-.contact-demo__eyebrow {
-  min-height: var(--inner-crumb-line);
-  margin: 0 0 var(--inner-crumb-gap);
-}
 .contact-demo__copy h1 {
   max-width: 14ch;
   text-wrap: balance;
@@ -7747,7 +7768,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 4rem;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .about-sh .about-h2 {
@@ -8026,14 +8047,19 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   align-items: center;
   text-align: center;
 }
-.about-signoff__email {
+.about-signoff__contacts {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+.about-signoff__contacts a {
   color: #111111;
   font-size: 16px;
   line-height: 1.5;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.about-signoff__email:hover {
+.about-signoff__contacts a:hover {
   text-decoration-thickness: 2px;
 }
 @media (max-width: 900px) {
@@ -8277,7 +8303,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 4rem;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .jobs-sh .jobs-h2 {
@@ -8320,7 +8346,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 1rem;
 }
 .jobs-board__count {
@@ -8590,7 +8616,7 @@ body:has(.home-top-band--timeline) .site-header.is-scrolled {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 4rem;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .customers-h2 {

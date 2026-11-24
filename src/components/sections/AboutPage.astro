@@ -196,7 +196,10 @@ const storyAfterPull = [
                   <p class="about-signoff__role">Country manager</p>
                 </div>
               </div>}
-              {locale === 'se' ? <a class="about-signoff__email" href="mailto:henrik.salwen@workofo.com">henrik.salwen@workofo.com</a> : <div>
+              {locale === 'se' ? <div class="about-signoff__contacts">
+                <a href="mailto:henrik.salwen@workofo.com">henrik.salwen@workofo.com</a>
+                <a href="tel:+46708166611">070-816 66 11</a>
+              </div> : <div>
                 <a class="btn btn--primary btn--cta" href={demoHref}>Get in touch</a>
               </div>}
             </div>

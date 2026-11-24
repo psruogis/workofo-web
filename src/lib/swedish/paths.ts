@@ -10,10 +10,8 @@ const pagePaths: Record<string, string> = {
   '/calculator': '/kalkylator',
   '/customers': '/kunder',
   '/privacy': '/integritetspolicy',
-  '/cookie-policy': '/cookiepolicy',
-  '/ai-transparency': '/ai-transparens',
+  '/cookie-policy': '/cookies',
   '/system-requirements': '/systemkrav',
-  '/terms': '/allmanna-villkor',
   '/industries/retail': '/branscher/handel',
   '/industries/contact-centre': '/branscher/kontaktcenter',
   '/industries/aviation': '/branscher/flygplatser',
@@ -30,6 +28,7 @@ const pagePaths: Record<string, string> = {
   '/blog/workforce-management-industry-trends-and-the-path-to-automated-planning-solutions': '/blogg/branschtrender-och-vagen-till-automatisk-bemanningsplanering',
 };
 const internalPaths = Object.fromEntries(Object.entries(pagePaths).map(([internal, publicPath]) => [publicPath, internal]));
+internalPaths['/cookiepolicy'] = '/cookie-policy';
 
 function mapPath(path: string, mapping: Record<string, string>): string {
   const suffixIndex = path.search(/[?#]/);

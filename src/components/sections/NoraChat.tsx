@@ -11,7 +11,7 @@ const SparkIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color
 
 export default function NoraChat({ locale = 'en' }: { locale?: string } = {}) {
   const message = locale === 'se' ? 'Ellen är sjuk i morgon. Registrera frånvaron och hitta någon som kan ta hennes pass.' : MSG;
-  const availableColleagues = ['Linnea Berg', 'Mattias Lund', 'Ellen Karlsson', locale === 'se' ? 'Stina' : 'Sara Holm'].join(', ');
+  const availableColleagues = ['Linnea Berg', 'Mattias Lund', 'Ellen Karlsson', locale === 'se' ? 'Stina Lind' : 'Sara Holm'].join(', ');
   const [step, setStep] = useState(0);
   const [typed, setTyped] = useState('');
   const [sendPressed, setSendPressed] = useState(false);

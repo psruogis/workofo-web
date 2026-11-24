@@ -18,10 +18,8 @@ const paths: Record<string, string> = {
   '/calculator': '/skaiciuokle',
   '/customers': '/klientai',
   '/privacy': '/privatumo-politika',
-  '/cookie-policy': '/slapuku-politika',
-  '/ai-transparency': '/di-skaidrumas',
+  '/cookie-policy': '/slapukai',
   '/system-requirements': '/sistemos-reikalavimai',
-  '/terms': '/bendrosios-salygos',
   '/industries/retail': '/sektoriai/mazmenine-prekyba',
   '/industries/aviation': '/sektoriai/aviacija',
   '/industries/contact-centre': '/sektoriai/kontaktu-centrai',
@@ -29,6 +27,7 @@ const paths: Record<string, string> = {
   '/industries/restaurants': '/sektoriai/restoranai',
 };
 const internal = Object.fromEntries(Object.entries(paths).map(([key, value]) => [value, key]));
+internal['/slapuku-politika'] = '/cookie-policy';
 
 export function lithuanianInternalPath(path: string): string {
   return internal[path] ?? path.replace(/^\/tinklarastis\//, '/blog/');

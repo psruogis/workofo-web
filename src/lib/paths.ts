@@ -18,6 +18,7 @@ export function localePath(locale: Locale, path = '/'): string {
   if (locale === 'se') return `/se${swedishPublicPath(p)}`;
   if (locale === 'lt') return `/lt${lithuanianPublicPath(p)}`;
   if (locale === DEFAULT_LOCALE) {
+    if (p === '/cookie-policy') return '/cookies';
     return p === '/' ? '/' : p;
   }
   if (p === '/') return `/${locale}/home`;

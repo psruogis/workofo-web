@@ -23,7 +23,6 @@ const copy = {
 
 <section id="home-service" class="home-service" aria-labelledby="home-service-heading">
   <div class="home-service__card">
-    <img src="/industries/retail.jpg" alt="" width="1152" height="864" loading="lazy" decoding="async" />
     <div class="home-service__copy">
       <h2 id="home-service-heading">{copy.heading}</h2>
       <p>{copy.body}</p>
@@ -35,31 +34,26 @@ const copy = {
 <style>
   .home-service {
     width: 100%;
-    padding: 0 var(--gutter) clamp(40px, 6vw, 80px);
+    padding: 0 var(--gutter) clamp(12px, 1.75vw, 24px);
     background: #fff;
     scroll-margin-top: 108px;
   }
 
   .home-service__card {
-    display: grid;
     max-width: calc(var(--max) - 2 * var(--gutter));
     margin-inline: auto;
-    grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr);
-    align-items: center;
-    padding: clamp(12px, 1.8vw, 24px);
+    padding: clamp(52px, 8vw, 108px) clamp(20px, 5vw, 64px);
     border-radius: 24px;
-    background: #ececea;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
+    background:
+      radial-gradient(ellipse at 10% 0%, #ebd9d4 0%, transparent 48%),
+      radial-gradient(ellipse at 66% 82%, #eadfd9 0%, transparent 53%),
+      linear-gradient(145deg, #f5f4f2, #eaeae7);
   }
 
   .home-service__copy {
-    padding: clamp(24px, 5vw, 64px);
+    max-width: 43rem;
+    margin-inline: auto;
+    text-align: center;
   }
 
   h2 {
@@ -76,17 +70,16 @@ const copy = {
     margin: 0;
     color: #4a4f57;
     line-height: 1.6;
-    text-wrap: pretty;
+    text-wrap: balance;
   }
 
   .home-service__close {
-    margin-top: 1.5em;
+    width: fit-content;
+    margin: 1.5em auto 0;
+    padding-top: 1.25em;
+    border-top: 1px solid rgb(17 17 17 / 9%);
     color: #111;
     font-weight: 600;
   }
 
-  @media (max-width: 680px) {
-    .home-service__card { grid-template-columns: minmax(0, 1fr); }
-    .home-service__copy { padding: 24px 12px 20px; }
-  }
 </style>

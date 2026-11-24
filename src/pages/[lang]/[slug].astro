@@ -27,9 +27,6 @@ if (slug === 'blog') {
   return Astro.redirect(localePath(locale, '/blog'), 302);
 }
 
-if (slug === 'cookie-policy') {
-  return Astro.redirect(localePath(locale, '/privacy#cookies'), 301);
-}
 const policy = isPolicyPage(slug) ? slug : undefined;
 ---
 {policy ? <PolicyPage locale={locale} page={policy} /> : <CmsPage locale={locale} slug={slug} />}

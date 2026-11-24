@@ -1,23 +1,21 @@
 export const policyPages = {
   privacy: {
-    en: 'Privacy and cookie policy',
-    se: 'Integritets- och cookiepolicy',
+    en: 'Privacy policy',
+    se: 'Integritetspolicy',
+    lt: 'Privatumo politika',
     source: 'https://www-workofo-com.filesusr.com/html/1e5e89_93b40bc7dd2e368194d0147cdd90577c.html',
   },
-  'ai-transparency': {
-    en: 'AI transparency',
-    se: 'AI-transparens',
-    source: 'https://www-workofo-com.filesusr.com/html/1e5e89_416acce6b9b8b3822099ee3c02107c44.html',
+  'cookie-policy': {
+    en: 'Cookie policy',
+    se: 'Cookiepolicy',
+    lt: 'Slapukų politika',
+    source: 'https://support.wix.com/en/article/cookies-and-your-wix-site',
   },
   'system-requirements': {
     en: 'System requirements',
     se: 'Systemkrav',
+    lt: 'Sistemos reikalavimai',
     source: 'https://www-workofo-com.filesusr.com/html/1e5e89_a07fc2a0d7b0a0034ca09b7a741cb624.html',
-  },
-  terms: {
-    en: 'General terms and conditions',
-    se: 'Allmänna villkor',
-    source: '/documents/workofo-general-terms-2023-12-01.pdf',
   },
 } as const;
 

@@ -10,6 +10,10 @@ import { lithuanianInternalPath, lithuanianPublicPath } from './lib/lithuanian/p
  */
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
+  // Keep retired policy URLs out of the generic localized CMS route.
+  if (/^\/(?:(?:en|se|lt)\/)?(?:ai-transparency|ai-transparens|di-skaidrumas|terms|allmanna-villkor|bendrosios-salygos)\/?$/.test(pathname)) {
+    return new Response('Not found', { status: 404 });
+  }
   const locale = pathname.match(/^\/(se|lt)(?:\/|$)/)?.[1];
   if (locale === 'se' || locale === 'lt') {
     const publicSlug = locale === 'lt' ? lithuanianPublicPath : swedishPublicPath;

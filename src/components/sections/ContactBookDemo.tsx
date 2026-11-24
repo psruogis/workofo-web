@@ -117,6 +117,21 @@ function employeeRangeLabel(chip: string, locale: string) {
   return `${format.format(Number(range[1]))}–${format.format(Number(range[2]))}`;
 }
 
+const INTRO_COPY = {
+  en: {
+    title: 'See Workofo with your own data.',
+    lede: 'Your demand data and scheduling rules, planned in 15-minute intervals.',
+  },
+  se: {
+    title: 'See what Workofo can do with your demand data and scheduling rules.',
+    lede: 'Plan staffing in 15-minute intervals, with your working-time rules built in.',
+  },
+  lt: {
+    title: 'Pamatykite, kaip „Workofo“ veikia su jūsų duomenimis.',
+    lede: 'Planuojame 15 minučių intervalais pagal jūsų paklausos duomenis ir grafikų sudarymo taisykles.',
+  },
+} satisfies Record<Locale, { title: string; lede: string }>;
+
 export default function ContactBookDemo({
   fields = [],
   formId,
@@ -125,6 +140,7 @@ export default function ContactBookDemo({
 }: Props) {
   const resolvedFormId = formId || DEMO_FORM_ID;
   const privacyHref = localePath(locale, '/privacy');
+  const intro = INTRO_COPY[locale];
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState('');
@@ -271,7 +287,6 @@ export default function ContactBookDemo({
       <section className="contact-demo">
         <div className="contact-demo__inner">
           <div className="contact-demo__success" data-reveal>
-            <p className="t-overline">Book a demo</p>
             <h1 data-split>{ui('formSuccess', locale)}</h1>
           </div>
         </div>
@@ -286,11 +301,8 @@ export default function ContactBookDemo({
           <div className="contact-demo__left">
             <div className="contact-demo__copy">
               <div className="contact-demo__intro" data-reveal>
-                <p className="t-overline contact-demo__eyebrow">Book a demo</p>
-                <h1 data-split>See what Workofo can do with your demand data and scheduling rules.</h1>
-                <p className="lede contact-demo__lede">
-                  Plan staffing in 15-minute intervals, with your working-time rules built in.
-                </p>
+                <h1 data-split>{intro.title}</h1>
+                <p className="lede contact-demo__lede">{intro.lede}</p>
                 <p className="contact-demo__next-title">What happens next</p>
                 <ol className="contact-demo__next">
                   {NEXT_STEPS.map((step, i) => (

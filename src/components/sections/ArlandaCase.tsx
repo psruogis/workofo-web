@@ -70,7 +70,12 @@ export default function ArlandaCase() {
                 <source src={VIDEO_SRC} type="video/mp4" />
               </video>
             ) : (
-              <img className="arlanda-case__photo" src="/aviator-arlanda.png" alt="" width="600" height="403" loading="lazy" decoding="async" />
+              <div className="arlanda-case__still">
+                <img className="arlanda-case__photo" src="/aviator-arlanda-norwegian.jpg" alt="" width="1531" height="1027" loading="lazy" decoding="async" />
+                <span className="arlanda-case__brand" aria-hidden="true">
+                  <img src="/workofo-logo.png?v=5" alt="" width="168" height="25" decoding="async" />
+                </span>
+              </div>
             )}
           </div>
 

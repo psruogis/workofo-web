@@ -2,6 +2,7 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import type { Locale } from '../../lib/locales';
 import { localePath } from '../../lib/paths';
+import { cookieCopy, privacyCopy } from '../../lib/policy-copy';
 import { policyPages, type PolicyPageKey } from '../../lib/policies';
 
 interface Props {
@@ -12,46 +13,23 @@ interface Props {
 const { locale, page } = Astro.props;
 const swedish = locale === 'se';
 const policy = policyPages[page];
-const title = swedish ? policy.se : policy.en;
-const readLabel = page === 'terms'
-  ? swedish ? 'Läs avtalsvillkoren (PDF, engelska)' : 'Read the terms (PDF)'
-  : swedish ? 'Läs hela originaldokumentet (engelska)' : 'Read the full original document';
+const title = policy[locale];
+const sections = page === 'privacy' ? privacyCopy[locale] : cookieCopy[locale];
+const relatedPage = page === 'privacy' ? 'cookie-policy' : 'privacy';
+const readLabel = swedish ? 'Läs hela originaldokumentet (engelska)' : 'Read the full original document';
 ---
 
 <SiteLayout locale={locale} title={`${title} | Workofo`} pathWithoutLang={`/${page}`}>
   <article class="policy">
     <h1>{title}</h1>
 
-    {page === 'privacy' && <>
-      <p>{swedish
-        ? 'Workofo Europe ApS (CVR 42015784, Amager Strandvej 230, 2300 Köpenhamn, Danmark) ansvarar för den behandling som beskrivs här. Den fullständiga policyn uppdaterades i november 2026.'
-        : 'Workofo Europe ApS (CVR 42015784, Amager Strandvej 230, 2300 Copenhagen, Denmark) is the controller for the processing described here. The full policy was updated in November 2026.'}</p>
-      <h2>{swedish ? 'Kontakt och demoförfrågningar' : 'Contact and demo requests'}</h2>
-      <p>{swedish
-        ? 'När du kontaktar oss eller bokar en demo använder vi de kontaktuppgifter, företagsuppgifter och svar du lämnar för att hantera din förfrågan. Den rättsliga grunden är berättigat intresse eller åtgärder inför ett avtal. Enligt policyn sparas förfrågningar i sex månader efter den senaste kontakten, om det inte inleds en affärsrelation.'
-        : 'When you contact us or request a demo, we use the contact details, company details and answers you provide to handle your request. The legal basis is legitimate interest or steps before a contract. Under the policy, enquiries are kept for six months after the last contact unless a business relationship follows.'}</p>
-      <h2>{swedish ? 'Uppgifter i Workofo och dina rättigheter' : 'Workofo platform data and your rights'}</h2>
-      <p>{swedish
-        ? 'När arbetsgivaren använder Workofo för schemaläggning eller tidrapportering ansvarar arbetsgivaren för den behandlingen. Kontakta arbetsgivaren om uppgifterna i ditt schema. För behandling som Workofo ansvarar för kan du bland annat begära tillgång, rättelse, radering eller begränsning, invända mot behandling och begära dataportabilitet där den rätten gäller.'
-        : 'Your employer is the controller for scheduling or time records it manages in Workofo. Contact your employer about your schedule data. For processing Workofo controls, you may request access, correction, deletion or restriction, object to processing and request portability where applicable.'}
-        {' '}<a href="mailto:contact@workofo.com">contact@workofo.com</a>
-      </p>
-      <h2 id="cookies">{swedish ? 'Cookies och lokal lagring' : 'Cookies and local storage'}</h2>
-      <p>{swedish
-        ? 'Avsnitt 8 i originalpolicyn beskriver vilka cookies och verktyg som används på workofo.com, deras ändamål och hur du ändrar ditt val där.'
-        : 'Section 8 of the original policy explains the cookies and tools used on workofo.com, their purposes and how to change your preferences there.'}</p>
-      <p><a href={localePath(locale, '/ai-transparency')}>{swedish ? 'Så använder Workofo AI' : 'How Workofo uses AI'}</a></p>
-    </>}
-
-    {page === 'ai-transparency' && <>
-      <p>{swedish
-        ? 'Workofo använder AI för att prognostisera bemanningsbehov och ge stöd till planerare. Ansvariga chefer granskar planeringen och fattar besluten.'
-        : 'Workofo uses AI to forecast staffing needs and support planners. Managers review the plan and make the decisions.'}</p>
-      <h2>{swedish ? 'Prognoser och Nora' : 'Forecasting and Nora'}</h2>
-      <p>{swedish
-        ? 'Prognoserna utgår från kundens aggregerade verksamhetsdata, som försäljning och kundflöden. Nora svarar på frågor om hur plattformen används och har samma åtkomstgränser som användaren. Workofo uppger att personuppgifter aldrig används för att träna AI-modeller.'
-        : 'Forecasts use the customer’s aggregated business data, such as sales and footfall. Nora answers questions about using the platform and is subject to the user’s access permissions. Workofo states that it does not use personal data to train AI models.'}</p>
-      <p><a href={localePath(locale, '/privacy')}>{swedish ? 'Integritets- och cookiepolicy' : 'Privacy and cookie policy'}</a></p>
+    {page !== 'system-requirements' && <>
+      {sections.map(([heading, body]) => <section>
+        <h2>{heading}</h2>
+        <p>{body}</p>
+      </section>)}
+      <p><a href="mailto:contact@workofo.com">contact@workofo.com</a></p>
+      <p><a data-legacy-cookie-target={page === 'privacy' ? '' : undefined} href={localePath(locale, '/' + relatedPage)}>{policyPages[relatedPage][locale]}</a></p>
     </>}
 
     {page === 'system-requirements' && <>
@@ -64,13 +42,21 @@ const readLabel = page === 'terms'
         : 'The web app supports the two latest stable major releases of Chromium-based browsers such as Chrome and Edge. The employee app is available for iPhone and Android. The specification lists exact version and network requirements.'}</p>
     </>}
 
-    {page === 'terms' && <p>{swedish
-      ? 'Allmänna villkor för Workofos tjänst enligt kundavtal med UAB Enodo. Dokumentet är på engelska och anger 1 december 2023 som ikraftträdandedatum.'
-      : 'General terms for the Workofo service under customer agreements with UAB Enodo. The document states an effective date of 1 December 2023.'}</p>}
-
-    <p class="policy__source"><a href={policy.source}>{readLabel}</a></p>
+    <p class="policy__source"><a href={policy.source}>{page === 'cookie-policy' ? 'Wix – Cookies and Your Wix Site' : readLabel}</a></p>
   </article>
 </SiteLayout>
+
+<script>
+  function followLegacyCookieLink() {
+    const target = document.querySelector<HTMLAnchorElement>('[data-legacy-cookie-target]');
+    if (target && window.location.hash === '#cookies') {
+      window.location.replace(target.href);
+    }
+  }
+
+  followLegacyCookieLink();
+  window.addEventListener('hashchange', followLegacyCookieLink);
+</script>
 
 <style>
   .policy { width: min(calc(100% - 48px), 48rem); margin: 0 auto; padding: clamp(48px, 8vw, 104px) 0; }

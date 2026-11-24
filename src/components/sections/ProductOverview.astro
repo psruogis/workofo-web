@@ -201,7 +201,7 @@ const dayHighlights = [
   .product-trust img { display: block; max-width: 170px; max-height: 38px; width: auto; height: auto; object-fit: contain; filter: grayscale(1); opacity: .55; }
   .product-section { background: #fff; }
   .product-features { padding: 128px 0 72px; }
-  .product-section__head { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: end; margin-bottom: 56px; }
+  .product-section__head { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; margin-bottom: 56px; }
   .product-section__head h2, .product-multisite h2, .product-faq h2 { max-width: 13em; margin: 0; font-family: var(--font-display); font-size: clamp(34px,3.7vw,46px); font-weight: 600; line-height: 1.08; letter-spacing: -.03em; }
   .product-section__head p { justify-self: end; max-width: 28rem; margin: 0; color: #6f6f6f; font-size: 17px; line-height: 1.6; }
   .product-features__grid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 20px; }
@@ -209,6 +209,7 @@ const dayHighlights = [
   .product-feature--wide { grid-column: span 7; }
   .product-feature--dark { background: #111; color: #fff; }
   .product-feature__visual { position: relative; display: flex; flex: 1 0 280px; min-height: 280px; margin: 12px 12px 0; overflow: hidden; border-radius: 20px; background: #fff; }
+  :is(#forecasting, #scheduling) > .product-feature__visual { flex-grow: 0; box-sizing: border-box; }
   .product-feature__copy { display: flex; flex-direction: column; align-items: flex-start; padding: 28px 32px 32px; }
   .product-feature__copy h3 { margin: 0; font-family: var(--font-display); font-size: 28px; font-weight: 600; line-height: 1.15; letter-spacing: -.02em; }
   .product-feature__copy p { max-width: 30rem; margin: 10px 0 0; color: #6f6f6f; font-size: 15.5px; line-height: 1.6; }
@@ -304,6 +305,7 @@ const dayHighlights = [
     .product-section__head p { justify-self: start; }
     .product-feature { grid-column: 1 / -1; }
     .product-feature__visual { flex-basis: 230px; min-height: 230px; }
+    :is(#forecasting, #scheduling) > .product-feature__visual { flex-basis: 280px; }
     .product-feature__visual--nora { flex-basis: auto; padding: 24px; }
     .product-feature__visual--nora > span { flex-shrink: 0; }
     .product-week { padding: 40px 0 80px; }

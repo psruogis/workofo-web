@@ -111,7 +111,6 @@ const sortFooterLinks = <T extends { label: string }>(links: T[]) => links.sort(
 const footerIndustries = sortFooterLinks(solutions);
 const footerProduct = sortFooterLinks([
   { label: 'Product overview', href: productHref },
-  { label: 'Demand forecasting', href: `${productHref}#forecasting` },
   { label: 'Automatic scheduling', href: `${productHref}#scheduling` },
   { label: 'Nora AI assistant', href: `${productHref}#nora` },
   { label: 'Employee app', href: `${productHref}#app` },
@@ -130,11 +129,8 @@ const footerStart = sortFooterLinks([
   { label: locale === 'se' ? 'Systemkrav' : 'System requirements', href: localePath(locale, '/system-requirements'), external: false },
 ]);
 const footerLegal = sortFooterLinks([
-  { label: locale === 'se' ? 'Integritets- och cookiepolicy' : 'Privacy and cookie policy', href: privacyHref, external: false },
-  { label: 'Cookie policy', href: cookieHref, external: false },
-  { label: locale === 'se' ? 'AI-transparens' : 'AI transparency', href: localePath(locale, '/ai-transparency'), external: false },
-  { label: locale === 'se' ? 'Allmänna villkor' : 'General terms', href: localePath(locale, '/terms'), external: false },
-  { label: 'LinkedIn', href: linkedInHref, external: true },
+  { label: 'Privacy policy', href: privacyHref },
+  { label: 'Cookie policy', href: cookieHref },
 ]);
 
 const footerOffices = [
@@ -540,9 +536,12 @@ function alternateHref(targetLocale: Locale): string {
 
         <div class="site-footer__legal">
           <p class="site-footer__copy">© 2026 Workofo Europe ApS, 42015784</p>
-          <nav class="site-footer__legal-nav" aria-label="Legal">
-            {footerLegal.map((item) => <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer noopener' : undefined}>{item.label}</a>)}
-          </nav>
+          <div class="site-footer__meta-links">
+            <nav class="site-footer__legal-nav" aria-label="Legal">
+              {footerLegal.map((item) => <a href={item.href}>{item.label}</a>)}
+            </nav>
+            <a href={linkedInHref} target="_blank" rel="noreferrer noopener">LinkedIn</a>
+          </div>
         </div>
       </div>
     </footer>
